@@ -8,9 +8,9 @@ import { MenuItem, PrimeNGConfig } from 'primeng/api';
 })
 export class AppComponent {
   title = 'mycollection-front';
-  visibleSidebar;
-  
-  items: MenuItem[];
+  visibleSidebar: any;
+
+  items: MenuItem[] = [];
 
   constructor(private primengConfig: PrimeNGConfig) {}
 
@@ -20,7 +20,7 @@ export class AppComponent {
           {
               label:'CDs',
               icon:'pi pi-circle-off'
-              
+
           },
       ];
   }

@@ -1,1 +1,31 @@
-<p>categorias works!</p>
+<div class="grid">
+  <div class="col-8 col-offset-2">
+    <p-table [value]="categorias" styleClass="p-datatable-gridlines" responsiveLayout="scroll">
+      <ng-template pTemplate="caption">
+        <div class="table-header" style="text-align:center">
+          Categorias
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Ação</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-categoria>
+          <tr>
+            <td>{{categoria.id}}</td>
+            <td>{{categoria.nome}}</td>
+            <td>Botao 1 | Botao 2</td>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        Desenvolvido por Brum Corporation
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
+
