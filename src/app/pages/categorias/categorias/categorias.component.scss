@@ -2,3 +2,7 @@
     text-align: center;
     width: 260px;
 }
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  text-align: center;
+}
