@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuItem, PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,20 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'mycollection-front';
+  visibleSidebar;
+  
+  items: MenuItem[];
+
+  constructor(private primengConfig: PrimeNGConfig) {}
+
+  ngOnInit() {
+    this.primengConfig.ripple = true;
+      this.items = [
+          {
+              label:'CDs',
+              icon:'pi pi-circle-off'
+              
+          },
+      ];
+  }
 }
