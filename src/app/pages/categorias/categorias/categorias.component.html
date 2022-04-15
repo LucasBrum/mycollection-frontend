@@ -1,29 +1,26 @@
 <div class="grid">
-  <div class="col-8 col-offset-2">
-    <p-table [value]="categorias" styleClass="p-datatable-gridlines" responsiveLayout="scroll">
-      <ng-template pTemplate="caption">
-        <div class="table-header" style="text-align:center">
-          Categorias
-        </div>
-      </ng-template>
-      <ng-template pTemplate="header">
+  <p-fieldset legend="Categorias" class="col-8 col-offset-2">
+    <div *ngIf="categorias$ | async as categorias; else loading">
+      <p-table [value]="categorias" styleClass="p-datatable-gridlines" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
           <tr>
             <th>Nome</th>
             <th>Ação</th>
           </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-categoria>
+        </ng-template>
+        <ng-template pTemplate="body" let-categoria>
           <tr>
-            <td>{{categoria.nome}}</td>
+            <td>{{ categoria.nome }}</td>
             <td>Botao 1 | Botao 2</td>
           </tr>
-      </ng-template>
-      <ng-template pTemplate="summary">
-        Desenvolvido por Brum Corporation
-      </ng-template>
-    </p-table>
-  </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-fieldset>
+
+  <ng-template #loading>
+    <div class="loading-spinner">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-template>
 </div>
-
-
-

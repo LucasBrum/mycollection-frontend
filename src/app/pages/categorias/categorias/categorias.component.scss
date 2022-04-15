@@ -6,3 +6,11 @@
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
   text-align: center;
 }
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+

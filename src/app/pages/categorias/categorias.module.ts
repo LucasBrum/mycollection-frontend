@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 
+import { SharedModule } from '../shared/shared.module';
+import { AppPrimengModule } from './../shared/app-primeng/app-primeng.module';
 import { CategoriasRoutingModule } from './categorias-routing.module';
 import { CategoriasComponent } from './categorias/categorias.component';
 
@@ -14,7 +16,9 @@ import { CategoriasComponent } from './categorias/categorias.component';
     CommonModule,
     TableModule,
     ToolbarModule,
-    CategoriasRoutingModule
+    CategoriasRoutingModule,
+    AppPrimengModule,
+    SharedModule
   ]
 })
 export class CategoriasModule { }

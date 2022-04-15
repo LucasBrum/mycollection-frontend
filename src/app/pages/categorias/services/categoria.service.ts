@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { first } from 'rxjs/operators';
+import { delay, first } from 'rxjs/operators';
 
 import { Categoria } from '../model/categoria';
 
@@ -16,7 +16,8 @@ export class CategoriaService {
   list() {
     return this.httpClient.get<Categoria[]>(this.API)
       .pipe(
-        first()
+        first(),
+        delay(2000)
       );
   }
 }
