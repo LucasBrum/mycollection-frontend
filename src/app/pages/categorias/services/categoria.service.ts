@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { first } from 'rxjs/operators';
+
 import { Categoria } from '../model/categoria';
 
 @Injectable({
@@ -7,9 +9,16 @@ import { Categoria } from '../model/categoria';
 })
 export class CategoriaService {
 
+  private readonly API = '../../../../assets/categorias.json';
+
   constructor(private httpClient: HttpClient) { }
 
-  list(): Categoria[] {
-    return [{ _id: 1, nome: 'CDs'}];
+  list() {
+    return this.httpClient.get<Categoria[]>(this.API)
+      .pipe(
+        first()
+      );
   }
 }
+
+
