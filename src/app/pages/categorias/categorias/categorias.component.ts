@@ -19,13 +19,12 @@ export class CategoriasComponent implements OnInit {
     private categoriaService: CategoriaService,
     private messageService: MessageService
   ) {
-    this.categorias$ = this.categoriaService.list().pipe(
+    this.categorias$ = this.categoriaService.list()
       catchError((error) => {
         this.showError();
         console.log(error);
         return of([]);
       })
-    );
   }
 
   ngOnInit(): void {}

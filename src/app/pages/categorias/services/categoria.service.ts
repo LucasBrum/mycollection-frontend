@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, first } from 'rxjs/operators';
+import { delay, first, map } from 'rxjs/operators';
 
 import { Categoria } from '../model/categoria';
 
@@ -9,7 +9,7 @@ import { Categoria } from '../model/categoria';
 })
 export class CategoriaService {
 
-  private readonly API = '../../../../assets/categorias.json';
+  private readonly API = 'mycollection/api/categories';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -17,9 +17,8 @@ export class CategoriaService {
     return this.httpClient.get<Categoria[]>(this.API)
       .pipe(
         first(),
-        delay(2000)
-      );
+        map(result => result['data'])
+
+    );
   }
 }
-
-
