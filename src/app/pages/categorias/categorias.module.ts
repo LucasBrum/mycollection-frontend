@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 
@@ -16,6 +18,7 @@ import { CategoriasComponent } from './categorias/categorias.component';
     CommonModule,
     TableModule,
     ToolbarModule,
+    ButtonModule,
     CategoriasRoutingModule,
     AppPrimengModule,
     SharedModule
