@@ -5,7 +5,7 @@ import { CategoriasComponent } from './pages/categorias/categorias/categorias.co
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'categorias' },
-  { 
+  {
     path: 'categorias',
     loadChildren: () => import('./pages/categorias/categorias.module').then(m => m.CategoriasModule)
   }

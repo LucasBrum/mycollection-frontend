@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -13,11 +14,14 @@ import { CategoriaService } from './../services/categoria.service';
   providers: [MessageService],
 })
 export class CategoriasComponent implements OnInit {
+
   categorias$: Observable<Categoria[]>;
 
   constructor(
     private categoriaService: CategoriaService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.categorias$ = this.categoriaService.list()
       catchError((error) => {
@@ -28,6 +32,10 @@ export class CategoriasComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  cadastrar() {
+    this.router.navigate(['cadastrar'], {relativeTo: this.route});
+  }
 
   showError() {
     this.messageService.add({
