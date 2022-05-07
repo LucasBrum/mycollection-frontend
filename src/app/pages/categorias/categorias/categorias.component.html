@@ -10,7 +10,7 @@
 
     </p-toolbar>
     <div *ngIf="categorias$ | async as categorias; else loading">
-      <p-table [value]="categorias" styleClass="p-datatable-gridlines" responsiveLayout="scroll">
+      <p-table [value]="categorias" styleClass="p-datatable-gridlines p-datatable-sm" responsiveLayout="scroll">
         <ng-template pTemplate="header">
           <tr>
             <th>Categoria</th>
@@ -21,8 +21,8 @@
           <tr>
             <td>{{ categoria.name }}</td>
             <td>
-              <button pButton type="button" icon="pi pi-pencil" iconPos="left" class="p-button-info"></button>
-              <button pButton  type="button" icon="pi pi-trash" iconPos="left" class="p-button-danger"></button>
+              <button pButton type="button" icon="pi pi-pencil" iconPos="left" class="p-button-info p-button-sm"></button>
+              <button pButton  type="button" icon="pi pi-trash" iconPos="left" class="p-button-danger p-button-sm"></button>
             </td>
           </tr>
         </ng-template>

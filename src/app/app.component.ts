@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuItem, PrimeNGConfig } from 'primeng/api';
+import { MegaMenuItem, MenuItem, PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'mycollection-front';
   visibleSidebar: any;
 
-  items: MenuItem[] = [];
+  items: MegaMenuItem[];
 
   constructor(private primengConfig: PrimeNGConfig) {}
 
@@ -22,6 +22,16 @@ export class AppComponent {
               icon:'pi pi-circle-off'
 
           },
+          {
+            label: 'Configurações', icon: 'pi pi-fw pi-cog',
+            items: [
+                [
+                    {
+                        items: [{label: 'Categorias', routerLink: ['/categorias']}]
+                    }
+                ]
+            ]
+        },
       ];
   }
 }

@@ -21,4 +21,11 @@ export class CategoriaService {
 
     );
   }
+
+  save(categoria: Categoria) {
+    return this.httpClient.post<Categoria>(this.API, categoria)
+      .pipe(
+        first()
+      );
+  }
 }

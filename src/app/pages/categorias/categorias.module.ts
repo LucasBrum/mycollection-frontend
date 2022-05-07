@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
@@ -27,6 +28,7 @@ import { CategoriasComponent } from './categorias/categorias.component';
     AppPrimengModule,
     DialogModule,
     InputTextModule,
+    ReactiveFormsModule,
     SharedModule
   ]
 })
