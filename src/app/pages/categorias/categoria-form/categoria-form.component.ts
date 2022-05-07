@@ -31,11 +31,13 @@ export class CategoriaFormComponent implements OnInit {
       result => {
         this.messageService.add({severity:'success', summary:'Sucesso', detail:'Categoria criada com sucesso.'})
       },
-      error => {
-        const msg = 'Erro ao cadastrar Categoria.';
-        this.messageService.add({severity:'error', summary:'Erro', detail:'Erro ao criar Categoria.'})
-      }
+      error => {this.onError()}
     )
+  }
+
+  private onError() {
+    const msg = 'Erro ao cadastrar Categoria.';
+    this.messageService.add({severity:'error', summary:'Erro', detail:'Erro ao criar Categoria.', life:5000})
   }
 
 }
