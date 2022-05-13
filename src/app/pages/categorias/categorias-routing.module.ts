@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CategoriasComponent } from './categorias/categorias.component';
 
 const routes: Routes = [
-  { path: '', component: CategoriasComponent },
+  { path: '', component: CategoriaFormComponent },
   { path: 'cadastrar', component: CategoriaFormComponent }
 ];
 

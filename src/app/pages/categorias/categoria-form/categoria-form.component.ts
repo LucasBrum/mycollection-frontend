@@ -13,6 +13,8 @@ import { CategoriaService } from '../services/categoria.service';
 export class CategoriaFormComponent implements OnInit {
 
   categoriaForm: FormGroup;
+  isEditing: boolean;
+  displayModal: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +35,10 @@ export class CategoriaFormComponent implements OnInit {
       },
       error => {this.onError()}
     )
+  }
+
+  showModalDialog() {
+    this.displayModal = true;
   }
 
   private onError() {

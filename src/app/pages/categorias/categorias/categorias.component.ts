@@ -15,6 +15,8 @@ import { CategoriaService } from './../services/categoria.service';
 })
 export class CategoriasComponent implements OnInit {
 
+  displayModal: boolean;
+
   categorias$: Observable<Categoria[]>;
 
   constructor(
@@ -33,8 +35,12 @@ export class CategoriasComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  cadastrar() {
-    this.router.navigate(['cadastrar'], {relativeTo: this.route});
+  // cadastrar() {
+  //   this.router.navigate(['cadastrar'], {relativeTo: this.route});
+  // }
+
+  showModalDialog() {
+    this.displayModal = true;
   }
 
   showError() {

@@ -1,12 +1,24 @@
 <p-toast></p-toast>
+
 <div class="grid">
-  <p-fieldset legend="Cadastrar Categoria" class="col-6 col-offset-3">
+  <p-fieldset legend="Categorias" class="col-6 col-offset-3">
     <form [formGroup]="categoriaForm">
-      <span class="p-float-label">
-        <input id="float-input" type="text" pInputText formControlName="name">
-        <label for="float-input">Categoria</label>
-      </span>
-      <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="salvar()"></p-button>
-    </form>
+      <div class="p-col-4 p-fluid toolbar-component">
+        <app-toolbar (openModal)="showModalDialog()"></app-toolbar>
+      </div>
+      <div>
+        <p-dialog header="{{isEditing ? 'Alterar Categoria' : 'Cadastrar Categoria'}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '30vw'}" [baseZIndex]="10000" [closable]="true" >
+          <div class="field grid">
+            <span class="p-float-label">
+              <input id="float-input" type="text" pInputText formControlName="name">
+              <label for="float-input">Categoria</label>
+            </span>
+          </div>
+          <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="salvar()"></p-button>
+        </p-dialog>
+      </div>
+      </form>
+    <app-categorias></app-categorias>
   </p-fieldset>
 </div>
+

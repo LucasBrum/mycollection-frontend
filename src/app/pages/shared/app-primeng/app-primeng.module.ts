@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FieldsetModule } from 'primeng/fieldset';
 import {ToastModule} from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
@@ -9,6 +10,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   exports: [
     ProgressSpinnerModule,
     FieldsetModule,
+    ButtonModule,
     ToastModule
 
   ],

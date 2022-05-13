@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
+
+import { TableModule } from 'primeng/table';
+
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { TableModule } from 'primeng/table';
-import { ToolbarModule } from 'primeng/toolbar';
 
 import { SharedModule } from '../shared/shared.module';
 import { AppPrimengModule } from './../shared/app-primeng/app-primeng.module';
 import { CategoriaFormComponent } from './categoria-form/categoria-form.component';
 import { CategoriasRoutingModule } from './categorias-routing.module';
 import { CategoriasComponent } from './categorias/categorias.component';
+import { ToolbarComponent } from '../shared/components/toolbar/toolbar.component';
 
 
 @NgModule({
@@ -22,13 +23,12 @@ import { CategoriasComponent } from './categorias/categorias.component';
   imports: [
     CommonModule,
     TableModule,
-    ToolbarModule,
-    ButtonModule,
+    DialogModule,
     CategoriasRoutingModule,
     AppPrimengModule,
-    DialogModule,
     InputTextModule,
     ReactiveFormsModule,
+    
     SharedModule
   ]
 })
