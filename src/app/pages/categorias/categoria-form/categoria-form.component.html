@@ -1,18 +1,21 @@
 <p-toast></p-toast>
 
-<div class="grid">
+<div class="p-flui grid">
   <p-fieldset legend="Categorias" class="col-6 col-offset-3">
-    <form [formGroup]="categoriaForm">
+    <form class="apps-form categoria-form" [formGroup]="categoriaForm">
       <div class="p-col-4 p-fluid toolbar-component">
         <app-toolbar (openModal)="showModalDialog()"></app-toolbar>
       </div>
       <div>
         <p-dialog header="{{isEditing ? 'Alterar Categoria' : 'Cadastrar Categoria'}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '30vw'}" [baseZIndex]="10000" [closable]="true" >
           <div class="field grid">
-            <span class="p-float-label">
-              <input id="float-input" type="text" pInputText formControlName="name">
-              <label for="float-input">Categoria</label>
-            </span>
+            <div class="field col-12 md:col-4">
+              <label for="name" class="required">Categoria</label>
+              <input type="text" id="inputtext" pInputText formControlName="name" required>
+              <small *ngIf="!name && (!camposForm.name.pristine || !pristine)"
+                      class="field-required">Campo obrigatório
+              </small>
+            </div>
           </div>
           <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="salvar()"></p-button>
         </p-dialog>

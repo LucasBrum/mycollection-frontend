@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 
 import { CategoriaService } from '../services/categoria.service';
@@ -15,17 +15,24 @@ export class CategoriaFormComponent implements OnInit {
   categoriaForm: FormGroup;
   isEditing: boolean;
   displayModal: boolean;
+  pristine = true;
 
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private categoriaService: CategoriaService) {
-    this.categoriaForm = this.formBuilder.group({
-      name: [null]
-    })
+
+
    }
 
   ngOnInit(): void {
+    this.buildForm();
+  }
+
+  buildForm() {
+    this.categoriaForm = this.formBuilder.group({
+      name: ['', Validators.required]
+    })
   }
 
   salvar() {
@@ -45,5 +52,9 @@ export class CategoriaFormComponent implements OnInit {
     const msg = 'Erro ao cadastrar Categoria.';
     this.messageService.add({severity:'error', summary:'Erro', detail:'Erro ao criar Categoria.', life:5000})
   }
+
+  get camposForm(): any { return this.categoriaForm.controls; }
+
+  get name(): string { return this.camposForm.name.value; }
 
 }
