@@ -7,21 +7,21 @@
         <app-toolbar (openModal)="showModalDialog()"></app-toolbar>
       </div>
       <div>
-        <p-dialog header="{{isEditing ? 'Alterar Categoria' : 'Cadastrar Categoria'}}" [(visible)]="displayModal" [modal]="true" [style]="{width: '30vw'}" [baseZIndex]="10000" [closable]="true" >
-          <div class="field grid">
-            <div class="field col-12 md:col-4">
-              <label for="name" class="required">Categoria</label>
+        <p-dialog header="{{isEditing ? 'Alterar Categoria' : 'Cadastrar Categoria'}}" [(visible)]="displayModal"
+          [modal]="true" [style]="{width: '30vw'}" [baseZIndex]="10000" [closable]="true">
+          <div class="formgrid grid">
+            <div class="field col">
               <input type="text" id="inputtext" pInputText formControlName="name" required>
-              <small *ngIf="!name && (!camposForm.name.pristine || !pristine)"
-                      class="field-required">Campo obrigatório
+              <small *ngIf="!name && (!camposForm.name.pristine || !pristine)" class="field-required">Campo obrigatório
               </small>
             </div>
+            <div class="field col">
+              <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="salvar()"></p-button>
+            </div>
           </div>
-          <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="salvar()"></p-button>
         </p-dialog>
       </div>
-      </form>
+    </form>
     <app-categorias></app-categorias>
   </p-fieldset>
 </div>
-
