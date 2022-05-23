@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -15,6 +16,8 @@ import { CategoriaService } from './../services/categoria.service';
 })
 export class CategoriasComponent implements OnInit {
 
+  @ViewChild('tabela', {static: true}) grid: Table;
+
   displayModal: boolean;
 
   categorias$: Observable<Categoria[]>;
@@ -25,19 +28,20 @@ export class CategoriasComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
+    this.list();
+  }
+
+  ngOnInit(): void {}
+
+  list() {
     this.categorias$ = this.categoriaService.list()
       catchError((error) => {
         this.showError();
         console.log(error);
         return of([]);
       })
+
   }
-
-  ngOnInit(): void {}
-
-  // cadastrar() {
-  //   this.router.navigate(['cadastrar'], {relativeTo: this.route});
-  // }
 
   showModalDialog() {
     this.displayModal = true;

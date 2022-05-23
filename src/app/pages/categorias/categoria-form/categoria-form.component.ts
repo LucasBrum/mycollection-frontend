@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { CategoriasComponent } from '../categorias/categorias.component';
 
 import { CategoriaService } from '../services/categoria.service';
 
@@ -11,6 +12,8 @@ import { CategoriaService } from '../services/categoria.service';
   providers: [MessageService]
 })
 export class CategoriaFormComponent implements OnInit {
+
+  @ViewChild('categoriaGrid') categoriaGrid: CategoriasComponent;
 
   categoriaForm: FormGroup;
   isEditing: boolean;
@@ -38,10 +41,15 @@ export class CategoriaFormComponent implements OnInit {
   salvar() {
     this.categoriaService.save(this.categoriaForm.value).subscribe(
       result => {
-        this.messageService.add({severity:'success', summary:'Sucesso', detail:'Categoria criada com sucesso.'})
+        
+        this.messageService.add({severity:'success', summary:'Sucesso', detail:'Categoria criada com sucesso.'});
+        this.categoriaGrid.list();
+        this.categoriaForm.reset();
       },
       error => {this.onError()}
-    )
+      )
+      this.displayModal = false;
+      
   }
 
   showModalDialog() {

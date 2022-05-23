@@ -27,5 +27,6 @@ export class CategoriaService {
       .pipe(
         first()
       );
+      
   }
 }
