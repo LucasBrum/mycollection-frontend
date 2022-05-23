@@ -13,7 +13,8 @@ import { CategoriaService } from '../services/categoria.service';
 })
 export class CategoriaFormComponent implements OnInit {
 
-  @ViewChild('categoriaGrid') categoriaGrid: CategoriasComponent;
+  // Chamar um método de outro componente
+  //@ViewChild('categoriaGrid') categoriaGrid: CategoriasComponent;
 
   categoriaForm: FormGroup;
   isEditing: boolean;
@@ -43,12 +44,11 @@ export class CategoriaFormComponent implements OnInit {
       result => {
         
         this.messageService.add({severity:'success', summary:'Sucesso', detail:'Categoria criada com sucesso.'});
-        this.categoriaGrid.list();
-        this.categoriaForm.reset();
       },
       error => {this.onError()}
       )
       this.displayModal = false;
+      this.categoriaForm.reset();
       
   }
 

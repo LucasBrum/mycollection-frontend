@@ -27,11 +27,16 @@ export class CategoriasComponent implements OnInit {
     private messageService: MessageService,
     private router: Router,
     private route: ActivatedRoute
-  ) {
-    this.list();
-  }
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.categoriaService.refreshNeeded$.subscribe(() => {
+      this.list();
+    })
+
+    this.list();
+
+  }
 
   list() {
     this.categorias$ = this.categoriaService.list()
