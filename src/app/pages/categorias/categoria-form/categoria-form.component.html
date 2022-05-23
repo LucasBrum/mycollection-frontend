@@ -3,22 +3,23 @@
 <div class="p-flui grid">
   <p-fieldset legend="Categorias" class="col-6 col-offset-3">
     <form class="apps-form categoria-form" [formGroup]="categoriaForm">
-      <div class="p-col-4 p-fluid toolbar-component">
+      <div class="p-col-12 p-fluid toolbar-component">
         <app-toolbar (openModal)="showModalDialog()"></app-toolbar>
       </div>
       <div>
         <p-dialog header="{{isEditing ? 'Alterar Categoria' : 'Cadastrar Categoria'}}" [(visible)]="displayModal"
-          [modal]="true" [style]="{width: '30vw'}" [baseZIndex]="10000" [closable]="true">
-          <div class="formgrid grid">
-            <div class="field col">
-              <input type="text" id="inputtext" pInputText formControlName="name" required>
-              <small *ngIf="!name && (!camposForm.name.pristine || !pristine)" class="field-required">Campo obrigatório
-              </small>
-            </div>
-            <div class="field col">
-              <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="salvar()"></p-button>
-            </div>
-          </div>
+          [modal]="true" [style]="{width: '30vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+        <!-- <div class="formgrid grid"> -->
+            <!-- <div class="field col"> -->
+              <input type="text" pInputText formControlName="name" required>
+              <small *ngIf="!name && (!camposForm.name.pristine || !pristine)" class="field-required">Campo obrigatório</small>
+            <!-- </div> -->
+            <!-- <div class="field col"> -->
+              <ng-template pTemplate="footer">
+                <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="salvar()"></p-button>
+              </ng-template>
+            <!-- </div> -->
+          <!-- </div> -->
         </p-dialog>
       </div>
     </form>
