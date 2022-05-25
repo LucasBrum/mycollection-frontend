@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { delay, first, map, tap } from 'rxjs/operators';
+import { first, map, tap } from 'rxjs/operators';
 
 import { Categoria } from '../model/categoria';
 
