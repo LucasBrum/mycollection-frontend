@@ -21,6 +21,7 @@ export class CategoriasComponent implements OnInit {
   displayModal: boolean;
 
   categorias$: Observable<Categoria[]>;
+  categoria: Categoria;
 
   constructor(
     private categoriaService: CategoriaService,
@@ -43,7 +44,6 @@ export class CategoriasComponent implements OnInit {
     this.categorias$ = this.categoriaService.list()
       catchError((error) => {
         this.showError('Erro ao carregar lista de Categorias.');
-        console.log(error);
         return of([]);
       })
 
@@ -51,7 +51,6 @@ export class CategoriasComponent implements OnInit {
 
   delete(categoria: Categoria): void {
     const categoriaId = categoria['id'];
-    console.log('Categoria >>>>>>>> ', categoriaId);
     this.confirmationService.confirm({
       message: 'Deseja realmente deletar a categoria ${categoria.name}.',
       accept: () => {

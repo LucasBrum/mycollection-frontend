@@ -41,10 +41,12 @@ export class CategoriaService {
   }
 
   delete(id: number) {
-    console.log('>>>>>>>>>>>', id);
     return this.httpClient.delete<any>(`${this.API}/${id}`)
       .pipe(
-        map(retorno => retorno)
+        tap(() => {
+          this._refreshNeeded$.next();
+        }),
+        map(retorno => retorno),
       );
   }
 
