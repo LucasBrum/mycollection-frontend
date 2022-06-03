@@ -1,5 +1,5 @@
 <p-toast></p-toast>
-
+<p-confirmDialog header="Confirmação" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <div>
   <div *ngIf="categorias$ | async as categorias; else loading">
     <p-table [value]="categorias" styleClass="p-datatable-gridlines p-datatable-sm" responsiveLayout="scroll">
@@ -13,8 +13,20 @@
         <tr>
           <td>{{ categoria.name }}</td>
           <td>
-            <button pButton type="button" icon="pi pi-pencil" iconPos="left" class="p-button-info p-button-sm"></button>
-            <button pButton  type="button" icon="pi pi-trash" iconPos="left" class="p-button-danger p-button-sm"></button>
+            <button pButton 
+                    type="button" 
+                    icon="pi pi-pencil" 
+                    iconPos="left" 
+                    class="p-button-info p-button-sm">
+            </button>
+            <button pButton  
+                    type="button" 
+                    icon="pi pi-trash" 
+                    iconPos="left" 
+                    class="p-button-danger p-button-sm"
+                    label="Confirm" 
+                    (click)="delete(categoria)">
+            </button>
           </td>
         </tr>
       </ng-template>

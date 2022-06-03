@@ -43,9 +43,13 @@ export class CategoriaFormComponent implements OnInit {
     this.categoriaService.save(this.categoriaForm.value).subscribe(
       result => {
         
-        this.messageService.add({severity:'success', summary:'Sucesso', detail:'Categoria criada com sucesso.'});
+        this.messageService.add({
+          severity:'success',
+          summary:'Sucesso',
+          detail:'Categoria criada com sucesso.'
+        });
       },
-      error => {this.onError()}
+      error => {this.onError('Erro ao cadastrar Categoria.')}
       )
       this.displayModal = false;
       this.categoriaForm.reset();
@@ -56,9 +60,14 @@ export class CategoriaFormComponent implements OnInit {
     this.displayModal = true;
   }
 
-  private onError() {
-    const msg = 'Erro ao cadastrar Categoria.';
-    this.messageService.add({severity:'error', summary:'Erro', detail:'Erro ao criar Categoria.', life:5000})
+  private onError(message: string) {
+    const msg = message;
+    this.messageService.add({
+      severity:'error',
+      summary:'Erro',
+      detail:msg,
+      life:5000
+    })
   }
 
   get camposForm(): any { return this.categoriaForm.controls; }
