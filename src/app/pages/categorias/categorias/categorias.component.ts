@@ -52,7 +52,7 @@ export class CategoriasComponent implements OnInit {
   delete(categoria: Categoria): void {
     const categoriaId = categoria['id'];
     this.confirmationService.confirm({
-      message: 'Deseja realmente deletar a categoria ${categoria.name}.',
+      message: 'Deseja realmente remover a categoria ' + categoria['name'] + '?',
       accept: () => {
         this.categoriaService.delete(categoriaId).subscribe(
           response => {
