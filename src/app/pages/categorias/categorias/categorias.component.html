@@ -1,5 +1,15 @@
 <p-toast></p-toast>
-<p-confirmDialog header="Confirmação" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<!-- <p-confirmDialog header="Confirmação" rejectLabel="Cancelar" acceptLabel="Remover" icon="pi pi-exclamation-triangle"></p-confirmDialog> -->
+<p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+  <ng-template pTemplate="header">
+      <h3>Exclusão de Categoria</h3>
+  </ng-template>
+  <ng-template pTemplate="footer">
+      <button type="button" pButton class="cd-btn-cancel" icon="pi pi-times" label="Cancelar" (click)="cd.reject()"></button>
+      <button type="button" pButton class="cd-btn-remove" icon="pi pi-trash" label="Remover" (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
+
 <div>
   <div *ngIf="categorias$ | async as categorias; else loading">
     <p-table [value]="categorias" styleClass="p-datatable-gridlines p-datatable-sm" responsiveLayout="scroll">
@@ -13,18 +23,17 @@
         <tr>
           <td>{{ categoria.name }}</td>
           <td>
-            <button pButton 
-                    type="button" 
-                    icon="pi pi-pencil" 
-                    iconPos="left" 
+            <button pButton
+                    type="button"
+                    icon="pi pi-pencil"
+                    iconPos="left"
                     class="p-button-info p-button-sm">
             </button>
-            <button pButton  
-                    type="button" 
-                    icon="pi pi-trash" 
-                    iconPos="left" 
+            <button pButton
+                    type="button"
+                    icon="pi pi-trash"
+                    iconPos="left"
                     class="p-button-danger p-button-sm"
-                    label="Confirm" 
                     (click)="delete(categoria)">
             </button>
           </td>

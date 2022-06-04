@@ -71,9 +71,9 @@ export class CategoriasComponent implements OnInit {
   private onError(message: string) {
     const msg = message;
     this.messageService.add({
-      severity:'error', 
-      summary:'Erro', 
-      detail: message, 
+      severity:'error',
+      summary:'Erro',
+      detail: message,
       life:5000
     })
   }
