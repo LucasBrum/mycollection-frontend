@@ -27,8 +27,8 @@ import { CategoriasComponent } from './categorias/categorias.component';
     AppPrimengModule,
     InputTextModule,
     ReactiveFormsModule,
-    
-    
+
+
     SharedModule
   ]
 })
