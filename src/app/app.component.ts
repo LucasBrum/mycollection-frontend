@@ -19,18 +19,14 @@ export class AppComponent {
       this.items = [
           {
               label:'CDs',
+              routerLink: ['/artists'],
               icon:'pi pi-circle-off'
 
           },
           {
-            label: 'Configurações', icon: 'pi pi-fw pi-cog',
-            items: [
-                [
-                    {
-                        items: [{label: 'Categorias', routerLink: ['/categorias']}]
-                    }
-                ]
-            ]
+            label: 'Categorias', icon: 'pi pi-fw pi-cog',
+            routerLink: ['/categorias']
+
         },
       ];
   }

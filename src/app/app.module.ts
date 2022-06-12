@@ -8,13 +8,11 @@ import { MegaMenuModule } from 'primeng/megamenu';
 
 import { AppRoutingModule } from './app-rounting.module';
 import { AppComponent } from './app.component';
-import { ArtistsComponent } from './pages/artists/artists/artists.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ArtistsComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

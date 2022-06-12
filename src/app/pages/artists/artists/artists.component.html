@@ -1,1 +1,31 @@
-<p>artists works!</p>
+<div class="card">
+    <div *ngIf="artists$ | async as artists; else loading">
+    <p-table [value]="artists" styleClass="p-datatable-striped table-artists" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="band">Band/Artist <p-sortIcon field="band"></p-sortIcon></th>
+                <th pSortableColumn="title">Title <p-sortIcon field="title"></p-sortIcon></th>
+                <th pSortableColumn="releaseYear">Release Year <p-sortIcon field="releaseYear"></p-sortIcon></th>
+                <th pSortableColumn="genre">Genre <p-sortIcon field="genre"></p-sortIcon></th>
+                <th pSortableColumn="country">Country<p-sortIcon field="country"></p-sortIcon></th>
+                <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{product.band}}</td>
+                <td>{{product.title}}</td>
+                <td>{{product.releaseYear}}</td>
+                <td>{{product.genre}}</td>
+                <td>{{product.country}}</td>
+                <td>{{product.category.name}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </div>
+  <ng-template #loading>
+    <div class="loading-spinner">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-template>
+</div>
