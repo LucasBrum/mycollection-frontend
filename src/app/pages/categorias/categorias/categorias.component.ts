@@ -59,7 +59,7 @@ export class CategoriasComponent implements OnInit {
             this.messageService.add({
               severity: 'success',
               summary:'Sucesso',
-              detail: 'Categoria deletada com sucesso!'
+              detail: 'Categoria deletada com sucesso.'
             })
             this.categoriaService.refreshNeeded$;
           },

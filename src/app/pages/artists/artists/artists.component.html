@@ -1,6 +1,17 @@
+<p-toast></p-toast>
+<p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '30vw'}">
+  <ng-template pTemplate="header">
+      <h3>Exclusão de Álbum</h3>
+  </ng-template>
+  <ng-template pTemplate="footer">
+      <button type="button" pButton class="cd-btn-cancel" icon="pi pi-times" label="Cancelar" (click)="cd.reject()"></button>
+      <button type="button" pButton class="cd-btn-remove" icon="pi pi-trash" label="Remover" (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
+
 <div class="card">
     <div *ngIf="artists$ | async as artists; else loading">
-    <p-table [value]="artists" styleClass="p-datatable-striped table-artists" responsiveLayout="scroll">
+    <p-table [value]="artists" styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm table-artists" responsiveLayout="scroll">
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="band">Band/Artist <p-sortIcon field="band"></p-sortIcon></th>
@@ -9,16 +20,32 @@
                 <th pSortableColumn="genre">Genre <p-sortIcon field="genre"></p-sortIcon></th>
                 <th pSortableColumn="country">Country<p-sortIcon field="country"></p-sortIcon></th>
                 <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
+                <th>Actions</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product>
+        <ng-template pTemplate="body" let-artist>
             <tr>
-                <td>{{product.band}}</td>
-                <td>{{product.title}}</td>
-                <td>{{product.releaseYear}}</td>
-                <td>{{product.genre}}</td>
-                <td>{{product.country}}</td>
-                <td>{{product.category.name}}</td>
+                <td>{{artist.band}}</td>
+                <td>{{artist.title}}</td>
+                <td>{{artist.releaseYear}}</td>
+                <td>{{artist.genre}}</td>
+                <td>{{artist.country}}</td>
+                <td>{{artist.category.name}}</td>
+                <td>
+                  <button pButton
+                          type="button"
+                          icon="pi pi-pencil"
+                          iconPos="left"
+                          class="p-button-info p-button-sm">
+                  </button>
+                  <button pButton
+                          type="button"
+                          icon="pi pi-trash"
+                          iconPos="left"
+                          class="p-button-danger p-button-sm"
+                          (click)="delete(artist)">
+                  </button>
+                </td>
             </tr>
         </ng-template>
     </p-table>
