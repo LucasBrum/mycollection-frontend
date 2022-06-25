@@ -38,8 +38,8 @@ export class CategoriaFormComponent implements OnInit {
   }
 
   salvar() {
-    this.categoriaService.save(this.categoriaForm.value).subscribe(
-      result => {
+    this.categoriaService.save(this.categoriaForm.value)
+    .subscribe(result => {
         
         this.messageService.add({
           severity:'success',

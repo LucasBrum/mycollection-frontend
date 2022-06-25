@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="p-flui grid">
   <p-fieldset legend="Cadastro de CD" class="col-12 col-offset-0">
     <form class="app-form artist-form" [formGroup]="artistForm">
@@ -44,7 +45,7 @@
         </div>
         <div class="field col-12 md:col-2">
           <span class="p-float-label">
-          <p-dropdown [options]="categorias" placeholder="Categoria" optionLabel="name" optionValue="id" formControlName="category"></p-dropdown>
+          <p-dropdown [options]="categorias" placeholder="Categoria" optionLabel="name" formControlName="category"></p-dropdown>
           
             <label for="inputtext">Category</label>
             <small *ngIf="!category && (!camposForm.category.pristine || !pristine)" class="p-error block">Campo
@@ -52,7 +53,7 @@
           </span>
         </div>
         <div class="field col-12 md:col-4">
-            <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (onClick)="listCategories()"></p-button>
+            <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="save()"></p-button>
         </div>
       </div>
     </form>

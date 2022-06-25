@@ -28,6 +28,16 @@ export class ArtistService {
       )
   }
 
+  save(artist: Artist) {
+    return this.httpClient.post<Artist>(this.API, artist)
+      .pipe(
+        first(),
+        tap(() => {
+          this._refreshNeeded$.next();
+        })
+      )
+  }
+
   delete(id: number) {
     return this.httpClient.delete<any>(`${this.API}/${id}`)
       .pipe(

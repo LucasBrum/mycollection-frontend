@@ -1,15 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { CategoriasComponent } from '../../categorias/categorias/categorias.component';
+import { MessageService } from 'primeng/api';
+
 import { Categoria } from '../../categorias/model/categoria';
 import { CategoriaService } from '../../categorias/services/categoria.service';
+import { ArtistService } from '../services/artist.service';
 
 @Component({
   selector: 'app-artist-form',
   templateUrl: './artist-form.component.html',
-  styleUrls: ['./artist-form.component.scss']
+  styleUrls: ['./artist-form.component.scss'],
+  providers: [MessageService]
 })
 export class ArtistFormComponent implements OnInit {
 
@@ -20,7 +21,9 @@ export class ArtistFormComponent implements OnInit {
   pristine = true;
 
   constructor(
+    private artistService: ArtistService,
     private categoriaService: CategoriaService,
+    private messageService: MessageService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -39,10 +42,36 @@ export class ArtistFormComponent implements OnInit {
       category: ['', Validators.required]
     })
   }
+  
+  save() {
+    this.artistService.save(this.artistForm.value)
+      .subscribe(result => {
+        this.messageService.add({
+          severity:'success',
+          summary:'Sucesso',
+          detail:'Álbum cadastro com sucesso.'
+        });
+      },
+      error => {this.onError('Erro ao cadastrar Álbum.')}
+      )
+
+      this.artistForm.reset();
+      
+  }
 
   listCategories() {
     this.categoriaService.list()
       .subscribe(categorias => this.categorias = categorias);
+  }
+
+  private onError(message: string) {
+    const msg = message;
+    this.messageService.add({
+      severity:'error',
+      summary:'Erro',
+      detail:msg,
+      life:5000
+    })
   }
 
   get camposForm(): any { return this.artistForm.controls; }

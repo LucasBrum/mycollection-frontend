@@ -3,7 +3,7 @@ export interface Artist {
   _id: number;
   band: string;
   title: string;
-  releaseYear: string;
+  releaseYear: number;
   country: string;
   genre: string;
   categoria: Categoria;
