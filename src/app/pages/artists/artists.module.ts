@@ -1,15 +1,17 @@
-import { ArtistsRoutingModule } from './artists-routing.module';
-import { ArtistsComponent } from './artists/artists.component';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TableModule } from 'primeng/table';
+import { NgModule } from '@angular/core';
+import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { TableModule } from 'primeng/table';
+import { ToolbarModule } from 'primeng/toolbar';
 
-
+import { AppPrimengModule } from '../shared/app-primeng/app-primeng.module';
 import { SharedModule } from '../shared/shared.module';
 import { ArtistFormComponent } from './artist-form/artist-form.component';
-import { AppPrimengModule } from '../shared/app-primeng/app-primeng.module';
-import {CardModule} from 'primeng/card';
+import { ArtistsRoutingModule } from './artists-routing.module';
+import { ArtistsComponent } from './artists/artists.component';
+
 
 
 @NgModule({
@@ -24,6 +26,9 @@ import {CardModule} from 'primeng/card';
     ArtistsRoutingModule,
     CardModule,
     ConfirmDialogModule,
+    ToolbarModule,
+    SplitButtonModule,
+    
     SharedModule
   ]
 })

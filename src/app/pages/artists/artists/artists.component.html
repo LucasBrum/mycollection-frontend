@@ -9,9 +9,16 @@
   </ng-template>
 </p-confirmDialog>
 
+<p-toolbar>
+  <div class="p-toolbar-group-left">
+      <p-button label="Cadastrar" icon="pi pi-plus" styleClass="p-button-success"></p-button>
+      
+  </div>
+</p-toolbar>
+
 <div class="card">
     <div *ngIf="artists$ | async as artists; else loading">
-    <p-table [value]="artists" styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm table-artists" responsiveLayout="scroll">
+    <p-table [value]="artists" styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm table" responsiveLayout="scroll">
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="band">Band/Artist <p-sortIcon field="band"></p-sortIcon></th>
@@ -32,7 +39,7 @@
                 <td>{{artist.country}}</td>
                 <td>{{artist.category.name}}</td>
                 <td>
-                  <button pButton
+                  <!-- <button pButton
                           type="button"
                           icon="pi pi-pencil"
                           iconPos="left"
@@ -44,7 +51,11 @@
                           iconPos="left"
                           class="p-button-danger p-button-sm"
                           (click)="delete(artist)">
-                  </button>
+                  </button> -->
+
+                  <a role="button">Editar</a>
+                  <i class="pi pi-pause"></i>
+                  <a role="button" (click)="delete(artist)">Excluir</a>
                 </td>
             </tr>
         </ng-template>

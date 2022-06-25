@@ -28,7 +28,6 @@ import { CategoriasComponent } from './categorias/categorias.component';
     InputTextModule,
     ReactiveFormsModule,
 
-
     SharedModule
   ]
 })

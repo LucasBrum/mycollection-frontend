@@ -1,11 +1,18 @@
 import { ArtistFormComponent } from './artist-form/artist-form.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ArtistsComponent } from './artists/artists.component';
 
 
 const routes: Routes = [
-  { path: '', component: ArtistFormComponent },
-  { path: 'create', component: ArtistFormComponent }
+  { path: 'artists',
+    component: ArtistsComponent,
+    
+  },
+  { path: 'artists/new',
+    component: ArtistFormComponent,
+    
+  }
 ];
 
 @NgModule({

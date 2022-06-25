@@ -8,6 +8,8 @@ import { MegaMenuModule } from 'primeng/megamenu';
 
 import { AppRoutingModule } from './app-rounting.module';
 import { AppComponent } from './app.component';
+import { ArtistsRoutingModule } from './pages/artists/artists-routing.module';
+import { ArtistsModule } from './pages/artists/artists.module';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { AppComponent } from './app.component';
     MatToolbarModule,
     MatButtonModule,
     MegaMenuModule,
+    ArtistsModule,
+    ArtistsRoutingModule,
     AppRoutingModule,
     HttpClientModule
 

@@ -1,4 +1,4 @@
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -17,6 +17,7 @@ export class ArtistsComponent implements OnInit {
 
   artists$: Observable<Artist[]>;
   artist: Artist;
+  items: MenuItem[];
 
   constructor(
     private artistService: ArtistService,
@@ -25,6 +26,13 @@ export class ArtistsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.items = [
+      {
+          label: 'Cadastrar',
+          icon: 'pi pi-refresh',
+          routerLink: ['/artist/new'],
+      }
+  ];
     this.artistService.refreshNeeded$.subscribe(() => {
       this.list();
     })
