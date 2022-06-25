@@ -22,11 +22,12 @@ export class CategoriaService {
 
   list() {
     return this.httpClient.get<Categoria[]>(this.API)
-      .pipe(
-        first(),
-        map(result => result['data'])
+    .pipe(
+      first(),
+      map(result => result['data'])
+      
+      );
 
-    );
   }
 
   save(categoria: Categoria) {

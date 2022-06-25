@@ -7,8 +7,8 @@
       <div>
         <p-dialog header="{{isEditing ? 'Alterar Categoria' : 'Cadastrar Categoria'}}" [(visible)]="displayModal"
           [modal]="true" [style]="{width: '30vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
-          <input type="text" pInputText formControlName="name" required>
-          <small *ngIf="!name && (!camposForm.name.pristine || !pristine)" class="field-required">Campo
+          <input type="text" placeholder="Categoria" pInputText formControlName="name" required>
+          <small *ngIf="!name && (!camposForm.name.pristine || !pristine)" class="p-error block">Campo
             obrigatório</small>
           <ng-template pTemplate="footer">
             <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="salvar()"></p-button>

@@ -1,5 +1,5 @@
-import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 
 import { Artist } from '../model/artist';
@@ -16,6 +16,7 @@ export class ArtistsComponent implements OnInit {
   displayModal: boolean;
 
   artists$: Observable<Artist[]>;
+
   artist: Artist;
   items: MenuItem[];
 
@@ -37,6 +38,7 @@ export class ArtistsComponent implements OnInit {
       this.list();
     })
     this.list();
+    
   }
 
   list() {

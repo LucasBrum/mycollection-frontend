@@ -1,10 +1,60 @@
-<p>rtfsarewqrewqrewqre
-  Testeeeeeeeeeeee
-  Testeeeeeeeeeeee
-  Testeeeeeeeeeeee
-  Testeeeeeeeeeeee
-</p>
-
-<p-fieldset legend="My Collection - CDs" class="fs-artists">
-  <app-artists></app-artists>
-</p-fieldset>
+<div class="p-flui grid">
+  <p-fieldset legend="Cadastro de CD" class="col-12 col-offset-0">
+    <form class="app-form artist-form" [formGroup]="artistForm">
+      <div class="p-fluid grid">
+        <div class="field col-12 md:col-2">
+          <span class="p-float-label">
+          <input type="text" pInputText formControlName="band" required>
+            <label for="inputtext">Band</label>
+            <small *ngIf="!band && (!camposForm.band.pristine || !pristine)" class="p-error block">Campo
+              obrigatório</small>
+          </span>
+        </div>
+        <div class="field col-12 md:col-3">
+          <span class="p-float-label">
+          <input type="text" pInputText formControlName="title" required>
+            <label for="inputtext">Title</label>
+            <small *ngIf="!title && (!camposForm.title.pristine || !pristine)" class="p-error block">Campo
+              obrigatório</small>
+          </span>
+        </div>
+        <div class="field col-12 md:col-1">
+          <span class="p-float-label">
+          <input type="text" pInputText formControlName="releaseYear" required>
+            <label for="inputtext">Release Year</label>
+            <small *ngIf="!releaseYear && (!camposForm.releaseYear.pristine || !pristine)" class="p-error block">Campo
+              obrigatório</small>
+          </span>
+        </div>
+        <div class="field col-12 md:col-2">
+          <span class="p-float-label">
+          <input type="text" pInputText formControlName="country" required>
+            <label for="inputtext">Country</label>
+            <small *ngIf="!country && (!camposForm.country.pristine || !pristine)" class="p-error block">Campo
+              obrigatório</small>
+          </span>
+        </div>
+        <div class="field col-12 md:col-2">
+          <span class="p-float-label">
+          <input type="text" pInputText formControlName="genre" required>
+            <label for="inputtext">Genre</label>
+            <small *ngIf="!genre && (!camposForm.genre.pristine || !pristine)" class="p-error block">Campo
+              obrigatório</small>
+          </span>
+        </div>
+        <div class="field col-12 md:col-2">
+          <span class="p-float-label">
+          <p-dropdown [options]="categorias" placeholder="Categoria" optionLabel="name" optionValue="id" formControlName="category"></p-dropdown>
+          
+            <label for="inputtext">Category</label>
+            <small *ngIf="!category && (!camposForm.category.pristine || !pristine)" class="p-error block">Campo
+              obrigatório</small>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4">
+            <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (onClick)="listCategories()"></p-button>
+        </div>
+      </div>
+    </form>
+  </p-fieldset>
+</div>

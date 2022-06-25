@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { CategoriasComponent } from '../categorias/categorias.component';
 
 import { CategoriaService } from '../services/categoria.service';
 
@@ -25,7 +24,6 @@ export class CategoriaFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private categoriaService: CategoriaService) {
-
 
    }
 

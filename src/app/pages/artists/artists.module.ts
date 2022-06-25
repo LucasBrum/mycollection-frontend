@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -28,6 +31,9 @@ import { ArtistsComponent } from './artists/artists.component';
     ConfirmDialogModule,
     ToolbarModule,
     SplitButtonModule,
+    InputTextModule,
+    DropdownModule,
+    ReactiveFormsModule,
     
     SharedModule
   ]
