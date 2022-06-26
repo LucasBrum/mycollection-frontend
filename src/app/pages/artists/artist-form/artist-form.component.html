@@ -29,7 +29,8 @@
         </div>
         <div class="field col-12 md:col-2">
           <span class="p-float-label">
-          <input type="text" pInputText formControlName="country" required>
+          <p-dropdown [options]="countries" placeholder="Country" optionLabel="name" optionValue="name" formControlName="country"></p-dropdown>
+          
             <label for="inputtext">Country</label>
             <small *ngIf="!country && (!camposForm.country.pristine || !pristine)" class="p-error block">Campo
               obrigatório</small>
@@ -58,4 +59,5 @@
       </div>
     </form>
   </p-fieldset>
+  
 </div>

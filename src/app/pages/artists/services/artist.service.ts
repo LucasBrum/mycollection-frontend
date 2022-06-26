@@ -10,10 +10,14 @@ import { Subject } from 'rxjs';
 export class ArtistService {
 
   private readonly API = 'mycollection/api/artists'
-
+  private _jsonCountries = 'assets/countries.json'
   private _refreshNeeded$ = new Subject<void>();
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { 
+    this.listCountries().subscribe(data => {
+      console.log(data);
+    })
+  }
 
   get refreshNeeded$() {
     return this._refreshNeeded$;
@@ -26,6 +30,14 @@ export class ArtistService {
         first(),
         map(result => result['data'])
       )
+  }
+
+  listCountries() {
+    return this.httpClient.get(this._jsonCountries)
+    .pipe(
+      first(),
+      map(result => result['data'])
+    )
   }
 
   save(artist: Artist) {

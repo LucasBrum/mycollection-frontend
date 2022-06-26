@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
 
 import { Categoria } from '../../categorias/model/categoria';
 import { CategoriaService } from '../../categorias/services/categoria.service';
@@ -17,6 +17,8 @@ export class ArtistFormComponent implements OnInit {
   categorias: Categoria[] = [];
   selectedCategory: Categoria;
 
+  countries: any[] = [];
+
   artistForm: FormGroup;
   pristine = true;
 
@@ -24,12 +26,14 @@ export class ArtistFormComponent implements OnInit {
     private artistService: ArtistService,
     private categoriaService: CategoriaService,
     private messageService: MessageService,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    private primengConfig: PrimeNGConfig
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
     this.listCategories();
+    this.listCountries();
   }
 
   buildForm() {
@@ -64,6 +68,11 @@ export class ArtistFormComponent implements OnInit {
       .subscribe(categorias => this.categorias = categorias);
   }
 
+  listCountries() {
+    this.artistService.listCountries()
+      .subscribe(countries => this.countries = countries);
+  }
+
   private onError(message: string) {
     const msg = message;
     this.messageService.add({
@@ -81,5 +90,7 @@ export class ArtistFormComponent implements OnInit {
   get country(): string { return this.camposForm.country.value; }
   get genre(): string { return this.camposForm.genre.value; }
   get category(): string { return this.camposForm.category.value; }
+
+  
 
 }

@@ -1,0 +1,24 @@
+{
+  "data": [ 
+      {"name": "Argentina", "code": "AR"}, 
+      {"name": "Australia", "code": "AU"}, 
+      {"name": "Austria", "code": "AT"}, 
+      {"name": "Belgium", "code": "BE"}, 
+      {"name": "Brazil", "code": "BR"}, 
+      {"name": "Canada", "code": "CA"}, 
+      {"name": "Chile", "code": "CL"}, 
+      {"name": "China", "code": "CN"}, 
+      {"name": "Denmark", "code": "DK"}, 
+      {"name": "Finland", "code": "FI"}, 
+      {"name": "France", "code": "FR"}, 
+      {"name": "Germany", "code": "DE"}, 
+      {"name": "Greece", "code": "GR"}, 
+      {"name": "Ireland", "code": "IE"}, 
+      {"name": "Israel", "code": "IL"}, 
+      {"name": "Italy", "code": "IT"}, 
+      {"name": "Jamaica", "code": "JM"}, 
+      {"name": "Japan", "code": "JP"}, 
+      {"name": "United Kingdom", "code": "GB"}, 
+      {"name": "United States", "code": "US"}
+  ]
+}
