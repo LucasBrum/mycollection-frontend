@@ -1,5 +1,6 @@
 <!-- <mat-toolbar color="primary">
     <span>My Collection</span>
-</mat-toolbar> -->
-<p-megaMenu [model]="items"></p-megaMenu>
+</mat-toolbar>
+<p-megaMenu [model]="items"></p-megaMenu> -->
+<app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 <router-outlet></router-outlet>

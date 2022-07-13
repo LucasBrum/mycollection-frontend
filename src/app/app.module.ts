@@ -10,16 +10,17 @@ import { AppRoutingModule } from './app-rounting.module';
 import { AppComponent } from './app.component';
 import { ArtistsRoutingModule } from './pages/artists/artists-routing.module';
 import { ArtistsModule } from './pages/artists/artists.module';
+import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-
     MatToolbarModule,
     MatButtonModule,
     MegaMenuModule,

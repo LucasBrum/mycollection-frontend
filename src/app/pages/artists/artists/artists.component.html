@@ -20,7 +20,7 @@
 </div>
 
 <div class="p-flui grid">
-  <p-fieldset legend="Cds" class="col-12">
+  <p-fieldset legend="Cds" class="col-8 col-offset-2">
     <div class="card">
         <div *ngIf="artists$ | async as artists; else loading">
         <p-table [value]="artists" styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm table" responsiveLayout="scroll">

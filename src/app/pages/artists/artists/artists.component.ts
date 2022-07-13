@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 
@@ -20,6 +20,9 @@ export class ArtistsComponent implements OnInit {
   artist: Artist;
   items: MenuItem[];
 
+  @Input() collapsed = false;
+  @Input() screeWidth = 0;
+
   constructor(
     private artistService: ArtistService,
     private messageService: MessageService,
@@ -40,6 +43,7 @@ export class ArtistsComponent implements OnInit {
     this.list();
     
   }
+
 
   list() {
     this.artists$ = this.artistService.list();
