@@ -9,7 +9,11 @@ const routes: Routes = [
     component: ArtistsComponent,
     
   },
-  { path: 'artists/new',
+  { path: 'artists/form',
+    component: ArtistFormComponent,
+    
+  },
+  { path: 'artists/form/:id',
     component: ArtistFormComponent,
     
   }

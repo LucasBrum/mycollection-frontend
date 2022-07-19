@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 })
 export class ArtistService {
 
+
   private readonly API = 'mycollection/api/artists'
   private _jsonCountries = 'assets/countries.json'
   private _refreshNeeded$ = new Subject<void>();
@@ -32,6 +33,14 @@ export class ArtistService {
       )
   }
 
+  getArtistById(id: number) {
+    return this.httpClient.get<Artist[]>(`${this.API}/${id}`)
+      .pipe(
+        first(),
+        map(result => result['data'])
+      )
+  }
+
   listCountries() {
     return this.httpClient.get(this._jsonCountries)
     .pipe(
@@ -48,6 +57,10 @@ export class ArtistService {
           this._refreshNeeded$.next();
         })
       )
+  }
+
+  update(id: number, artist: Artist) {
+    return this.httpClient.put(`${this.API}/${id}`, artist)
   }
 
   delete(id: number) {

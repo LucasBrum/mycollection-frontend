@@ -5,7 +5,7 @@ import { Table } from 'primeng/table';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {ConfirmationService} from 'primeng/api';
-import { Categoria } from '../model/categoria';
+import { Category } from '../model/category';
 import { CategoriaService } from './../services/categoria.service';
 
 @Component({
@@ -20,8 +20,8 @@ export class CategoriasComponent implements OnInit {
 
   displayModal: boolean;
 
-  categorias$: Observable<Categoria[]>;
-  categoria: Categoria;
+  categorias$: Observable<Category[]>;
+  categoria: Category;
 
   constructor(
     private categoriaService: CategoriaService,
@@ -49,7 +49,7 @@ export class CategoriasComponent implements OnInit {
 
   }
 
-  delete(categoria: Categoria): void {
+  delete(categoria: Category): void {
     const categoriaId = categoria['id'];
     this.confirmationService.confirm({
       message: 'Deseja realmente remover a categoria ' + categoria['name'] + '?',

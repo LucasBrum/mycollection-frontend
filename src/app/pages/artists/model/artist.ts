@@ -1,10 +1,10 @@
-import { Categoria } from './../../categorias/model/categoria';
-export interface Artist {
+import { Category } from './../../categorias/model/category';
+export class Artist {
   _id: number;
   band: string;
   title: string;
   releaseYear: number;
   country: string;
   genre: string;
-  categoria: Categoria;
+  category: Category;
 }

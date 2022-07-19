@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
+import { ArtistFormComponent } from '../artist-form/artist-form.component';
 
 import { Artist } from '../model/artist';
 import { ArtistService } from './../services/artist.service';
@@ -13,6 +15,9 @@ import { ArtistService } from './../services/artist.service';
 })
 export class ArtistsComponent implements OnInit {
 
+  @ViewChild('tabela', {static: true}) grid: Table;
+  @Output() editar: EventEmitter<number> = new EventEmitter();
+
   displayModal: boolean;
 
   artists$: Observable<Artist[]>;
@@ -22,6 +27,7 @@ export class ArtistsComponent implements OnInit {
 
   @Input() collapsed = false;
   @Input() screeWidth = 0;
+
 
   constructor(
     private artistService: ArtistService,
@@ -44,13 +50,11 @@ export class ArtistsComponent implements OnInit {
     
   }
 
-
   list() {
     this.artists$ = this.artistService.list();
   }
 
   delete(artist: Artist): void {
-    console.log("teste teste teste");
     const artistId = artist['id'];
     console.log(artist['id'])
     this.confirmationService.confirm({

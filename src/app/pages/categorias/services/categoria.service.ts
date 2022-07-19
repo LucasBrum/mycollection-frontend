@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { first, map, tap } from 'rxjs/operators';
 
-import { Categoria } from '../model/categoria';
+import { Category } from '../model/category';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class CategoriaService {
   }
 
   list() {
-    return this.httpClient.get<Categoria[]>(this.API)
+    return this.httpClient.get<Category[]>(this.API)
     .pipe(
       first(),
       map(result => result['data'])
@@ -30,8 +30,8 @@ export class CategoriaService {
 
   }
 
-  save(categoria: Categoria) {
-    return this.httpClient.post<Categoria>(this.API, categoria)
+  save(categoria: Category) {
+    return this.httpClient.post<Category>(this.API, categoria)
       .pipe(
         first(),
         tap(() => {

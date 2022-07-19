@@ -13,17 +13,17 @@
   <div class="col-6 col-offset-3">
     <p-toolbar>
       <div class="p-toolbar-group-left">
-          <p-button label="Cadastrar" routerLink="/artists/new" icon="pi pi-plus" styleClass="p-button-success"></p-button>
+          <p-button label="Cadastrar" routerLink="/artists/form" icon="pi pi-plus" styleClass="p-button-success"></p-button>
       </div>
     </p-toolbar>
 </div>
 </div>
 
 <div class="p-flui grid">
-  <p-fieldset legend="Cds" class="col-8 col-offset-2">
+  <p-fieldset legend="Cds" class="col-10 col-offset-1">
     <div class="card">
         <div *ngIf="artists$ | async as artists; else loading">
-        <p-table [value]="artists" styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm table" responsiveLayout="scroll">
+        <p-table [value]="artists" styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm table" responsiveLayout="scroll" #tabela>
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="band">Band/Artist <p-sortIcon field="band"></p-sortIcon></th>
@@ -44,21 +44,7 @@
                     <td>{{artist.country}}</td>
                     <td>{{artist.category.name}}</td>
                     <td>
-                      <!-- <button pButton
-                              type="button"
-                              icon="pi pi-pencil"
-                              iconPos="left"
-                              class="p-button-info p-button-sm">
-                      </button>
-                      <button pButton
-                              type="button"
-                              icon="pi pi-trash"
-                              iconPos="left"
-                              class="p-button-danger p-button-sm"
-                              (click)="delete(artist)">
-                      </button> -->
-
-                      <a role="button">Editar</a>
+                      <a role="button" routerLink="/artists/form/{{artist.id}}">Editar</a>
                       <i class="pi pi-pause"></i>
                       <a role="button" (click)="delete(artist)">Excluir</a>
                     </td>
