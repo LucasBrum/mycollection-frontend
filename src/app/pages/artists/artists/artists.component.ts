@@ -47,7 +47,7 @@ export class ArtistsComponent implements OnInit {
       this.list();
     })
     this.list();
-    
+
   }
 
   list() {

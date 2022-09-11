@@ -14,7 +14,7 @@ export class ArtistService {
   private _jsonCountries = 'assets/countries.json'
   private _refreshNeeded$ = new Subject<void>();
 
-  constructor(private httpClient: HttpClient) { 
+  constructor(private httpClient: HttpClient) {
     this.listCountries().subscribe(data => {
       console.log(data);
     })
@@ -61,6 +61,12 @@ export class ArtistService {
 
   update(id: number, artist: Artist) {
     return this.httpClient.put(`${this.API}/${id}`, artist)
+    .pipe(
+      first(),
+      tap(() => {
+        this._refreshNeeded$.next();
+      })
+    )
   }
 
   delete(id: number) {

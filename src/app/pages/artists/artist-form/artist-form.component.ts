@@ -21,17 +21,17 @@ export class ArtistFormComponent implements OnInit {
   @ViewChild('artistsGrid') artistsGrid: ArtistsComponent;
 
   id: number;
-  
+
   artist: Artist;
-  
+
   artistForm: FormGroup;
 
   countries: any[] = [];
   categorias: Category[] = [];
   selectedCategory: Category;
-  
+
   pristine = true;
-  
+
   constructor(
     private artistService: ArtistService,
     private categoriaService: CategoriaService,
@@ -39,7 +39,7 @@ export class ArtistFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private primengConfig: PrimeNGConfig,
     private activatedRoute : ActivatedRoute
-    
+
   ) {
   }
 
@@ -60,7 +60,7 @@ export class ArtistFormComponent implements OnInit {
     this.listCategories();
     this.listCountries();
   }
-  
+
   setArtistFormToEdit(artist: Artist) {
     this.artist = artist;
     console.log("Entrei no SET", artist);
@@ -87,7 +87,7 @@ export class ArtistFormComponent implements OnInit {
       category: ['', Validators.required]
     })
   }
-  
+
   save() {
     if(this.id) {
       this.updateArtist();
@@ -105,7 +105,7 @@ export class ArtistFormComponent implements OnInit {
 
         this.artistForm.reset();
     }
-      
+
   }
 
   private updateArtist() {
@@ -151,6 +151,6 @@ export class ArtistFormComponent implements OnInit {
   get genre(): string { return this.camposForm.genre.value; }
   get category(): string { return this.camposForm.category.value; }
 
-  
+
 
 }
