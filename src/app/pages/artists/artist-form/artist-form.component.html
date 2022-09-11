@@ -22,7 +22,7 @@
         <div class="field col-12 md:col-1">
           <span class="p-float-label">
           <input type="text" pInputText formControlName="releaseYear" required>
-            <label for="inputtext">Release Year</label>
+            <label for="inputtext">Year</label>
             <small *ngIf="!releaseYear && (!camposForm.releaseYear.pristine || !pristine)" class="p-error block">Campo
               obrigatório</small>
           </span>
@@ -53,8 +53,11 @@
               obrigatório</small>
           </span>
         </div>
-        <div class="field col-12 md:col-4">
-            <p-button label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="save()" routerLink="/artists"></p-button>
+        <div class="btn col-12 md:col-4">
+            <button pButton label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="save()" routerLink="/artists"></button>
+        </div>
+        <div class="btn col-12 md:col-4">
+            <button pButton label="Adicionar Outro" icon="pi pi-plus-circle" class="p-button-success btn-adicionar-outro" (click)="save()"></button>
         </div>
       </div>
     </form>
