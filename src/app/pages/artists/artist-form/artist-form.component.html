@@ -31,7 +31,7 @@
           <span class="p-float-label">
           <p-dropdown [options]="countries" placeholder="Country" optionLabel="name" optionValue="name" formControlName="country"></p-dropdown>
 
-            <label for="inputtext">Country</label>
+            <label for="inputtext"></label>
             <small *ngIf="!country && (!camposForm.country.pristine || !pristine)" class="p-error block">Campo
               obrigatório</small>
           </span>
@@ -48,7 +48,7 @@
           <span class="p-float-label">
           <p-dropdown [options]="categorias" placeholder="Categoria" optionLabel="name" formControlName="category"></p-dropdown>
 
-            <label for="inputtext">Category</label>
+            <label for="inputtext"></label>
             <small *ngIf="!category && (!camposForm.category.pristine || !pristine)" class="p-error block">Campo
               obrigatório</small>
           </span>
