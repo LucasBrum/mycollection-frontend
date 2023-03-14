@@ -23,7 +23,10 @@
   <p-fieldset legend="Cds" class="col-10 col-offset-1">
     <div class="card">
         <div *ngIf="artists$ | async as artists; else loading">
-        <p-table [value]="artists" styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm table" responsiveLayout="scroll" #tabela>
+        <p-table [value]="artists" selectionMode="single"  [(selection)]="selectedAlbum" dataKey="title"
+          styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm table" responsiveLayout="scroll" #tabela
+          (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)"
+        >
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="band">Band/Artist <p-sortIcon field="band"></p-sortIcon></th>
@@ -36,7 +39,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-artist>
-                <tr>
+                <tr [pSelectableRow]="artist">
                     <td>{{artist.band}}</td>
                     <td>{{artist.title}}</td>
                     <td>{{artist.releaseYear}}</td>

@@ -15,6 +15,8 @@ import { ArtistService } from './../services/artist.service';
 })
 export class ArtistsComponent implements OnInit {
 
+  selectedAlbum: Artist;
+
   @ViewChild('tabela', {static: true}) grid: Table;
   @Output() editar: EventEmitter<number> = new EventEmitter();
 
@@ -72,6 +74,18 @@ export class ArtistsComponent implements OnInit {
         )
       }
     })
+  }
+
+  selectProduct(artist: Artist) {
+    this.messageService.add({severity:'info', summary:'Album selecionado', detail: artist.band});
+  }
+
+  onRowSelect(event) {
+      this.messageService.add({severity:'info', summary:'Album selecionado', detail: event.data.band + ' - ' + event.data.title});
+  }
+
+  onRowUnselect(event) {
+      this.messageService.add({severity:'info', summary:'Album selecionado',  detail: event.data.band + ' - ' + event.data.title});
   }
 
 }
