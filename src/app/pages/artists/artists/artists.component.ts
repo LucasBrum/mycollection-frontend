@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
-import { ArtistFormComponent } from '../artist-form/artist-form.component';
 
 import { Artist } from '../model/artist';
 import { ArtistService } from './../services/artist.service';
@@ -15,12 +15,21 @@ import { ArtistService } from './../services/artist.service';
 })
 export class ArtistsComponent implements OnInit {
 
+  private readonly ENDPOINT_GET_COVER_IMAGE = 'http://localhost:4200/mycollection/api/artists/album/cover/';
+  display: boolean = false;
+
+    showDialog() {
+        this.display = true;
+    }
+
+
   selectedAlbum: Artist;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
 
   @ViewChild('tabela', {static: true}) grid: Table;
   @Output() editar: EventEmitter<number> = new EventEmitter();
-
-  displayModal: boolean;
 
   artists$: Observable<Artist[]>;
 
@@ -34,8 +43,8 @@ export class ArtistsComponent implements OnInit {
   constructor(
     private artistService: ArtistService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) { }
+    private confirmationService: ConfirmationService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.items = [
@@ -54,6 +63,15 @@ export class ArtistsComponent implements OnInit {
 
   list() {
     this.artists$ = this.artistService.list();
+  }
+
+  getCoverFromAlbum(event) {
+    const coverImageId = event.data.id;
+    this.retrievedImage = this.artistService.getCoverFromAlbum(event.data.id)
+      .subscribe(response => {
+        this.display = true;
+        this.retrievedImage = this.ENDPOINT_GET_COVER_IMAGE + coverImageId;
+      })
   }
 
   delete(artist: Artist): void {
@@ -76,7 +94,7 @@ export class ArtistsComponent implements OnInit {
     })
   }
 
-  selectProduct(artist: Artist) {
+  selectAlbum(artist: Artist) {
     this.messageService.add({severity:'info', summary:'Album selecionado', detail: artist.band});
   }
 

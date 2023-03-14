@@ -41,11 +41,19 @@ export class ArtistService {
       )
   }
 
+  getCoverFromAlbum(id: number) {
+    return this.httpClient.get(`${this.API}/album/cover/${id}`, { responseType: 'text' })
+      // .pipe(
+      //   first(),
+      //   map(result => result['data'])
+      // )
+  }
+
   listCountries() {
     return this.httpClient.get(this._jsonCountries)
     .pipe(
       first(),
-      map(result => result['data'])
+      map(result => result[''])
     )
   }
 
