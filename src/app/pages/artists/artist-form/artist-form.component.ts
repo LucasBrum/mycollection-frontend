@@ -45,7 +45,6 @@ export class ArtistFormComponent implements OnInit {
 
   ngOnInit(): void {
     let params: Observable<Params> = this.activatedRoute.params
-    console.log("Testeeeeeeeeeeeee");
       params.subscribe(urlParams => {
         this.id = urlParams['id'];
         if (this.id) {
@@ -117,7 +116,7 @@ export class ArtistFormComponent implements OnInit {
           detail: 'Álbum atualizado com sucesso.'
         });
       },
-        error => { this.onError('Erro ao cadastrar Álbum.'); }
+        error => { this.onError('Erro ao atualizar Álbum.'); }
       );
 
     this.artistForm.reset();

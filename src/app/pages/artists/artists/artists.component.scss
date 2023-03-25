@@ -45,11 +45,29 @@
 
 }
 
-a {
+a.a-edit-artist {
   background-image: linear-gradient(
     to right,
-    #54b3d6,
-    #54b3d6 50%,
+    #004d69,
+    #003cff 50%,
+    #6366F1 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+  display: inline-block;
+  padding: 5px 0;
+  position: relative;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+}
+
+a.a-delete-artist {
+  background-image: linear-gradient(
+    to right,
+    #ff0000,
+    #ff0000 50%,
     #6366F1 50%
   );
   background-size: 200% 100%;
@@ -65,7 +83,7 @@ a {
 
 a:before{
   content: '';
-  background: #54b3d6;
+  background: #000000;
   display: block;
   position: absolute;
   bottom: -3px;
@@ -77,12 +95,12 @@ a:before{
 
 a:hover {
  background-position: 0;
- 
+
 }
 
 a:hover::before{
   width: 100%;
-  
+
 }
 
 /* Presentational Styles */
@@ -93,5 +111,5 @@ body {
   font-weight: 700;
   height: 100vh;
   place-items: center;
-  
+
 }

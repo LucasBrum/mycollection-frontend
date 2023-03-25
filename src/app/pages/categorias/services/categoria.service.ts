@@ -25,7 +25,7 @@ export class CategoriaService {
     .pipe(
       first(),
       map(result => result['data'])
-      
+
       );
 
   }
@@ -38,7 +38,7 @@ export class CategoriaService {
           this._refreshNeeded$.next();
         })
       );
-      
+
   }
 
   delete(id: number) {
@@ -49,6 +49,16 @@ export class CategoriaService {
         }),
         map(retorno => retorno),
       );
+  }
+
+  update(id: number, category: Category) {
+    return this.httpClient.put(`${this.API}/${id}`, category)
+      .pipe(
+        first(),
+        tap(() => {
+          this._refreshNeeded$.next();
+        })
+      )
   }
 
 }

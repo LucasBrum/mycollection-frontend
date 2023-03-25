@@ -3,6 +3,12 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.p-datatable .p-datatable-tbody > tr {
+  font-weight: 600;
+  background: #ffffff;
+  color: #495057;
+  transition: box-shadow 0.2s;
+}
 
 .grid {
   display: flex;
