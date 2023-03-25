@@ -13,7 +13,7 @@
   <div class="col-6 col-offset-3">
     <p-toolbar>
       <div class="p-toolbar-group-left">
-          <p-button label="Cadastrar" routerLink="/artists/form" icon="pi pi-plus" styleClass="p-button-success"></p-button>
+          <p-button label="Cadastrar" routerLink="/artists/create" icon="pi pi-plus" styleClass="p-button-success"></p-button>
       </div>
     </p-toolbar>
 </div>
@@ -23,7 +23,11 @@
   <p-fieldset legend="Cds" class="col-10 col-offset-1">
     <div class="card">
         <div *ngIf="artists$ | async as artists; else loading">
-        <p-table [value]="artists" styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm table" responsiveLayout="scroll" #tabela>
+        <p-table [value]="artists" selectionMode="single"  [(selection)]="selectedAlbum" dataKey="id"
+          styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm table" responsiveLayout="scroll" #tabela
+          (onRowSelect)="getCoverFromAlbum($event)" (onRowUnselect)="getCoverFromAlbum($event)">
+
+
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="band">Band/Artist <p-sortIcon field="band"></p-sortIcon></th>
@@ -36,7 +40,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-artist>
-                <tr>
+                <tr [pSelectableRow]="artist">
                     <td>{{artist.band}}</td>
                     <td>{{artist.title}}</td>
                     <td>{{artist.releaseYear}}</td>
@@ -58,5 +62,13 @@
         </div>
       </ng-template>
     </div>
+    <p-dialog header="" [(visible)]="display">
+      <img [src]="retrievedImage">
+    </p-dialog>
+
   </p-fieldset>
+
 </div>
+
+
+

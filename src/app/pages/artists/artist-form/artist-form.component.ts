@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { Observable } from 'rxjs';
 
@@ -33,6 +33,7 @@ export class ArtistFormComponent implements OnInit {
   pristine = true;
 
   constructor(
+    private router: Router,
     private artistService: ArtistService,
     private categoriaService: CategoriaService,
     private messageService: MessageService,
@@ -98,11 +99,14 @@ export class ArtistFormComponent implements OnInit {
             summary:'Sucesso',
             detail:'Álbum cadastro com sucesso.'
           });
-        },
-        error => {this.onError('Erro ao cadastrar Álbum.')}
-        )
 
-        this.artistForm.reset();
+          this.router.navigate(['/artists'])
+        },
+        errorResponse => {
+          this.onInfo(errorResponse.error.data);
+          console.log(errorResponse.error.data);
+        });
+
     }
 
   }
@@ -134,9 +138,21 @@ export class ArtistFormComponent implements OnInit {
 
   private onError(message: string) {
     const msg = message;
+    console.log('enterei no on error <<<<<<<<<<<<<<<<<<<<', msg)
     this.messageService.add({
       severity:'error',
       summary:'Erro',
+      detail:msg,
+      life:5000
+    })
+  }
+
+  private onInfo(message: string) {
+    const msg = message;
+    console.log('[log]Info====', msg)
+    this.messageService.add({
+      severity:'info',
+      summary:'Info',
       detail:msg,
       life:5000
     })

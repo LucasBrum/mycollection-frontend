@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
+import {DialogModule} from 'primeng/dialog';
 
 import { AppPrimengModule } from '../shared/app-primeng/app-primeng.module';
 import { SharedModule } from '../shared/shared.module';
@@ -26,6 +27,7 @@ import { ArtistsComponent } from './artists/artists.component';
     CommonModule,
     TableModule,
     AppPrimengModule,
+    DialogModule,
     ArtistsRoutingModule,
     CardModule,
     ConfirmDialogModule,
@@ -34,7 +36,7 @@ import { ArtistsComponent } from './artists/artists.component';
     InputTextModule,
     DropdownModule,
     ReactiveFormsModule,
-    
+
     SharedModule
   ]
 })
