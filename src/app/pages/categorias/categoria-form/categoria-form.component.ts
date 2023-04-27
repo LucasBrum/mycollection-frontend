@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { Category } from '../model/category';
 
 import { CategoriaService } from '../services/categoria.service';
 
@@ -14,6 +15,10 @@ export class CategoriaFormComponent implements OnInit {
 
   // Chamar um método de outro componente
   //@ViewChild('categoriaGrid') categoriaGrid: CategoriasComponent;
+
+  id: number;
+
+  category: Category;
 
   categoriaForm: FormGroup;
   isEditing: boolean;
@@ -31,6 +36,17 @@ export class CategoriaFormComponent implements OnInit {
     this.buildForm();
   }
 
+  setCategoryFormToEdit(category: Category) {
+    this.category = category;
+
+    if(category) {
+      this.categoriaForm.patchValue({
+        id: category._id,
+        name: category.name
+      });
+    }
+  }
+
   buildForm() {
     this.categoriaForm = this.formBuilder.group({
       name: ['', Validators.required]
@@ -40,7 +56,7 @@ export class CategoriaFormComponent implements OnInit {
   salvar() {
     this.categoriaService.save(this.categoriaForm.value)
     .subscribe(result => {
-        
+
         this.messageService.add({
           severity:'success',
           summary:'Sucesso',
@@ -51,7 +67,22 @@ export class CategoriaFormComponent implements OnInit {
       )
       this.displayModal = false;
       this.categoriaForm.reset();
-      
+
+  }
+
+  private updateCateogory() {
+    this.categoriaService.update(this.category['id'], this.categoriaForm.value)
+      .subscribe(result => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Categoria atualizada com sucesso.'
+        });
+      },
+        error => { this.onError('Erro ao atualizar categoria.')}
+      );
+
+      this.categoriaForm.reset();
   }
 
   showModalDialog() {

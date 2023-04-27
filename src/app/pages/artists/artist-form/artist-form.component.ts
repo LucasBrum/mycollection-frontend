@@ -133,7 +133,7 @@ export class ArtistFormComponent implements OnInit {
           detail: 'Álbum atualizado com sucesso.'
         });
       },
-        error => { this.onError('Erro ao cadastrar Álbum.'); }
+        error => { this.onError('Erro ao atualizar Álbum.'); }
       );
 
     this.artistForm.reset();

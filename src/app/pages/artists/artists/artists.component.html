@@ -48,9 +48,9 @@
                     <td>{{artist.country}}</td>
                     <td>{{artist.category.name}}</td>
                     <td>
-                      <a role="button" routerLink="/artists/form/{{artist.id}}">Editar</a>
+                      <a role="button" class="a-edit-artist" routerLink="/artists/form/{{artist.id}}">Editar</a>
                       <i class="pi pi-pause"></i>
-                      <a role="button" (click)="delete(artist)">Excluir</a>
+                      <a role="button" class="a-delete-artist" (click)="delete(artist)">Excluir</a>
                     </td>
                 </tr>
             </ng-template>
