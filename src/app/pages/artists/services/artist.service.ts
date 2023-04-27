@@ -76,6 +76,7 @@ export class ArtistService {
   }
 
   update(id: number, artist: Artist) {
+
     return this.httpClient.put(`${this.API}/${id}`, artist)
     .pipe(
       first(),

@@ -7,7 +7,7 @@ import { ArtistsComponent } from './artists/artists.component';
 const routes: Routes = [
   { path: 'artists', component: ArtistsComponent },
   { path: 'artists/create', component: ArtistFormComponent},
-  { path: 'artists/create/:id', component: ArtistFormComponent }
+  { path: 'artists/form/:id', component: ArtistFormComponent }
 ];
 
 @NgModule({

@@ -115,6 +115,32 @@ export class ArtistFormComponent implements OnInit {
 
   }
 
+  saveAnother() {
+
+    console.log('this.artistForm.value ================ ', this.artistForm.value);
+    if(this.id) {
+      this.updateArtist();
+    } else {
+      this.artistService.save(this.artistForm.value)
+        .subscribe(result => {
+          this.messageService.add({
+            severity:'success',
+            summary:'Sucesso',
+            detail:'Álbum cadastro com sucesso.'
+          });
+
+          this.buildForm();
+
+        },
+        errorResponse => {
+          this.onInfo(errorResponse.error.data);
+          console.log(errorResponse.error.data);
+        });
+
+    }
+
+  }
+
   onUpload($event) {
     console.log("Arquivo de imagem selecionado...", $event.files)
     this.coverImageFile = $event.files
