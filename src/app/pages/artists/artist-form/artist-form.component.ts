@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
@@ -25,7 +25,7 @@ export class ArtistFormComponent implements OnInit {
   artist: Artist;
 
   artistForm: FormGroup;
-
+  coverImageFile: File[];
   countries: any[] = [];
   categorias: Category[] = [];
   selectedCategory: Category;
@@ -53,7 +53,6 @@ export class ArtistFormComponent implements OnInit {
           .subscribe(artist => this.setArtistFormToEdit(artist),
           err => console.log(err))
         }
-        console.log(this.artist);
       })
 
     this.buildForm();
@@ -72,23 +71,28 @@ export class ArtistFormComponent implements OnInit {
         country: artist.country,
         genre: artist.genre,
         releaseYear: artist.releaseYear,
-        title: artist.title
+        title: artist.title,
       });
     }
   }
 
   buildForm() {
+    console.log(">>>>>>>> Cover Image File", this.coverImageFile)
     this.artistForm = this.formBuilder.group({
       band: ['', Validators.required],
       title: ['', Validators.required],
       releaseYear: ['', Validators.required],
       country: ['', Validators.required],
       genre: ['', Validators.required],
-      category: ['', Validators.required]
+      category: ['', Validators.required],
+      coverImage: this.coverImageFile ? this.coverImageFile[0] : null
     })
+
   }
 
   save() {
+
+    console.log('this.artistForm.value ================ ', this.artistForm.value);
     if(this.id) {
       this.updateArtist();
     } else {
@@ -109,6 +113,15 @@ export class ArtistFormComponent implements OnInit {
 
     }
 
+  }
+
+  onUpload($event) {
+    console.log("Arquivo de imagem selecionado...", $event.files)
+    this.coverImageFile = $event.files
+    this.messageService.add({severity: 'info', summary: 'Sucesso', detail: 'Upload da imagem efetuado com sucesso.'});
+    this.artistForm.patchValue({
+      coverImage: $event.files[0]
+    })
   }
 
   private updateArtist() {
@@ -133,7 +146,10 @@ export class ArtistFormComponent implements OnInit {
 
   listCountries() {
     this.artistService.listCountries()
-      .subscribe(countries => this.countries = countries);
+      .subscribe(countries => {
+        this.countries = countries
+      });
+
   }
 
   private onError(message: string) {
@@ -165,7 +181,6 @@ export class ArtistFormComponent implements OnInit {
   get country(): string { return this.camposForm.country.value; }
   get genre(): string { return this.camposForm.genre.value; }
   get category(): string { return this.camposForm.category.value; }
-
-
+  get coverImage(): string { return this.camposForm.coverImage.value; }
 
 }

@@ -2,7 +2,7 @@ import { Artist } from './../model/artist';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first, map, tap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,6 @@ export class ArtistService {
 
   constructor(private httpClient: HttpClient) {
     this.listCountries().subscribe(data => {
-      console.log(data);
     })
   }
 
@@ -49,16 +48,25 @@ export class ArtistService {
       // )
   }
 
-  listCountries() {
+  listCountries(): Observable<any> {
     return this.httpClient.get(this._jsonCountries)
     .pipe(
       first(),
-      map(result => result[''])
+      map(result => result['data'])
     )
   }
 
   save(artist: Artist) {
-    return this.httpClient.post<Artist>(this.API, artist)
+    console.log(">>>>>>>>> ARTIST ", artist)
+    const body = this.sanitize(artist);
+
+    console.log(">>>>>>>>> BODY ", body)
+
+    var formData = new FormData();
+    formData.append('artist', new Blob([JSON.stringify(body)], {type: 'application/json'}));
+    formData.append('coverImage', body.coverImage)
+
+    return this.httpClient.post<Artist>(this.API, formData)
       .pipe(
         first(),
         tap(() => {
@@ -85,5 +93,19 @@ export class ArtistService {
         }),
         map(response => response),
       );
+  }
+
+  sanitize(value: any) {
+    const body = { ...value }
+    if (body.band) body.band = body.band.trim()
+    if (body.title) body.title = body.title.trim()
+    if (body.releaseYear) body.releaseYear = body.releaseYear.trim()
+    if (body.country) body.country = body.country.trim()
+    if (body.genre) body.genre = body.genre.trim()
+
+    if (body.category) {
+      body.category = { id: body.category.id }
+    }
+    return body
   }
 }

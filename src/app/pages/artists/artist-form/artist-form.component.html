@@ -53,6 +53,12 @@
               obrigatório</small>
           </span>
         </div>
+        <div class="field col-12 md:col-2">
+          <p-fileUpload id="coverImage" styleClass="p-button-outlined p-button-info" mode="basic" name="coverImage[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" (onUpload)="onUpload($event)" [auto]="true" chooseLabel="Anexar"></p-fileUpload>
+        </div>
+
+
+
         <div class="btn col-12 md:col-4">
             <button pButton label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="save()"></button>
         </div>

@@ -2,11 +2,11 @@ export const navbarData = [
     {
         label:'CDs',
         routerLink: 'artists',
-        icon:'pi pi-circle-off'
+        icon:'pi pi-play'
 
     },
     {
-      label: 'Categorias', 
+      label: 'Categorias',
       icon: 'pi pi-fw pi-cog',
       routerLink: '/categorias'
 
