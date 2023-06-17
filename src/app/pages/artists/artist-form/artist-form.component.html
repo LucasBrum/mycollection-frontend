@@ -11,6 +11,7 @@
               obrigatório</small>
           </span>
         </div>
+        <!--
         <div class="field col-12 md:col-3">
           <span class="p-float-label">
           <input type="text" pInputText formControlName="title" required>
@@ -27,6 +28,7 @@
               obrigatório</small>
           </span>
         </div>
+        -->
         <div class="field col-12 md:col-2">
           <span class="p-float-label">
           <p-dropdown [options]="countries" placeholder="Country" optionLabel="name" optionValue="name" formControlName="country"></p-dropdown>
@@ -36,6 +38,7 @@
               obrigatório</small>
           </span>
         </div>
+        <!--
         <div class="field col-12 md:col-2">
           <span class="p-float-label">
           <input type="text" pInputText formControlName="genre" required>
@@ -53,6 +56,7 @@
               obrigatório</small>
           </span>
         </div>
+        -->
         <div class="field col-12 md:col-2">
           <p-fileUpload id="coverImage" styleClass="p-button-outlined p-button-info" mode="basic" name="coverImage[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" (onUpload)="onUpload($event)" [auto]="true" chooseLabel="Anexar"></p-fileUpload>
         </div>

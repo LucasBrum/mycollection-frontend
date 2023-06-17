@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { ArtistsRoutingModule } from './pages/artists/artists-routing.module';
 import { ArtistsModule } from './pages/artists/artists.module';
 import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
+import { ItemsModule } from './pages/items/items.module';
+import { ItemsRoutingModule } from './pages/items/items-routing.module';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
     MegaMenuModule,
     ArtistsModule,
     ArtistsRoutingModule,
+    ItemsModule,
+    ItemsRoutingModule,
     AppRoutingModule,
     HttpClientModule
 

@@ -31,22 +31,26 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="band">Band/Artist <p-sortIcon field="band"></p-sortIcon></th>
+                    <!--
                     <th pSortableColumn="title">Title <p-sortIcon field="title"></p-sortIcon></th>
                     <th pSortableColumn="releaseYear">Release Year <p-sortIcon field="releaseYear"></p-sortIcon></th>
                     <th pSortableColumn="genre">Genre <p-sortIcon field="genre"></p-sortIcon></th>
-                    <th pSortableColumn="country">Country<p-sortIcon field="country"></p-sortIcon></th>
                     <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
+                    -->
+                    <th pSortableColumn="country">Country<p-sortIcon field="country"></p-sortIcon></th>
                     <th>Actions</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-artist>
                 <tr [pSelectableRow]="artist" >
-                    <td>{{artist.band}}</td>
+                    <td>{{artist.name}}</td>
+                    <!--
                     <td>{{artist.title}}</td>
                     <td>{{artist.releaseYear}}</td>
                     <td>{{artist.genre}}</td>
-                    <td>{{artist.country}}</td>
                     <td>{{artist.category.name}}</td>
+                    -->
+                    <td>{{artist.country}}</td>
                     <td>
                       <a role="button" class="a-edit-artist" routerLink="/artists/form/{{artist.id}}">Editar</a>
                       <i class="pi pi-pause"></i>
