@@ -78,7 +78,7 @@ export class ArtistsComponent implements OnInit {
     const artistId = artist['id'];
     console.log(artist['id'])
     this.confirmationService.confirm({
-      message: 'Deseja realmente remover o Álbum ' + artist['title'] + ' do ' + artist['band'] + ' ?',
+      message: 'Deseja realmente remover o Álbum ' + artist['title'] + ' do ' + artist['name'] + ' ?',
       accept: () => {
         this.artistService.delete(artistId).subscribe(
           response => {
@@ -95,15 +95,15 @@ export class ArtistsComponent implements OnInit {
   }
 
   selectAlbum(artist: Artist) {
-    this.messageService.add({severity:'info', summary:'Album selecionado', detail: artist.band});
+    this.messageService.add({severity:'info', summary:'Album selecionado', detail: artist.name});
   }
 
   onRowSelect(event) {
-      this.messageService.add({severity:'info', summary:'Album selecionado', detail: event.data.band + ' - ' + event.data.title});
+      this.messageService.add({severity:'info', summary:'Album selecionado', detail: event.data.name + ' - ' + event.data.country});
   }
 
   onRowUnselect(event) {
-      this.messageService.add({severity:'info', summary:'Album selecionado',  detail: event.data.band + ' - ' + event.data.title});
+      this.messageService.add({severity:'info', summary:'Album selecionado',  detail: event.data.name + ' - ' + event.data.country});
   }
 
 }

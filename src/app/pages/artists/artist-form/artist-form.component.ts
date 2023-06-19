@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
@@ -14,7 +14,8 @@ import { ArtistService } from '../services/artist.service';
   selector: 'app-artist-form',
   templateUrl: './artist-form.component.html',
   styleUrls: ['./artist-form.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService],
+  encapsulation: ViewEncapsulation.None
 })
 export class ArtistFormComponent implements OnInit {
 
@@ -66,7 +67,7 @@ export class ArtistFormComponent implements OnInit {
     if (artist) {
       this.artistForm.patchValue({
         id: artist._id,
-        band: artist.band,
+        band: artist.name,
         category: artist.category,
         country: artist.country,
         genre: artist.genre,

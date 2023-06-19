@@ -11,21 +11,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 }
 
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  margin-right: -0.5rem;
-  margin-left: -0.5rem;
-  margin-top: -0.5rem;
-  padding: 10px 10px 10px 10px;
-
-}
-
-.p-fluid .p-button {
-  width: 35%;
-  margin-left: 70%;
-}
-
 .field-required {
   color: #e24c4c;
 }

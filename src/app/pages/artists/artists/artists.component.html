@@ -9,7 +9,7 @@
   </ng-template>
 </p-confirmDialog>
 
-<div class="p-flui grid">
+<div class="p-fluid grid">
   <div class="col-6 col-offset-3">
     <p-toolbar>
       <div class="p-toolbar-group-left">
@@ -19,7 +19,7 @@
 </div>
 </div>
 
-<div class="p-flui grid">
+<div class="p-fluid grid">
   <p-fieldset legend="Cds" class="col-10 col-offset-1">
     <div class="card">
         <div *ngIf="artists$ | async as artists; else loading">
@@ -30,7 +30,7 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="band">Band/Artist <p-sortIcon field="band"></p-sortIcon></th>
+                    <th pSortableColumn="name">Band/Artist <p-sortIcon field="name"></p-sortIcon></th>
                     <!--
                     <th pSortableColumn="title">Title <p-sortIcon field="title"></p-sortIcon></th>
                     <th pSortableColumn="releaseYear">Release Year <p-sortIcon field="releaseYear"></p-sortIcon></th>

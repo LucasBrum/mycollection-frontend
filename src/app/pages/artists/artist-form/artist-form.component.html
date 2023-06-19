@@ -1,75 +1,33 @@
 <p-toast></p-toast>
-<div class="p-flui grid">
-  <p-fieldset legend="Cadastro de CD" class="col-8 col-offset-2">
+<div class="container justify-content-center shadow-6">
+  <p-fieldset legend="Cadastro de CD" class="fieldset-artist">
     <form class="app-form artist-form" [formGroup]="artistForm">
-      <div class="p-fluid grid">
-        <div class="field col-12 md:col-2">
+      <div  class="grid">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-6">
           <span class="p-float-label">
-          <input type="text" pInputText formControlName="band" required>
-            <label for="inputtext">Band</label>
-            <small *ngIf="!band && (!camposForm.band.pristine || !pristine)" class="p-error block">Campo
-              obrigatório</small>
-          </span>
+            <input class="fullWidth" type="text" pInputText formControlName="name" required>
+              <label for="inputtext">Band</label>
+              <small *ngIf="!band && (!camposForm.band.pristine || !pristine)" class="p-error block">Campo
+                obrigatório</small>
+            </span>
         </div>
-        <!--
-        <div class="field col-12 md:col-3">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-6">
           <span class="p-float-label">
-          <input type="text" pInputText formControlName="title" required>
-            <label for="inputtext">Title</label>
-            <small *ngIf="!title && (!camposForm.title.pristine || !pristine)" class="p-error block">Campo
-              obrigatório</small>
-          </span>
+            <p-dropdown styleClass="fullWidth" [options]="countries" placeholder="Country" optionLabel="name" optionValue="name" formControlName="country"></p-dropdown>
+              <label for="inputtext"></label>
+              <small *ngIf="!country && (!camposForm.country.pristine || !pristine)" class="p-error block">Campo
+                obrigatório</small>
+            </span>
         </div>
-        <div class="field col-12 md:col-1">
-          <span class="p-float-label">
-          <input type="text" pInputText formControlName="releaseYear" required>
-            <label for="inputtext">Year</label>
-            <small *ngIf="!releaseYear && (!camposForm.releaseYear.pristine || !pristine)" class="p-error block">Campo
-              obrigatório</small>
-          </span>
-        </div>
-        -->
-        <div class="field col-12 md:col-2">
-          <span class="p-float-label">
-          <p-dropdown [options]="countries" placeholder="Country" optionLabel="name" optionValue="name" formControlName="country"></p-dropdown>
-
-            <label for="inputtext"></label>
-            <small *ngIf="!country && (!camposForm.country.pristine || !pristine)" class="p-error block">Campo
-              obrigatório</small>
-          </span>
-        </div>
-        <!--
-        <div class="field col-12 md:col-2">
-          <span class="p-float-label">
-          <input type="text" pInputText formControlName="genre" required>
-            <label for="inputtext">Genre</label>
-            <small *ngIf="!genre && (!camposForm.genre.pristine || !pristine)" class="p-error block">Campo
-              obrigatório</small>
-          </span>
-        </div>
-        <div class="field col-12 md:col-2">
-          <span class="p-float-label">
-          <p-dropdown [options]="categorias" placeholder="Categoria" optionLabel="name" formControlName="category"></p-dropdown>
-
-            <label for="inputtext"></label>
-            <small *ngIf="!category && (!camposForm.category.pristine || !pristine)" class="p-error block">Campo
-              obrigatório</small>
-          </span>
-        </div>
-        -->
-        <div class="field col-12 md:col-2">
-          <p-fileUpload id="coverImage" styleClass="p-button-outlined p-button-info" mode="basic" name="coverImage[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" (onUpload)="onUpload($event)" [auto]="true" chooseLabel="Anexar"></p-fileUpload>
-        </div>
-
-
-
-        <div class="btn col-12 md:col-4">
+      </div>
+      <div class="grid">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-6">
             <button pButton label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="save()"></button>
         </div>
-        <div class="btn col-12 md:col-4">
-            <button pButton label="Adicionar Outro" icon="pi pi-plus-circle" class="p-button-success btn-adicionar-outro" (click)="saveAnother()"></button>
+        <div class="col-12 sm:col-12 md:col-12 lg:col-6">
+          <button pButton label="Adicionar Outro" icon="pi pi-plus-circle" class="p-button-success btn-adicionar-outro" (click)="saveAnother()"></button>
         </div>
       </div>
     </form>
   </p-fieldset>
-</div>
+  </div>
