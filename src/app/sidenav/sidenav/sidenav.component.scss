@@ -1,6 +1,6 @@
 .sidenav {
     background: #263238;
-    transition: all .5s ease;
+    transition: all .3s ease;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -15,7 +15,8 @@
         width: 100%;
 
         .logo {
-            background: #fff;
+            background: #000;
+            color: #22C55E;
             text-align: center;
             width: 3rem;
             min-width: 3rem;
@@ -29,7 +30,7 @@
 
         .logo-text {
             margin-left: 1.5rem;
-            font-size: 24px;
+            font-size: 19px;
             font-weight: 700;
             color: #fff;
         }
@@ -44,7 +45,7 @@
             border: none;
 
             .fa-times {
-                color: #fff;
+                color: #22C55E;
                 font-size: 24px;
             }
 
@@ -75,7 +76,7 @@
             display: flex;
             align-items: center;
             height: 3rem;
-            color: #f3f3f3;
+            color: #22C55E;
             text-decoration: none;
             border-radius: 0.625rem;
             transition: all .3s ease;
@@ -96,7 +97,7 @@
 
     .sidenav-nav-item:hover {
         .sidenav-nav-link {
-            background-color: #fff;
+            background-color: #22C55E;
             color: #000;
         }
     }
@@ -104,7 +105,7 @@
 }
 
 .active {
-    background-color: #fff;
+    background-color: #22C55E;
 
     .sidenav-link-icon,
     .sidenav-link-text {
