@@ -19,8 +19,8 @@
 </div>
 </div>
 
-<div class="p-fluid grid">
-  <p-fieldset legend="Cds" class="col-10 col-offset-1">
+<div class="container justify-content-center shadow-2">
+  <p-fieldset legend="Cds" class="col-12 sm:col-12 md:col-12 lg:col-6">
     <div class="card">
         <div *ngIf="artists$ | async as artists; else loading">
         <p-table [value]="artists" selectionMode="single"  [(selection)]="selectedAlbum" dataKey="id"
