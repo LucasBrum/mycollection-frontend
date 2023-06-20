@@ -1,8 +1,8 @@
 export const navbarData = [
     {
-        label:'CDs',
+        label:'Artists',
         routerLink: 'artists',
-        icon:'pi pi-play'
+        icon: "pi pi-users"
 
     },
     {
