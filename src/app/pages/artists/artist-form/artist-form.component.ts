@@ -67,26 +67,26 @@ export class ArtistFormComponent implements OnInit {
     if (artist) {
       this.artistForm.patchValue({
         id: artist._id,
-        band: artist.name,
-        category: artist.category,
+        name: artist.name,
         country: artist.country,
-        genre: artist.genre,
-        releaseYear: artist.releaseYear,
-        title: artist.title,
+        //category: artist.category,
+        //genre: artist.genre,
+        //releaseYear: artist.releaseYear,
+        //title: artist.title,
       });
     }
   }
 
   buildForm() {
-    console.log(">>>>>>>> Cover Image File", this.coverImageFile)
+    //console.log(">>>>>>>> Cover Image File", this.coverImageFile)
     this.artistForm = this.formBuilder.group({
-      band: ['', Validators.required],
-      title: ['', Validators.required],
-      releaseYear: ['', Validators.required],
+      name: ['', Validators.required],
       country: ['', Validators.required],
-      genre: ['', Validators.required],
-      category: ['', Validators.required],
-      coverImage: this.coverImageFile ? this.coverImageFile[0] : null
+//      title: ['', Validators.required],
+//      releaseYear: ['', Validators.required],
+//     genre: ['', Validators.required],
+//      category: ['', Validators.required],
+//      coverImage: this.coverImageFile ? this.coverImageFile[0] : null
     })
 
   }
@@ -202,12 +202,12 @@ export class ArtistFormComponent implements OnInit {
   }
 
   get camposForm(): any { return this.artistForm.controls; }
-  get band(): string { return this.camposForm.band.value; }
-  get title(): string { return this.camposForm.title.value; }
-  get releaseYear(): string { return this.camposForm.releaseYear.value; }
+  get name(): string { return this.camposForm.name.value; }
   get country(): string { return this.camposForm.country.value; }
-  get genre(): string { return this.camposForm.genre.value; }
-  get category(): string { return this.camposForm.category.value; }
-  get coverImage(): string { return this.camposForm.coverImage.value; }
+  //get title(): string { return this.camposForm.title.value; }
+  //get releaseYear(): string { return this.camposForm.releaseYear.value; }
+  //get genre(): string { return this.camposForm.genre.value; }
+  //get category(): string { return this.camposForm.category.value; }
+  //get coverImage(): string { return this.camposForm.coverImage.value; }
 
 }

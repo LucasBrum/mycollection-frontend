@@ -57,6 +57,19 @@ export class ArtistService {
   }
 
   save(artist: Artist) {
+    return this.httpClient.post<Artist>(this.API, artist)
+      .pipe(
+        first(),
+        tap(() => {
+          this._refreshNeeded$.next();
+        })
+      );
+
+  }
+
+
+/**
+  save(artist: Artist) {
     console.log(">>>>>>>>> ARTIST ", artist)
     const body = this.sanitize(artist);
 
@@ -74,6 +87,8 @@ export class ArtistService {
         })
       )
   }
+*/
+
 
   update(id: number, artist: Artist) {
 
