@@ -1,12 +1,12 @@
-import { Artist } from "../../artists/model/artist";
 import { Category } from "../../categorias/model/category";
 
-export class Item {
-
+export class ArtistItemDetailsResponse {
   _id: number;
+  name: string;
+  country: string;
   title: string;
   releaseYear: number;
   genre: string;
   category: Category;
-  artist: Artist;
+
 }

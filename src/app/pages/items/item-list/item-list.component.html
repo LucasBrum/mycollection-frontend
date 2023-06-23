@@ -1,1 +1,78 @@
-<p>item-list works!</p>
+<p-toast></p-toast>
+<p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '30vw'}">
+  <ng-template pTemplate="header">
+    <h3>Exclusão de Álbum</h3>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button type="button" pButton class="cd-btn-cancel" icon="pi pi-times" label="Cancelar"
+      (click)="cd.reject()"></button>
+    <button type="button" pButton class="cd-btn-remove" icon="pi pi-trash" label="Remover"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
+
+<div class="p-fluid grid">
+  <div class="col-6 col-offset-3">
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <p-button label="Cadastrar" routerLink="/artists/create" icon="pi pi-plus" styleClass="p-button-success">
+        </p-button>
+      </div>
+    </p-toolbar>
+  </div>
+</div>
+
+<div class="container justify-content-center shadow-2">
+  <p-fieldset legend="Cds" class="col-12 sm:col-12 md:col-12 lg:col-6">
+    <div *ngIf="artistsItemDetailsResponse$ | async as artistsItemDetailsResponse; else loading">
+      <p-table [value]="artistsItemDetailsResponse" selectionMode="single" [(selection)]="selectedArtistItemDetails"
+        dataKey="id" styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm" responsiveLayout="scroll"
+        #tabela (onRowSelect)="getCoverFromAlbum($event)" (onRowUnselect)="getCoverFromAlbum($event)">
+
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="name">Band/Artist <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="title">Title <p-sortIcon field="title"></p-sortIcon>
+            </th>
+            <th pSortableColumn="releaseYear">Release Year <p-sortIcon field="releaseYear"></p-sortIcon>
+            </th>
+            <th pSortableColumn="genre">Genre <p-sortIcon field="genre"></p-sortIcon>
+            </th>
+            <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon>
+            </th>
+            <th pSortableColumn="country">Country<p-sortIcon field="country"></p-sortIcon>
+            </th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-artistItemDetails>
+          <tr [pSelectableRow]="artistItemDetails">
+            <td>{{artistItemDetails.name}}</td>
+            <td>{{artistItemDetails.title}}</td>
+            <td>{{artistItemDetails.releaseYear}}</td>
+            <td>{{artistItemDetails.genre}}</td>
+            <td>{{artistItemDetails.category}}</td>
+            <td>{{artistItemDetails.country}}</td>
+            <td>
+              <a role="button" class="a-edit-item" routerLink="/artists/form/{{artistItemDetails.id}}">Editar</a>
+              <i class="pi pi-pause"></i>
+              <a role="button" class="a-delete-item" (click)="delete(artistItemDetails)">Excluir</a>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <ng-template #loading>
+      <div class="loading-spinner">
+        <p-progressSpinner></p-progressSpinner>
+      </div>
+    </ng-template>
+    <p-dialog header="" [(visible)]="display">
+      <img [src]="retrievedImage">
+    </p-dialog>
+
+  </p-fieldset>
+
+</div>

@@ -53,7 +53,7 @@ export class ArtistsComponent implements OnInit {
           icon: 'pi pi-refresh',
           routerLink: ['/artist/new'],
       }
-  ];
+    ];
     this.artistService.refreshNeeded$.subscribe(() => {
       this.list();
     })

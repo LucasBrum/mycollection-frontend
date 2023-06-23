@@ -1,0 +1,142 @@
+.body {
+  width: calc(100% - 5rem);
+  height: 100vh;
+  margin-left: 5rem;
+  z-index: 0;
+  position: relative;
+  top: 0;
+  transition: all 5s ease;
+  background: #f4f7fa;
+  padding: 3rem;
+}
+
+.container {
+  width: 70%;
+  margin: auto;
+  padding: 1rem 1rem 3rem 1rem;
+  border-radius: 1.5rem;
+}
+
+.body-trimmed {
+  width: calc(100% - 16.5625rem);
+  margin-left: 16.5625rem;
+}
+
+.body-md-screen {
+  width: calc(100% - 5rem);
+  margin-left: 5rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    text-align: center;
+
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    text-align: center;
+}
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.p-button-info {
+  margin: 5px 5px 5px 5px;
+
+}
+
+.p-button-danger {
+  margin: 5px 5px 5px 5px;
+
+}
+
+a.a-edit-item {
+  background-image: linear-gradient(
+    to right,
+    #004d69,
+    #003cff 50%,
+    #6366F1 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+  display: inline-block;
+  padding: 5px 0;
+  position: relative;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+}
+
+a.a-delete-item {
+  background-image: linear-gradient(
+    to right,
+    #ff0000,
+    #ff0000 50%,
+    #6366F1 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+  display: inline-block;
+  padding: 5px 0;
+  position: relative;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+}
+
+a:before{
+  content: '';
+  background: #000000;
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+a:hover {
+ background-position: 0;
+
+}
+
+a:hover::before{
+  width: 100%;
+
+}
+
+/* Presentational Styles */
+body {
+  display: grid;
+  font-family: 'Poppins', sans-serif;
+  font-size: 27px;
+  font-weight: 700;
+  height: 100vh;
+  place-items: center;
+
+}
+
+:host ::ng-deep .p-button {
+  margin: 0 .5rem 0 0;
+  min-width: 10rem;
+}
+
+p {
+  margin: 0;
+}
+
+.confirmation-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host ::ng-deep .p-dialog .p-button {
+  min-width: 6rem;
+}

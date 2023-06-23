@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first, map, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { ArtistItemDetailsResponse } from '../model/ArtistItemDetailsResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,14 @@ export class ArtistService {
         })
       );
 
+  }
+
+  listArtistsItemsDetails() {
+    return this.httpClient.get<ArtistItemDetailsResponse[]>(`${this.API}/items/details`)
+      .pipe(
+        first(),
+        map(result => result['data'])
+      )
   }
 
 
