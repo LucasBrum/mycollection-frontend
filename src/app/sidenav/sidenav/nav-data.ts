@@ -6,6 +6,12 @@ export const navbarData = [
 
     },
     {
+      label:'Items',
+      routerLink: 'items',
+      icon: "pi pi-box"
+
+    },
+    {
       label: 'Categorias',
       icon: 'pi pi-fw pi-cog',
       routerLink: '/categorias'

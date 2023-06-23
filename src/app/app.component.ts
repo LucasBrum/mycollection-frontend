@@ -25,13 +25,20 @@ export class AppComponent {
     this.primengConfig.ripple = true;
       this.items = [
           {
-              label:'CDs',
+              label:'Artists',
               routerLink: ['/artists'],
               icon:'pi pi-circle-off'
 
           },
           {
-            label: 'Categorias', icon: 'pi pi-fw pi-cog',
+            label:'Items',
+            routerLink: ['/items'],
+            icon:'pi pi-box'
+
+        },
+          {
+            label: 'Categorias',
+            icon: 'pi pi-fw pi-cog',
             routerLink: ['/categorias']
 
         },

@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { ItemsRoutingModule } from './items-routing.module';
 import { ItemCreateComponent } from './item-create/item-create.component';
+import { ItemListComponent } from './item-list/item-list.component';
 
 
 @NgModule({
   declarations: [
-    ItemCreateComponent
+    ItemCreateComponent,
+    ItemListComponent
   ],
   imports: [
     CommonModule,
