@@ -37,7 +37,7 @@
         </div>
         <div class="col-12 sm:col-12 md:col-12 lg:col-3">
           <span class="p-float-label">
-            <p-dropdown styleClass="fullWidth" [options]="categorias" placeholder="Categories" optionLabel="name" formControlName="category"></p-dropdown>
+            <p-dropdown styleClass="fullWidth" [options]="categorias" placeholder="Categories" optionLabel="name" formControlName="category" ></p-dropdown>
               <label for="inputtext"></label>
               <small *ngIf="!artist && (!camposForm.artist.pristine || !pristine)" class="p-error block">Campo
                 obrigatório</small>
