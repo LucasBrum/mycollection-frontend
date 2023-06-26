@@ -65,7 +65,7 @@ export class ItemListComponent implements OnInit {
 
   getCoverFromAlbum(event) {
     const coverImageId = event.data.id;
-    console.log('Cover Image', coverImageId);
+    console.log('Cover Image', event.data);
 //    this.itemService.getCoverFromAlbum(coverImageId)
 //      .subscribe(response => {
 //        this.display = true;
@@ -73,6 +73,7 @@ export class ItemListComponent implements OnInit {
 //      });
     this.display = true;
     this.retrievedImage = this.ENDPOINT_GET_COVER_IMAGE + coverImageId;
+    console.log(this.retrievedImage)
   }
 
   delete(item: Item): void {
@@ -81,7 +82,7 @@ export class ItemListComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Deseja realmente remover o Álbum ' + item['title'] + ' do ' + item['name'] + ' ?',
       accept: () => {
-        this.artistService.delete(itemId).subscribe(
+        this.itemService.delete(itemId).subscribe(
           response => {
             this.messageService.add({
               severity: 'success',
