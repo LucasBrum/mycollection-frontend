@@ -65,15 +65,6 @@ export class ArtistsComponent implements OnInit {
     this.artists$ = this.artistService.list();
   }
 
-  getCoverFromAlbum(event) {
-    const coverImageId = event.data.id;
-    this.retrievedImage = this.artistService.getCoverFromAlbum(event.data.id)
-      .subscribe(response => {
-        this.display = true;
-        this.retrievedImage = this.ENDPOINT_GET_COVER_IMAGE + coverImageId;
-      })
-  }
-
   delete(artist: Artist): void {
     const artistId = artist['id'];
     console.log(artist['id'])

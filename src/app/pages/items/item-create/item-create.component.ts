@@ -90,7 +90,6 @@ export class ItemCreateComponent implements OnInit {
   }
 
   save() {
-
     console.log('this.itemForm.value ================ ', this.itemForm.value);
     if(this.id) {
       this.updateArtist();
@@ -115,7 +114,6 @@ export class ItemCreateComponent implements OnInit {
   }
 
   saveAnother() {
-
     console.log('this.artistForm.value ================ ', this.itemForm.value);
     if(this.id) {
       this.updateArtist();
@@ -178,7 +176,10 @@ export class ItemCreateComponent implements OnInit {
   }
 
   listArtists() {
-    this.artistService.list().subscribe(artists => {this.artists = artists});
+    this.artistService.list().subscribe(artists => {
+      this.artists = artists
+      console.log('ARTISTS >>> ', artists);
+    });
 
   }
 

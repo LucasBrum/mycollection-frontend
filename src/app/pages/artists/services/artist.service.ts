@@ -41,14 +41,6 @@ export class ArtistService {
       )
   }
 
-  getCoverFromAlbum(id: number) {
-    return this.httpClient.get(`${this.API}/album/cover/${id}`, { responseType: 'text' })
-      // .pipe(
-      //   first(),
-      //   map(result => result['data'])
-      // )
-  }
-
   listCountries(): Observable<any> {
     return this.httpClient.get(this._jsonCountries)
     .pipe(

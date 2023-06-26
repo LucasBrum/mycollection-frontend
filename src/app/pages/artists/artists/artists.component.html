@@ -24,8 +24,7 @@
     <div class="card">
         <div *ngIf="artists$ | async as artists; else loading">
         <p-table [value]="artists" selectionMode="single"  [(selection)]="selectedAlbum" dataKey="id"
-          styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm" responsiveLayout="scroll" #tabela
-          (onRowSelect)="getCoverFromAlbum($event)" (onRowUnselect)="getCoverFromAlbum($event)">
+          styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm" responsiveLayout="scroll" #tabela>
 
 
             <ng-template pTemplate="header">

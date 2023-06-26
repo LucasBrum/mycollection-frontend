@@ -1,11 +1,11 @@
 <p-toast></p-toast>
 <div class="container justify-content-center shadow-2">
   <p-fieldset legend="Cadastro de Items" class="fieldset-artist">
-    <form class="app-form artist-form" [formGroup]="itemForm">
+    <form class="app-form item-form" [formGroup]="itemForm">
       <div  class="grid">
         <div class="col-12 sm:col-12 md:col-12 lg:col-6">
           <span class="p-float-label">
-            <p-dropdown styleClass="fullWidth" [options]="artists" placeholder="Artist" optionLabel="name" optionValue="name" formControlName="artist"></p-dropdown>
+            <p-dropdown styleClass="fullWidth" [options]="artists" placeholder="Artist" optionLabel="name" formControlName="artist"></p-dropdown>
               <label for="inputtext"></label>
               <small *ngIf="!artist && (!camposForm.artist.pristine || !pristine)" class="p-error block">Campo
                 obrigatório</small>
@@ -37,7 +37,7 @@
         </div>
         <div class="col-12 sm:col-12 md:col-12 lg:col-3">
           <span class="p-float-label">
-            <p-dropdown styleClass="fullWidth" [options]="categorias" placeholder="Categories" optionLabel="name" optionValue="name" formControlName="artist"></p-dropdown>
+            <p-dropdown styleClass="fullWidth" [options]="categorias" placeholder="Categories" optionLabel="name" formControlName="category"></p-dropdown>
               <label for="inputtext"></label>
               <small *ngIf="!artist && (!camposForm.artist.pristine || !pristine)" class="p-error block">Campo
                 obrigatório</small>

@@ -6,6 +6,7 @@ import { ArtistService } from '../../artists/services/artist.service';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { Item } from '../model/item';
+import { ItemService } from '../services/item.service';
 
 @Component({
   selector: 'app-item-list',
@@ -15,7 +16,7 @@ import { Item } from '../model/item';
 })
 export class ItemListComponent implements OnInit {
 
-  private readonly ENDPOINT_GET_COVER_IMAGE = 'http://localhost:4200/mycollection/api/artists/album/cover/';
+  private readonly ENDPOINT_GET_COVER_IMAGE = 'http://localhost:4200/mycollection/api/items/cover/';
 
   display: boolean = false;
 
@@ -38,6 +39,7 @@ export class ItemListComponent implements OnInit {
 
   constructor(
     private artistService: ArtistService,
+    private itemService: ItemService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private router: Router
@@ -63,11 +65,14 @@ export class ItemListComponent implements OnInit {
 
   getCoverFromAlbum(event) {
     const coverImageId = event.data.id;
-    this.retrievedImage = this.artistService.getCoverFromAlbum(event.data.id)
-      .subscribe(response => {
-        this.display = true;
-        this.retrievedImage = this.ENDPOINT_GET_COVER_IMAGE + coverImageId;
-      })
+    console.log('Cover Image', coverImageId);
+//    this.itemService.getCoverFromAlbum(coverImageId)
+//      .subscribe(response => {
+//        this.display = true;
+//        this.retrievedImage = response;
+//      });
+    this.display = true;
+    this.retrievedImage = this.ENDPOINT_GET_COVER_IMAGE + coverImageId;
   }
 
   delete(item: Item): void {
