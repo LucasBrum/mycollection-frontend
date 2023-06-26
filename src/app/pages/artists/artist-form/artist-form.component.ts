@@ -42,8 +42,7 @@ export class ArtistFormComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private activatedRoute : ActivatedRoute
 
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     let params: Observable<Params> = this.activatedRoute.params

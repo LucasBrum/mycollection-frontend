@@ -11,16 +11,16 @@
 
 <div class="p-fluid grid">
   <div class="col-6 col-offset-3">
-    <p-toolbar>
+    <p-toolbar class="toolbar">
       <div class="p-toolbar-group-left">
-          <p-button label="Cadastrar" routerLink="/artists/create" icon="pi pi-plus" styleClass="p-button-success"></p-button>
+          <p-button label="Cadastrar Artista" routerLink="/artists/create" icon="pi pi-plus" styleClass="p-button-success"></p-button>
       </div>
     </p-toolbar>
 </div>
 </div>
 
 <div class="container justify-content-center shadow-2">
-  <p-fieldset legend="Cds" class="col-12 sm:col-12 md:col-12 lg:col-6">
+  <p-fieldset legend="Artistas" class="col-12 sm:col-12 md:col-12 lg:col-6">
     <div class="card">
         <div *ngIf="artists$ | async as artists; else loading">
         <p-table [value]="artists" selectionMode="single"  [(selection)]="selectedAlbum" dataKey="id"

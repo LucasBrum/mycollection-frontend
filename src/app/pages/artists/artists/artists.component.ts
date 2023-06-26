@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
@@ -11,7 +11,7 @@ import { ArtistService } from './../services/artist.service';
   selector: 'app-artists',
   templateUrl: './artists.component.html',
   styleUrls: ['./artists.component.scss'],
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService]
 })
 export class ArtistsComponent implements OnInit {
 
