@@ -50,15 +50,18 @@
         <ng-template pTemplate="body" let-artistItemDetails>
           <tr [pSelectableRow]="artistItemDetails">
             <td>{{artistItemDetails.name}}</td>
-            <td>{{artistItemDetails.title}}</td>
+            <td class="col-title">{{artistItemDetails.title}}</td>
             <td>{{artistItemDetails.releaseYear}}</td>
             <td>{{artistItemDetails.genre}}</td>
-            <td>{{artistItemDetails.category}}</td>
+            <td class="col-category">{{artistItemDetails.category}}</td>
             <td>{{artistItemDetails.country}}</td>
             <td>
-              <a role="button" class="a-edit-item" routerLink="/artists/form/{{artistItemDetails.id}}">Editar</a>
-              <i class="pi pi-pause"></i>
-              <a role="button" class="a-delete-item" (click)="delete(artistItemDetails)">Excluir</a>
+              <a role="button" class="a-edit-item" routerLink="/items/create/{{artistItemDetails.id}}">
+                <i class="pi pi-pencil"></i>
+              </a>
+              <a role="button" class="a-delete-item" (click)="delete(artistItemDetails)">
+                <i class="pi pi-trash"></i>
+              </a>
             </td>
           </tr>
         </ng-template>

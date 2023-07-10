@@ -15,6 +15,7 @@
   margin: auto;
   padding: 1rem 1rem 3rem 1rem;
   border-radius: 1.5rem;
+  background: #2632380f;
 }
 
 .body-trimmed {
@@ -75,8 +76,8 @@ a.a-delete-artist {
   background-image: linear-gradient(
     to right,
     #ff0000,
-    #ff0000 50%,
-    #6366F1 50%
+    #0084ff 50%,
+    #ff0000 50%
   );
   background-size: 200% 100%;
   background-position: -100%;
@@ -87,6 +88,7 @@ a.a-delete-artist {
   -webkit-text-fill-color: transparent;
   transition: all 0.3s ease-in-out;
   font-weight: bold;
+  margin: 0 10px;
 }
 
 a:before{

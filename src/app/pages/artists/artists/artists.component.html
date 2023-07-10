@@ -51,9 +51,12 @@
                     -->
                     <td>{{artist.country}}</td>
                     <td>
-                      <a role="button" class="a-edit-artist" routerLink="/artists/form/{{artist.id}}">Editar</a>
-                      <i class="pi pi-pause"></i>
-                      <a role="button" class="a-delete-artist" (click)="delete(artist)">Excluir</a>
+                      <a role="button" class="a-edit-artist" routerLink="/artists/form/{{artist.id}}">
+                        <i class="pi pi-pencil"></i>
+                      </a>
+                      <a role="button" class="a-delete-artist" (click)="delete(artist)">
+                        <i class="pi pi-trash" style="color: #1c5792"></i>
+                      </a>
                     </td>
                 </tr>
             </ng-template>

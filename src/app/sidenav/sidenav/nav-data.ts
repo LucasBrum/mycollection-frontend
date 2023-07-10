@@ -8,7 +8,7 @@ export const navbarData = [
     {
       label:'Items',
       routerLink: 'items',
-      icon: "pi pi-box"
+      icon: "pi pi-play"
 
     },
     {

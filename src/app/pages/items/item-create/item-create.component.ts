@@ -92,7 +92,7 @@ export class ItemCreateComponent implements OnInit {
   save() {
     console.log('this.itemForm.value ================ ', this.itemForm.value);
     if(this.id) {
-      this.updateArtist();
+      this.updateItem();
     } else {
       this.itemService.save(this.itemForm.value)
         .subscribe(result => {
@@ -116,7 +116,7 @@ export class ItemCreateComponent implements OnInit {
   saveAnother() {
     console.log('this.artistForm.value ================ ', this.itemForm.value);
     if(this.id) {
-      this.updateArtist();
+      this.updateItem();
     } else {
       this.itemService.save(this.itemForm.value)
         .subscribe(result => {
@@ -147,7 +147,8 @@ export class ItemCreateComponent implements OnInit {
     })
   }
 
-  private updateArtist() {
+  private updateItem() {
+    console.log("THIS ITEM FORM VALUE ",  this.itemForm.value)
     this.itemService.update(this.item['id'], this.itemForm.value)
       .subscribe(result => {
         this.messageService.add({

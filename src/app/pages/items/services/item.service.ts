@@ -50,7 +50,15 @@ export class ItemService {
   }
 
   update(id: number, item: Item) {
-    return this.httpClient.put(`${this.API}/${id}`, item)
+    console.log(">>>>>>>>> ITEM ", item)
+    const body = this.sanitize(item);
+
+    console.log(">>>>>>>>> BODY ", body)
+
+    var formData = new FormData();
+    formData.append('item', new Blob([JSON.stringify(body)], {type: 'application/json'}));
+    formData.append('coverImage', body.coverImage);
+    return this.httpClient.put<Item>(`${this.API}/${id}`, formData)
       .pipe(
         first(),
         tap(() => {
@@ -78,7 +86,7 @@ export class ItemService {
   sanitize(value: any) {
     const body = { ...value }
     if (body.title) body.title = body.title.trim()
-    if (body.releaseYear) body.releaseYear = body.releaseYear.trim()
+    if (body.releaseYear) body.releaseYear = body.releaseYear
     if (body.country) body.country = body.country.trim()
     if (body.genre) body.genre = body.genre.trim()
 
