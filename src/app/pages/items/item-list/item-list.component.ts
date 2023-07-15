@@ -100,8 +100,8 @@ export class ItemListComponent implements OnInit {
     this.messageService.add({severity:'info', summary:'Album selecionado', detail: event.data.name + ' - ' + event.data.country});
   }
 
-  onRowUnselect(event) {
-      this.messageService.add({severity:'info', summary:'Album selecionado',  detail: event.data.name + ' - ' + event.data.country});
+  closeDialog() {
+    this.retrievedImage = null;
   }
 
 }
