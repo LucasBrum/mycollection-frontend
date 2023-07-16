@@ -53,7 +53,7 @@ export class ItemListComponent implements OnInit {
           routerLink: ['/items/create'],
       }
     ];
-    this.artistService.refreshNeeded$.subscribe(() => {
+    this.itemService.refreshNeeded$.subscribe(() => {
       this.list();
     })
     this.list();

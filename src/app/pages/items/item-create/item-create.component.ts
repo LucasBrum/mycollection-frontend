@@ -156,6 +156,8 @@ export class ItemCreateComponent implements OnInit {
           summary: 'Sucesso',
           detail: 'Item atualizado com sucesso.'
         });
+
+        this.router.navigate(['/items'])
       },
         error => { this.onError('Erro ao atualizar Item.'); }
       );
