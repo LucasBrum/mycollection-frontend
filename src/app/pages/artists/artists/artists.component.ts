@@ -69,14 +69,14 @@ export class ArtistsComponent implements OnInit {
     const artistId = artist['id'];
     console.log(artist['id'])
     this.confirmationService.confirm({
-      message: 'Deseja realmente remover o Álbum ' + artist['title'] + ' do ' + artist['name'] + ' ?',
+      message: 'Deseja realmente remover o artista ' + artist['name'] + ' ?',
       accept: () => {
         this.artistService.delete(artistId).subscribe(
           response => {
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
-              detail: 'Álbum deletado com sucesso.'
+              detail: 'Artista deletado com sucesso.'
             })
             this.artistService.refreshNeeded$;
           }

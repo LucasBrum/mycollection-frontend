@@ -127,7 +127,7 @@ export class ItemCreateComponent implements OnInit {
           });
 
           this.buildForm();
-
+          this.itemForm.reset();
         },
         errorResponse => {
           this.onInfo(errorResponse.error.data);
