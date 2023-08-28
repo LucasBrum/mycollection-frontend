@@ -13,6 +13,7 @@ import { ArtistsModule } from './pages/artists/artists.module';
 import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
 import { ItemsModule } from './pages/items/items.module';
 import { ItemsRoutingModule } from './pages/items/items-routing.module';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { ItemsRoutingModule } from './pages/items/items-routing.module';
     ArtistsModule,
     ArtistsRoutingModule,
     ItemsModule,
+    PaginatorModule,
     ItemsRoutingModule,
     AppRoutingModule,
     HttpClientModule
