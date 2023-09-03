@@ -14,6 +14,8 @@ import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
 import { ItemsModule } from './pages/items/items.module';
 import { ItemsRoutingModule } from './pages/items/items-routing.module';
 import { PaginatorModule } from 'primeng/paginator';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -31,12 +33,13 @@ import { PaginatorModule } from 'primeng/paginator';
     ArtistsRoutingModule,
     ItemsModule,
     PaginatorModule,
+    ToastModule,
     ItemsRoutingModule,
     AppRoutingModule,
     HttpClientModule
 
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
