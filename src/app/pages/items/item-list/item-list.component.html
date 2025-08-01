@@ -24,10 +24,10 @@
 
 <div class="container justify-content-center shadow-2">
   <p-fieldset legend="Cds" class="col-12 sm:col-12 md:col-12 lg:col-6">
-    <div *ngIf="artistsItemDetailsResponse$ | async as artistsItemDetailsResponse; else loading">
-      <p-table [value]="artistsItemDetailsResponse"
+    <div *ngIf="items; else loading">
+      <p-table [value]="items"
         styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm" selectionMode="single"
-        [(selection)]="selectedArtistItemDetails" dataKey="id"
+        [(selection)]="selectedItem" dataKey="id"
         styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm" responsiveLayout="scroll" [rows]="30"
         [paginator]="true" [responsive]="true" #tabela (onRowSelect)="getCoverFromAlbum($event)"
         [rowsPerPageOptions]="[10, 20, 30, 50, 100]"
@@ -52,19 +52,19 @@
             <th>Actions</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-artistItemDetails>
-          <tr [pSelectableRow]="artistItemDetails">
-            <td>{{artistItemDetails.name}}</td>
-            <td class="col-title">{{artistItemDetails.title}}</td>
-            <td>{{artistItemDetails.releaseYear}}</td>
-            <td>{{artistItemDetails.genre}}</td>
-            <td class="col-category">{{artistItemDetails.category}}</td>
-            <td>{{artistItemDetails.country}}</td>
+        <ng-template pTemplate="body" let-item>
+          <tr [pSelectableRow]="item">
+                         <td>{{item.artist?.name}}</td>
+             <td class="col-title">{{item.title}}</td>
+             <td>{{item.releaseYear}}</td>
+             <td>{{item.genre}}</td>
+             <td class="col-category">{{item.category?.name}}</td>
+             <td>{{item.artist?.country}}</td>
             <td>
-              <a role="button" class="a-edit-item" routerLink="/items/create/{{artistItemDetails.id}}">
+              <a role="button" class="a-edit-item" routerLink="/items/create/{{item.id}}">
                 <i class="pi pi-pencil"></i>
               </a>
-              <a role="button" class="a-delete-item" (click)="delete(artistItemDetails)">
+              <a role="button" class="a-delete-item" (click)="delete(item)">
                 <i class="pi pi-trash"></i>
               </a>
             </td>
@@ -77,8 +77,15 @@
         <p-progressSpinner></p-progressSpinner>
       </div>
     </ng-template>
-    <p-dialog header="" [(visible)]="display" (click)="closeDialog()">
-      <img [src]="retrievedImage">
+         <p-dialog header="Capa do Álbum" [(visible)]="display" [modal]="true" [style]="{width: 'auto'}" [draggable]="false" [resizable]="false">
+      <div class="album-cover-container" *ngIf="retrievedImage">
+        <img [src]="retrievedImage" alt="Capa do álbum" class="album-cover-image" 
+             (error)="onImageError($event)" 
+             (load)="onImageLoad($event)">
+      </div>
+      <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" (click)="closeDialog()" label="Fechar" class="p-button-text"></button>
+      </ng-template>
     </p-dialog>
 
   </p-fieldset>

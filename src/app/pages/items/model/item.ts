@@ -9,4 +9,5 @@ export class Item {
   genre: string;
   category: Category;
   artist: Artist;
+  coverImagePath?: string;
 }

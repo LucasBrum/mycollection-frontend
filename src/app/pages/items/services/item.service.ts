@@ -5,6 +5,23 @@ import { first, map, tap } from 'rxjs/operators';
 import { Item } from '../model/item';
 
 
+export interface ItemWithCoverImage {
+  id: number;
+  title: string;
+  releaseYear: number;
+  genre: string;
+  coverImagePath: string;
+  artist: {
+    id: number;
+    name: string;
+    country: string;
+  };
+  category: {
+    id: number;
+    name: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -67,12 +84,10 @@ export class ItemService {
       )
   }
 
-  getCoverFromAlbum(id: number) {
-    return this.httpClient.get(`${this.API}/cover/${id}`, { responseType: 'text' })
-//    .pipe(
-//      first(),
-//     map(result => result['data'])
-//      )
+  getCoverImageUrl(coverImagePath: string): string {
+    // The backend now returns full S3 URLs
+    if (!coverImagePath) return '';
+    return coverImagePath;
   }
 
   getItemById(id: number) {
@@ -81,6 +96,23 @@ export class ItemService {
         first(),
         map(result => result['data'])
       )
+  }
+
+  getByImagePath(imagePath: string) {
+    return this.httpClient.get<any>(`${this.API}/by-image-path`, {
+      params: { imagePath }
+    }).pipe(
+      first(),
+      map(result => result['data'])
+    );
+  }
+
+  listAll() {
+    return this.httpClient.get<any>(`${this.API}`)
+      .pipe(
+        first(),
+        map(result => result['data'] as Item[])
+      );
   }
 
   sanitize(value: any) {

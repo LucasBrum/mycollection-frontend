@@ -8,5 +8,6 @@ export class ArtistItemDetailsResponse {
   releaseYear: number;
   genre: string;
   category: Category;
+  coverImagePath: string;
 
 }

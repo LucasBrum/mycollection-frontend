@@ -6,7 +6,7 @@ import { ArtistService } from '../../artists/services/artist.service';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { Item } from '../model/item';
-import { ItemService } from '../services/item.service';
+import { ItemService, ItemWithCoverImage } from '../services/item.service';
 
 @Component({
   selector: 'app-item-list',
@@ -16,7 +16,7 @@ import { ItemService } from '../services/item.service';
 })
 export class ItemListComponent implements OnInit {
 
-  private readonly ENDPOINT_GET_COVER_IMAGE = 'http://localhost:4200/mycollection/api/items/cover/';
+  // No longer need ENDPOINT_GET_COVER_IMAGE as we use the coverImagePath from the backend
 
   display: boolean = false;
 
@@ -24,7 +24,7 @@ export class ItemListComponent implements OnInit {
       this.display = true;
   }
 
-  selectedArtistItemDetails: ArtistItemDetailsResponse;
+  selectedItem: Item;
   retrievedImage: any;
   base64Data: any;
   retrieveResonse: any;
@@ -32,10 +32,8 @@ export class ItemListComponent implements OnInit {
   @ViewChild('tabela', {static: true}) grid: Table;
   @Output() editar: EventEmitter<number> = new EventEmitter();
 
-  artistsItemDetailsResponse$: Observable<ArtistItemDetailsResponse[]>;
-
-  item: Item;
-  items: MenuItem[];
+  items: Item[] = [];
+  menuItems: MenuItem[];
 
   constructor(
     private artistService: ArtistService,
@@ -46,7 +44,7 @@ export class ItemListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.items = [
+    this.menuItems = [
       {
           label: 'Cadastrar',
           icon: 'pi pi-refresh',
@@ -60,20 +58,37 @@ export class ItemListComponent implements OnInit {
   }
 
   list() {
-    this.artistsItemDetailsResponse$ = this.artistService.listArtistsItemsDetails();
+    // Usar o endpoint que retorna os itens completos
+    this.itemService.listAll().subscribe(
+      items => {
+        this.items = items;
+      },
+      error => {
+        console.error('Error fetching items:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao carregar lista de álbuns.',
+          life: 3000
+        });
+      }
+    );
   }
 
   getCoverFromAlbum(event) {
-    const coverImageId = event.data.id;
-    console.log('Cover Image', event.data);
-//    this.itemService.getCoverFromAlbum(coverImageId)
-//      .subscribe(response => {
-//        this.display = true;
-//        this.retrievedImage = response;
-//      });
-    this.display = true;
-    this.retrievedImage = this.ENDPOINT_GET_COVER_IMAGE + coverImageId;
-    console.log(this.retrievedImage)
+    console.log('Selected item:', event.data);
+    if (event.data.coverImagePath) {
+      // Usar a URL do S3 diretamente
+      this.display = true;
+      this.retrievedImage = event.data.coverImagePath;
+    } else {
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Info',
+        detail: 'Este item não possui imagem de capa.',
+        life: 3000
+      });
+    }
   }
 
   delete(item: Item): void {
@@ -102,6 +117,23 @@ export class ItemListComponent implements OnInit {
 
   closeDialog() {
     this.retrievedImage = null;
+  }
+
+  onImageError(event: any) {
+    if (this.display) { // Só mostra o erro se o diálogo estiver aberto
+      console.error('Error loading image:', event);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Erro ao carregar imagem. Verifique as permissões do bucket S3.',
+        life: 5000
+      });
+      this.display = false;
+    }
+  }
+
+  onImageLoad(event: any) {
+    console.log('Image loaded successfully:', event);
   }
 
 }
