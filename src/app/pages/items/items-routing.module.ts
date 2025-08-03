@@ -4,9 +4,9 @@ import { ItemCreateComponent } from './item-create/item-create.component';
 import { ItemListComponent } from './item-list/item-list.component';
 
 const routes: Routes = [
-  { path: 'items', component: ItemListComponent},
-  { path: 'items/create', component: ItemCreateComponent},
-  { path: 'items/create/:id', component: ItemCreateComponent}
+  { path: '', component: ItemListComponent },
+  { path: 'create', component: ItemCreateComponent },
+  { path: 'create/:id', component: ItemCreateComponent }
 ];
 
 @NgModule({

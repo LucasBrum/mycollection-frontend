@@ -38,16 +38,32 @@ export class ItemService {
 
 
   save(item: Item) {
-    console.log(">>>>>>>>> ITEM ", item)
+    console.log("Item to save:", item);
     const body = this.sanitize(item);
+    console.log("Sanitized body:", body);
 
-    console.log(">>>>>>>>> BODY ", body)
+    const formData = new FormData();
+    
+    // Separa a imagem do resto dos dados
+    const { coverImageFile, ...itemData } = body;
+    
+    // Adiciona o item como um Blob JSON
+    const itemBlob = new Blob([JSON.stringify(itemData)], {
+      type: 'application/json'
+    });
+    formData.append('item', itemBlob);
+    
+    // Adiciona a imagem se existir
+    if (coverImageFile) {
+      formData.append('coverImageFile', coverImageFile, coverImageFile.name);
+    }
 
-    var formData = new FormData();
-    formData.append('item', new Blob([JSON.stringify(body)], {type: 'application/json'}));
-    formData.append('coverImage', body.coverImage);
+    // Configura os headers para multipart/form-data
+    const headers = {
+      Accept: 'application/json',
+    };
 
-    return this.httpClient.post<Item>(this.API, formData)
+    return this.httpClient.post<Item>(this.API, formData, { headers })
       .pipe(
         first(),
         tap(() => {
@@ -67,15 +83,32 @@ export class ItemService {
   }
 
   update(id: number, item: Item) {
-    console.log(">>>>>>>>> ITEM ", item)
+    console.log("Item to update:", item);
     const body = this.sanitize(item);
+    console.log("Sanitized body:", body);
 
-    console.log(">>>>>>>>> BODY ", body)
+    const formData = new FormData();
+    
+    // Separa a imagem do resto dos dados
+    const { coverImageFile, ...itemData } = body;
+    
+    // Adiciona o item como um Blob JSON
+    const itemBlob = new Blob([JSON.stringify(itemData)], {
+      type: 'application/json'
+    });
+    formData.append('item', itemBlob);
+    
+    // Adiciona a imagem se existir
+    if (coverImageFile) {
+      formData.append('coverImageFile', coverImageFile, coverImageFile.name);
+    }
 
-    var formData = new FormData();
-    formData.append('item', new Blob([JSON.stringify(body)], {type: 'application/json'}));
-    formData.append('coverImage', body.coverImage);
-    return this.httpClient.put<Item>(`${this.API}/${id}`, formData)
+    // Configura os headers para multipart/form-data
+    const headers = {
+      Accept: 'application/json',
+    };
+
+    return this.httpClient.put<Item>(`${this.API}/${id}`, formData, { headers })
       .pipe(
         first(),
         tap(() => {

@@ -45,9 +45,14 @@
         </div>
         <div class="col-12 sm:col-12 md:col-12 lg:col-3">
           <span class="p-float-label">
-            <p-fileUpload id="coverImage" styleClass="fullWidth p-button-outlined p-button-info" mode="basic"
-              name="coverImage[]" url="https://www.primefaces.org/cdn/api/upload.php"
-              accept="image/*" (onUpload)="onUpload($event)" [auto]="true" chooseLabel="Adicionar Imagem">
+            <p-fileUpload id="coverImage" 
+              styleClass="fullWidth p-button-outlined p-button-info" 
+              mode="basic"
+              [auto]="true"
+              [customUpload]="true"
+              (uploadHandler)="onUpload($event)"
+              accept="image/*" 
+              chooseLabel="Adicionar Imagem">
             </p-fileUpload>
           </span>
         </div>

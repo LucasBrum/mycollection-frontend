@@ -31,10 +31,8 @@ import { MessageService } from 'primeng/api';
     MegaMenuModule,
     ArtistsModule,
     ArtistsRoutingModule,
-    ItemsModule,
     PaginatorModule,
     ToastModule,
-    ItemsRoutingModule,
     AppRoutingModule,
     HttpClientModule
 

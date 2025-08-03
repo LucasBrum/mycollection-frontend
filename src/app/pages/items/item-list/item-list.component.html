@@ -79,13 +79,10 @@
     </ng-template>
          <p-dialog header="Capa do Álbum" [(visible)]="display" [modal]="true" [style]="{width: 'auto'}" [draggable]="false" [resizable]="false">
       <div class="album-cover-container" *ngIf="retrievedImage">
-        <img [src]="retrievedImage" alt="Capa do álbum" class="album-cover-image" 
-             (error)="onImageError($event)" 
+        <img [src]="retrievedImage" alt="Capa do álbum" class="album-cover-image"
+             (error)="onImageError($event)"
              (load)="onImageLoad($event)">
       </div>
-      <ng-template pTemplate="footer">
-        <button type="button" pButton icon="pi pi-times" (click)="closeDialog()" label="Fechar" class="p-button-text"></button>
-      </ng-template>
     </p-dialog>
 
   </p-fieldset>

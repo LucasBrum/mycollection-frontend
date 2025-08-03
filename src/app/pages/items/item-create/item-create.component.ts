@@ -24,7 +24,7 @@ export class ItemCreateComponent implements OnInit {
   item: Item;
 
   itemForm: FormGroup;
-  coverImageFile: File[];
+  selectedFiles: File[];
   artists: Artist[] = [];
   countries: any[] = [];
   categorias: Category[] = [];
@@ -84,7 +84,7 @@ export class ItemCreateComponent implements OnInit {
       releaseYear: ['', Validators.required],
       genre: ['', Validators.required],
       category: ['', Validators.required],
-      coverImage: this.coverImageFile ? this.coverImageFile[0] : null
+      coverImageFile: this.selectedFiles ? this.selectedFiles[0] : null
     })
 
   }
@@ -139,12 +139,25 @@ export class ItemCreateComponent implements OnInit {
   }
 
   onUpload($event) {
-    console.log("Arquivo de imagem selecionado...", $event.files)
-    this.coverImageFile = $event.files
-    this.messageService.add({severity: 'info', summary: 'Sucesso', detail: 'Upload da imagem efetuado com sucesso.'});
-    this.itemForm.patchValue({
-      coverImage: $event.files[0]
-    })
+    if ($event.files && $event.files.length > 0) {
+      const file = $event.files[0];
+      console.log("Arquivo selecionado:", {
+        name: file.name,
+        type: file.type,
+        size: file.size
+      });
+      
+      // Armazena o arquivo diretamente
+      this.itemForm.patchValue({
+        coverImageFile: file
+      });
+      
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Sucesso',
+        detail: `Imagem "${file.name}" selecionada com sucesso.`
+      });
+    }
   }
 
   private updateItem() {
@@ -214,6 +227,6 @@ export class ItemCreateComponent implements OnInit {
   get releaseYear(): string { return this.camposForm.releaseYear.value; }
   get genre(): string { return this.camposForm.genre.value; }
   get category(): string { return this.camposForm.category.value; }
-  get coverImage(): string { return this.camposForm.coverImage.value; }
+  get coverImageFile(): string { return this.camposForm.coverImageFile.value; }
 
 }
