@@ -15,6 +15,7 @@ import { ItemService, ItemWithCoverImage } from '../services/item.service';
   providers: [MessageService, ConfirmationService],
 })
 export class ItemListComponent implements OnInit {
+  collapsed = true; // Estado do menu lateral
 
   // No longer need ENDPOINT_GET_COVER_IMAGE as we use the coverImagePath from the backend
 
