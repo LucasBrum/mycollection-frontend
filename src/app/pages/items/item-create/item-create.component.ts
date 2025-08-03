@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FileUpload } from 'primeng/fileupload';
 import { Item } from '../model/item';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Category } from '../../categorias/model/category';
@@ -18,6 +19,7 @@ import { Artist } from '../../artists/model/artist';
   encapsulation: ViewEncapsulation.None
 })
 export class ItemCreateComponent implements OnInit {
+  @ViewChild('fileUpload') fileUpload: FileUpload;
 
   id: number;
 
@@ -126,16 +128,22 @@ export class ItemCreateComponent implements OnInit {
             detail:'Item cadastrado com sucesso.'
           });
 
-          this.buildForm();
+          // Reset the selected files
+          this.selectedFiles = null;
+          // Reset the form
           this.itemForm.reset();
+          // Rebuild the form with clean state
+          this.buildForm();
+          // Clear the file upload component
+          if (this.fileUpload) {
+            this.fileUpload.clear();
+          }
         },
         errorResponse => {
           this.onInfo(errorResponse.error.data);
           console.log(errorResponse.error.data);
         });
-
     }
-
   }
 
   onUpload($event) {
