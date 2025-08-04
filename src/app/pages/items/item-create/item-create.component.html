@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 <div class="container justify-content-center shadow-2">
-  <p-fieldset legend="Cadastro de Items" class="fieldset-artist">
+  <p-fieldset [legend]="id ? 'Editar Item' : 'Cadastro de Items'" class="fieldset-artist">
     <form class="app-form item-form" [formGroup]="itemForm">
       <div  class="grid">
         <div class="col-12 sm:col-12 md:col-12 lg:col-6">
@@ -59,10 +59,10 @@
         </div>
       </div>
       <div class="grid">
-        <div class="col-12 sm:col-12 md:col-12 lg:col-6">
-            <button pButton label="Salvar" icon="pi pi-check" class="btn-salvar" (click)="save()"></button>
+        <div [class]="id ? 'col-12' : 'col-12 sm:col-12 md:col-12 lg:col-6'">
+            <button pButton [label]="id ? 'Atualizar' : 'Salvar'" icon="pi pi-check" class="btn-salvar" (click)="save()"></button>
         </div>
-        <div class="col-12 sm:col-12 md:col-12 lg:col-6">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-6" *ngIf="!id">
           <button pButton label="Adicionar Outro" icon="pi pi-plus-circle" class="p-button-success btn-adicionar-outro" (click)="saveAnother()"></button>
         </div>
       </div>

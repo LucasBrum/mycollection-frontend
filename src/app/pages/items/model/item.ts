@@ -2,8 +2,8 @@ import { Artist } from "../../artists/model/artist";
 import { Category } from "../../categorias/model/category";
 
 export class Item {
-
-  _id: number;
+  id: number; // ID principal
+  _id?: number; // Mantendo por compatibilidade
   title: string;
   releaseYear: number;
   genre: string;

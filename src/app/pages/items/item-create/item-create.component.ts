@@ -46,46 +46,77 @@ export class ItemCreateComponent implements OnInit {
 
   ) {}
 
-  ngOnInit(): void {
-    let params: Observable<Params> = this.activatedRoute.params
-      params.subscribe(urlParams => {
-        this.id = urlParams['id'];
-        if (this.id) {
-          this.itemService.getItemById(this.id)
-          .subscribe(artist => this.setArtistFormToEdit(artist),
-          err => console.log(err))
-        }
-      })
-
+  async ngOnInit(): Promise<void> {
     this.buildForm();
-    this.listCategories();
-    this.listCountries();
-    this.listArtists();
+    
+    // Se não estiver em modo de edição, carrega os dados relacionados imediatamente
+    if (!this.activatedRoute.snapshot.params['id']) {
+      await Promise.all([
+        this.listCategories(),
+        this.listCountries(),
+        this.listArtists()
+      ]);
+    }
+
+    this.activatedRoute.params.subscribe(params => {
+      this.id = params['id'];
+      if (this.id) {
+        this.itemService.getItemById(this.id).subscribe(
+          item => {
+            if (item) {
+              console.log('Item loaded for edit:', item);
+              this.setItemFormToEdit(item);
+            } else {
+              this.handleItemNotFound();
+            }
+          },
+          error => {
+            console.error('Error loading item:', error);
+            if (error.status === 404) {
+              this.handleItemNotFound();
+            } else {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Erro',
+                detail: 'Erro ao carregar item para edição. Por favor, tente novamente.'
+              });
+            }
+          }
+        );
+      }
+    });
   }
 
-  setArtistFormToEdit(item: Item) {
-    this.item = item;
-    console.log("Entrei no SET", item);
+  setItemFormToEdit(item: Item) {
+    console.log("Setting form to edit with item:", item);
     if (item) {
-      this.itemForm.patchValue({
-        id: item._id,
-        title: item.title,
-        releaseYear: item.releaseYear,
-        genre: item.genre,
-        category: item.category,
-        artist: item.artist
+      this.item = item;
+      // Aguarda os dados relacionados serem carregados
+      Promise.all([
+        this.listCategories(),
+        this.listArtists()
+      ]).then(() => {
+        this.itemForm.patchValue({
+          title: item.title,
+          releaseYear: item.releaseYear,
+          genre: item.genre,
+          category: item.category,
+          artist: item.artist,
+          coverImagePath: item.coverImagePath
+        });
       });
     }
   }
 
   buildForm() {
-    //console.log(">>>>>>>> Cover Image File", this.coverImageFile)
+    this.pristine = true;
     this.itemForm = this.formBuilder.group({
       artist: ['', Validators.required],
       title: ['', Validators.required],
       releaseYear: ['', Validators.required],
       genre: ['', Validators.required],
       category: ['', Validators.required],
+      coverImagePath: [''],
       coverImageFile: this.selectedFiles ? this.selectedFiles[0] : null
     })
 
@@ -186,23 +217,33 @@ export class ItemCreateComponent implements OnInit {
     this.itemForm.reset();
   }
 
-  listCategories() {
-    this.categoriaService.list()
-      .subscribe(categorias => this.categorias = categorias);
+  listCategories(): Promise<void> {
+    return new Promise((resolve) => {
+      this.categoriaService.list()
+        .subscribe(categorias => {
+          this.categorias = categorias;
+          resolve();
+        });
+    });
   }
 
-  listCountries() {
-    this.artistService.list()
-      .subscribe(countries => {
-        this.countries = countries
+  listCountries(): Promise<void> {
+    return new Promise((resolve) => {
+      this.artistService.list()
+        .subscribe(countries => {
+          this.countries = countries;
+          resolve();
+        });
+    });
+  }
+
+  listArtists(): Promise<void> {
+    return new Promise((resolve) => {
+      this.artistService.list().subscribe(artists => {
+        this.artists = artists;
+        console.log('ARTISTS >>> ', artists);
+        resolve();
       });
-
-  }
-
-  listArtists() {
-    this.artistService.list().subscribe(artists => {
-      this.artists = artists
-      console.log('ARTISTS >>> ', artists);
     });
 
   }
@@ -216,6 +257,19 @@ export class ItemCreateComponent implements OnInit {
       detail:msg,
       life:5000
     })
+  }
+
+  private handleItemNotFound() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Item não encontrado',
+      detail: 'O item que você está tentando editar não foi encontrado.',
+      life: 5000
+    });
+    // Redireciona de volta para a lista após um breve delay
+    setTimeout(() => {
+      this.router.navigate(['/items']);
+    }, 1500);
   }
 
   private onInfo(message: string) {

@@ -124,10 +124,10 @@ export class ItemService {
   }
 
   getItemById(id: number) {
-    return this.httpClient.get<Item[]>(`${this.API}/${id}`)
+    return this.httpClient.get<any>(`${this.API}/${id}`)
       .pipe(
         first(),
-        map(result => result['data'])
+        map(result => result['data'] as Item)
       )
   }
 
@@ -144,7 +144,12 @@ export class ItemService {
     return this.httpClient.get<any>(`${this.API}`)
       .pipe(
         first(),
-        map(result => result['data'] as Item[])
+        map(result => {
+          console.log('Raw API response:', result);
+          const items = result['data'] as Item[];
+          console.log('Mapped items:', items);
+          return items;
+        })
       );
   }
 

@@ -60,11 +60,12 @@ export class ItemListComponent implements OnInit {
 
   list() {
     // Usar o endpoint que retorna os itens completos
-    this.itemService.listAll().subscribe(
-      items => {
+    this.itemService.listAll().subscribe({
+      next: (items) => {
+        console.log('Items loaded:', items);
         this.items = items;
       },
-      error => {
+      error: (error) => {
         console.error('Error fetching items:', error);
         this.messageService.add({
           severity: 'error',
@@ -73,7 +74,7 @@ export class ItemListComponent implements OnInit {
           life: 3000
         });
       }
-    );
+    });
   }
 
   getCoverFromAlbum(event) {
@@ -93,23 +94,41 @@ export class ItemListComponent implements OnInit {
   }
 
   delete(item: Item): void {
-    const itemId = item['id'];
-    console.log(item['id'])
+    if (!item || (!item.id && !item._id)) {
+      console.error('Invalid item or item ID:', item);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'ID do item inválido'
+      });
+      return;
+    }
+
+    console.log('Deleting item:', item);
     this.confirmationService.confirm({
-      message: 'Deseja realmente remover o Álbum ' + item['title'] + ' do ' + item['name'] + ' ?',
+      message: `Deseja realmente remover o álbum "${item.title}" do artista "${item.artist?.name}"?`,
       accept: () => {
-        this.itemService.delete(itemId).subscribe(
-          response => {
+        const itemId = item.id || item._id;
+        this.itemService.delete(itemId).subscribe({
+          next: () => {
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
               detail: 'Álbum deletado com sucesso.'
-            })
-            this.artistService.refreshNeeded$;
+            });
+            this.list();
+          },
+          error: (error) => {
+            console.error('Error deleting item:', error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Erro ao deletar álbum. Por favor, tente novamente.'
+            });
           }
-        )
+        });
       }
-    })
+    });
   }
 
   onRowSelect(event) {
