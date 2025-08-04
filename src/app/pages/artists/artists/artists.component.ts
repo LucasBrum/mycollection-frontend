@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
@@ -11,7 +11,7 @@ import { ArtistService } from './../services/artist.service';
   selector: 'app-artists',
   templateUrl: './artists.component.html',
   styleUrls: ['./artists.component.scss'],
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService]
 })
 export class ArtistsComponent implements OnInit {
 
@@ -53,7 +53,7 @@ export class ArtistsComponent implements OnInit {
           icon: 'pi pi-refresh',
           routerLink: ['/artist/new'],
       }
-  ];
+    ];
     this.artistService.refreshNeeded$.subscribe(() => {
       this.list();
     })
@@ -65,27 +65,18 @@ export class ArtistsComponent implements OnInit {
     this.artists$ = this.artistService.list();
   }
 
-  getCoverFromAlbum(event) {
-    const coverImageId = event.data.id;
-    this.retrievedImage = this.artistService.getCoverFromAlbum(event.data.id)
-      .subscribe(response => {
-        this.display = true;
-        this.retrievedImage = this.ENDPOINT_GET_COVER_IMAGE + coverImageId;
-      })
-  }
-
   delete(artist: Artist): void {
     const artistId = artist['id'];
     console.log(artist['id'])
     this.confirmationService.confirm({
-      message: 'Deseja realmente remover o Álbum ' + artist['title'] + ' do ' + artist['band'] + ' ?',
+      message: 'Deseja realmente remover o artista ' + artist['name'] + ' ?',
       accept: () => {
         this.artistService.delete(artistId).subscribe(
           response => {
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
-              detail: 'Álbum deletado com sucesso.'
+              detail: 'Artista deletado com sucesso.'
             })
             this.artistService.refreshNeeded$;
           }
@@ -95,15 +86,15 @@ export class ArtistsComponent implements OnInit {
   }
 
   selectAlbum(artist: Artist) {
-    this.messageService.add({severity:'info', summary:'Album selecionado', detail: artist.band});
+    this.messageService.add({severity:'info', summary:'Album selecionado', detail: artist.name});
   }
 
   onRowSelect(event) {
-      this.messageService.add({severity:'info', summary:'Album selecionado', detail: event.data.band + ' - ' + event.data.title});
+      this.messageService.add({severity:'info', summary:'Album selecionado', detail: event.data.name + ' - ' + event.data.country});
   }
 
   onRowUnselect(event) {
-      this.messageService.add({severity:'info', summary:'Album selecionado',  detail: event.data.band + ' - ' + event.data.title});
+      this.messageService.add({severity:'info', summary:'Album selecionado',  detail: event.data.name + ' - ' + event.data.country});
   }
 
 }

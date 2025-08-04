@@ -1,7 +1,7 @@
 <p-toast></p-toast>
 <p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '30vw'}">
   <ng-template pTemplate="header">
-      <h3>Exclusão de Álbum</h3>
+      <h3>Exclusão de Artista</h3>
   </ng-template>
   <ng-template pTemplate="footer">
       <button type="button" pButton class="cd-btn-cancel" icon="pi pi-times" label="Cancelar" (click)="cd.reject()"></button>
@@ -9,48 +9,54 @@
   </ng-template>
 </p-confirmDialog>
 
-<div class="p-flui grid">
+<div class="p-fluid grid">
   <div class="col-6 col-offset-3">
-    <p-toolbar>
+    <p-toolbar class="toolbar">
       <div class="p-toolbar-group-left">
-          <p-button label="Cadastrar" routerLink="/artists/create" icon="pi pi-plus" styleClass="p-button-success"></p-button>
+          <p-button label="Cadastrar Artista" routerLink="/artists/create" icon="pi pi-plus" styleClass="p-button-success"></p-button>
       </div>
     </p-toolbar>
 </div>
 </div>
 
-<div class="p-flui grid">
-  <p-fieldset legend="Cds" class="col-10 col-offset-1">
+<div class="container justify-content-center shadow-2">
+  <p-fieldset legend="Artistas" class="col-12 sm:col-12 md:col-12 lg:col-6">
     <div class="card">
         <div *ngIf="artists$ | async as artists; else loading">
         <p-table [value]="artists" selectionMode="single"  [(selection)]="selectedAlbum" dataKey="id"
-          styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm" responsiveLayout="scroll" #tabela
-          (onRowSelect)="getCoverFromAlbum($event)" (onRowUnselect)="getCoverFromAlbum($event)">
+          styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm" responsiveLayout="scroll" #tabela>
 
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="band">Band/Artist <p-sortIcon field="band"></p-sortIcon></th>
+                    <th pSortableColumn="name">Band/Artist <p-sortIcon field="name"></p-sortIcon></th>
+                    <!--
                     <th pSortableColumn="title">Title <p-sortIcon field="title"></p-sortIcon></th>
                     <th pSortableColumn="releaseYear">Release Year <p-sortIcon field="releaseYear"></p-sortIcon></th>
                     <th pSortableColumn="genre">Genre <p-sortIcon field="genre"></p-sortIcon></th>
-                    <th pSortableColumn="country">Country<p-sortIcon field="country"></p-sortIcon></th>
                     <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
+                    -->
+                    <th pSortableColumn="country">Country<p-sortIcon field="country"></p-sortIcon></th>
                     <th>Actions</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-artist>
                 <tr [pSelectableRow]="artist" >
-                    <td>{{artist.band}}</td>
+                    <td>{{artist.name}}</td>
+                    <!--
                     <td>{{artist.title}}</td>
                     <td>{{artist.releaseYear}}</td>
                     <td>{{artist.genre}}</td>
-                    <td>{{artist.country}}</td>
                     <td>{{artist.category.name}}</td>
+                    -->
+                    <td>{{artist.country}}</td>
                     <td>
-                      <a role="button" class="a-edit-artist" routerLink="/artists/form/{{artist.id}}">Editar</a>
-                      <i class="pi pi-pause"></i>
-                      <a role="button" class="a-delete-artist" (click)="delete(artist)">Excluir</a>
+                      <a role="button" class="a-edit-artist" routerLink="/artists/form/{{artist.id}}">
+                        <i class="pi pi-pencil"></i>
+                      </a>
+                      <a role="button" class="a-delete-artist" (click)="delete(artist)">
+                        <i class="pi pi-trash" style="color: #1c5792"></i>
+                      </a>
                     </td>
                 </tr>
             </ng-template>

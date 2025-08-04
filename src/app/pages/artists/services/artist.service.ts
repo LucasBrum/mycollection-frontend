@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first, map, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { ArtistItemDetailsResponse } from '../model/ArtistItemDetailsResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -40,14 +41,6 @@ export class ArtistService {
       )
   }
 
-  getCoverFromAlbum(id: number) {
-    return this.httpClient.get(`${this.API}/album/cover/${id}`, { responseType: 'text' })
-      // .pipe(
-      //   first(),
-      //   map(result => result['data'])
-      // )
-  }
-
   listCountries(): Observable<any> {
     return this.httpClient.get(this._jsonCountries)
     .pipe(
@@ -56,6 +49,27 @@ export class ArtistService {
     )
   }
 
+  save(artist: Artist) {
+    return this.httpClient.post<Artist>(this.API, artist)
+      .pipe(
+        first(),
+        tap(() => {
+          this._refreshNeeded$.next();
+        })
+      );
+
+  }
+
+  listArtistsItemsDetails() {
+    return this.httpClient.get<ArtistItemDetailsResponse[]>(`${this.API}/items/details`)
+      .pipe(
+        first(),
+        map(result => result['data'])
+      )
+  }
+
+
+/**
   save(artist: Artist) {
     console.log(">>>>>>>>> ARTIST ", artist)
     const body = this.sanitize(artist);
@@ -74,6 +88,8 @@ export class ArtistService {
         })
       )
   }
+*/
+
 
   update(id: number, artist: Artist) {
 

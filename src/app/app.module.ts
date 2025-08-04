@@ -11,6 +11,11 @@ import { AppComponent } from './app.component';
 import { ArtistsRoutingModule } from './pages/artists/artists-routing.module';
 import { ArtistsModule } from './pages/artists/artists.module';
 import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
+import { ItemsModule } from './pages/items/items.module';
+import { ItemsRoutingModule } from './pages/items/items-routing.module';
+import { PaginatorModule } from 'primeng/paginator';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -26,11 +31,13 @@ import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
     MegaMenuModule,
     ArtistsModule,
     ArtistsRoutingModule,
+    PaginatorModule,
+    ToastModule,
     AppRoutingModule,
     HttpClientModule
 
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,207 @@
+.main-container {
+  padding: 1.25rem;
+  min-height: calc(100vh - 4rem);
+  background-color: var(--surface-ground);
+  margin-left: 5rem; // Espaço para o menu lateral
+  transition: margin-left 0.3s ease;
+  
+  &.nav-expanded {
+    margin-left: 16rem; // Quando o menu estiver expandido
+  }
+}
+
+.header-container {
+  margin-bottom: 1.25rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--surface-card);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 1.25rem;
+}
+
+.header-left {
+  .page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .page-subtitle {
+    color: var(--text-color-secondary);
+    margin: 0;
+    font-size: 1rem;
+  }
+}
+
+.header-right {
+  .add-button {
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    
+    &.p-button {
+      background: var(--primary-color);
+      border-radius: 8px;
+      
+      &:hover {
+        background: var(--primary-600);
+      }
+    }
+  }
+}
+
+.content-container {
+  background: var(--surface-card);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin: 0 auto;
+  max-width: 1400px;
+}
+
+.card-container {
+  background: var(--surface-card);
+  border-radius: 12px;
+}
+
+:host ::ng-deep {
+  .modern-table {
+    .p-datatable-header {
+      background: transparent;
+      border: none;
+  padding: 1rem;
+}
+
+    .p-datatable-thead > tr > th {
+      background: var(--surface-card);
+      border: none;
+      border-bottom: 1px solid var(--surface-border);
+      color: var(--text-color);
+      font-weight: 600;
+      padding: 0.5rem 0.75rem;
+      height: 40px;
+
+      .flex.align-items-center {
+        height: 100%;
+        font-size: 0.875rem;
+      }
+    }
+
+    .p-datatable-tbody > tr {
+      border: none;
+      transition: background-color 0.2s;
+      height: 48px;
+
+      &:hover {
+        background: var(--surface-hover);
+      }
+
+      > td {
+        border: none;
+        border-bottom: 1px solid var(--surface-border);
+        padding: 0.5rem 0.75rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.875rem;
+        line-height: 1.2;
+      }
+    }
+
+    .p-paginator {
+      background: transparent;
+      border: none;
+      padding: 1rem;
+    }
+  }
+
+  .category-badge {
+    background: var(--primary-color);
+    color: var(--primary-color-text);
+    border-radius: 12px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+
+    &.dvd-badge {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(238, 82, 83, 0.2);
+      
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px rgba(238, 82, 83, 0.3);
+      }
+    }
+  }
+
+  .p-button.p-button-text {
+    padding: 0.5rem;
+    
+    &:hover {
+      background: var(--surface-hover);
+    }
+  }
+
+  .add-button {
+    font-weight: 600;
+  }
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+// Dialog styles
+:host ::ng-deep .p-dialog {
+  .p-dialog-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--surface-border);
+  }
+
+  .p-dialog-content {
+    padding: 0;
+  }
+
+  .album-cover-container {
+  display: flex;
+    justify-content: center;
+  align-items: center;
+    padding: 1.5rem;
+  }
+
+  .album-cover-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+}
+
+// Responsive adjustments
+@media screen and (max-width: 768px) {
+  .main-container {
+    padding: 1rem;
+  }
+
+  .content-container {
+    padding: 1rem;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  text-align: center;
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
@@ -14,7 +14,8 @@ import { ArtistService } from '../services/artist.service';
   selector: 'app-artist-form',
   templateUrl: './artist-form.component.html',
   styleUrls: ['./artist-form.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService],
+  encapsulation: ViewEncapsulation.None
 })
 export class ArtistFormComponent implements OnInit {
 
@@ -29,8 +30,8 @@ export class ArtistFormComponent implements OnInit {
   countries: any[] = [];
   categorias: Category[] = [];
   selectedCategory: Category;
+  formSubmitted = false;
 
-  pristine = true;
 
   constructor(
     private router: Router,
@@ -41,8 +42,7 @@ export class ArtistFormComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private activatedRoute : ActivatedRoute
 
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     let params: Observable<Params> = this.activatedRoute.params
@@ -66,33 +66,42 @@ export class ArtistFormComponent implements OnInit {
     if (artist) {
       this.artistForm.patchValue({
         id: artist._id,
-        band: artist.band,
-        category: artist.category,
+        name: artist.name,
         country: artist.country,
-        genre: artist.genre,
-        releaseYear: artist.releaseYear,
-        title: artist.title,
+        //category: artist.category,
+        //genre: artist.genre,
+        //releaseYear: artist.releaseYear,
+        //title: artist.title,
       });
     }
   }
 
   buildForm() {
-    console.log(">>>>>>>> Cover Image File", this.coverImageFile)
+    this.formSubmitted = false;
     this.artistForm = this.formBuilder.group({
-      band: ['', Validators.required],
-      title: ['', Validators.required],
-      releaseYear: ['', Validators.required],
+      name: ['', Validators.required],
       country: ['', Validators.required],
-      genre: ['', Validators.required],
-      category: ['', Validators.required],
-      coverImage: this.coverImageFile ? this.coverImageFile[0] : null
-    })
-
+//      title: ['', Validators.required],
+//      releaseYear: ['', Validators.required],
+//     genre: ['', Validators.required],
+//      category: ['', Validators.required],
+//      coverImage: this.coverImageFile ? this.coverImageFile[0] : null
+    });
   }
 
   save() {
+    this.formSubmitted = true;
+    
+    if (this.artistForm.invalid) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Por favor, preencha todos os campos obrigatórios.',
+        life: 3000
+      });
+      return;
+    }
 
-    console.log('this.artistForm.value ================ ', this.artistForm.value);
     if(this.id) {
       this.updateArtist();
     } else {
@@ -101,7 +110,7 @@ export class ArtistFormComponent implements OnInit {
           this.messageService.add({
             severity:'success',
             summary:'Sucesso',
-            detail:'Álbum cadastro com sucesso.'
+            detail:'Artista cadastrado com sucesso.'
           });
 
           this.router.navigate(['/artists'])
@@ -110,14 +119,23 @@ export class ArtistFormComponent implements OnInit {
           this.onInfo(errorResponse.error.data);
           console.log(errorResponse.error.data);
         });
-
     }
 
   }
 
   saveAnother() {
+    this.formSubmitted = true;
+    
+    if (this.artistForm.invalid) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Por favor, preencha todos os campos obrigatórios.',
+        life: 3000
+      });
+      return;
+    }
 
-    console.log('this.artistForm.value ================ ', this.artistForm.value);
     if(this.id) {
       this.updateArtist();
     } else {
@@ -126,17 +144,17 @@ export class ArtistFormComponent implements OnInit {
           this.messageService.add({
             severity:'success',
             summary:'Sucesso',
-            detail:'Álbum cadastro com sucesso.'
+            detail:'Artista cadastrado com sucesso.'
           });
 
+          // Reseta o formulário e mantém na página para cadastrar outro
+          this.artistForm.reset();
           this.buildForm();
-
         },
         errorResponse => {
           this.onInfo(errorResponse.error.data);
           console.log(errorResponse.error.data);
         });
-
     }
 
   }
@@ -162,7 +180,7 @@ export class ArtistFormComponent implements OnInit {
         error => { this.onError('Erro ao atualizar Álbum.'); }
       );
 
-    this.artistForm.reset();
+    this.buildForm();
   }
 
   listCategories() {
@@ -201,12 +219,12 @@ export class ArtistFormComponent implements OnInit {
   }
 
   get camposForm(): any { return this.artistForm.controls; }
-  get band(): string { return this.camposForm.band.value; }
-  get title(): string { return this.camposForm.title.value; }
-  get releaseYear(): string { return this.camposForm.releaseYear.value; }
+  get name(): string { return this.camposForm.name.value; }
   get country(): string { return this.camposForm.country.value; }
-  get genre(): string { return this.camposForm.genre.value; }
-  get category(): string { return this.camposForm.category.value; }
-  get coverImage(): string { return this.camposForm.coverImage.value; }
+  //get title(): string { return this.camposForm.title.value; }
+  //get releaseYear(): string { return this.camposForm.releaseYear.value; }
+  //get genre(): string { return this.camposForm.genre.value; }
+  //get category(): string { return this.camposForm.category.value; }
+  //get coverImage(): string { return this.camposForm.coverImage.value; }
 
 }

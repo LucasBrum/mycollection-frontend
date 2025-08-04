@@ -1,8 +1,12 @@
 # MycollectionFront
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.13.0.
+
+v12.22.12 - Use nvm to change the version
 
 ## Development server
+To run change node version to 18.13.0 . Use command nvm for that:
+- nvm use 12.22.12
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 

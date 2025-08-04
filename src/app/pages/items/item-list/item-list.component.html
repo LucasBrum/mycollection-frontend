@@ -1,0 +1,135 @@
+<p-toast></p-toast>
+<p-confirmDialog #cd [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '30vw'}">
+  <ng-template pTemplate="header">
+    <h3>Exclusão de Álbum</h3>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button type="button" pButton class="cd-btn-cancel" icon="pi pi-times" label="Cancelar"
+      (click)="cd.reject()"></button>
+    <button type="button" pButton class="cd-btn-remove" icon="pi pi-trash" label="Remover"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
+
+<div class="main-container" [ngClass]="{'nav-expanded': !collapsed}">
+  <div class="header-container">
+    <div class="header-content">
+      <div class="header-left">
+        <h1 class="page-title">Minha Coleção</h1>
+        <p class="page-subtitle">Gerencie seus álbuns favoritos</p>
+      </div>
+      <div class="header-right">
+        <p-button label="Adicionar Novo Item"
+                  routerLink="/items/create"
+                  icon="pi pi-plus"
+                  styleClass="p-button-success add-button">
+        </p-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-container">
+    <div class="card-container" *ngIf="items; else loading">
+      <p-table [value]="items"
+        styleClass="modern-table"
+        selectionMode="single"
+        [(selection)]="selectedItem"
+        dataKey="id"
+        responsiveLayout="scroll"
+        [rows]="10"
+        [paginator]="true"
+        [responsive]="true"
+        #tabela
+        (onRowSelect)="getCoverFromAlbum($event)"
+        [rowsPerPageOptions]="[10, 20, 30, 50]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} items">
+
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="artist.name" class="text-left">
+              <div class="flex align-items-center">
+                <span>Artista</span>
+                <p-sortIcon field="artist.name"></p-sortIcon>
+              </div>
+            </th>
+            <th pSortableColumn="title" class="text-left">
+              <div class="flex align-items-center">
+                <span>Título</span>
+                <p-sortIcon field="title"></p-sortIcon>
+              </div>
+            </th>
+            <th pSortableColumn="releaseYear" style="width: 120px">
+              <div class="flex align-items-center">
+                <span>Ano</span>
+                <p-sortIcon field="releaseYear"></p-sortIcon>
+              </div>
+            </th>
+            <th pSortableColumn="genre" class="text-left">
+              <div class="flex align-items-center">
+                <span>Gênero</span>
+                <p-sortIcon field="genre"></p-sortIcon>
+              </div>
+            </th>
+            <th pSortableColumn="category.name" class="text-left">
+              <div class="flex align-items-center">
+                <span>Categoria</span>
+                <p-sortIcon field="category.name"></p-sortIcon>
+              </div>
+            </th>
+            <th pSortableColumn="artist.country" class="text-left">
+              <div class="flex align-items-center">
+                <span>País</span>
+                <p-sortIcon field="artist.country"></p-sortIcon>
+              </div>
+            </th>
+            <th style="width: 100px">Ações</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr [pSelectableRow]="item" class="hover:surface-200">
+            <td class="text-left">{{item.artist?.name}}</td>
+            <td class="text-left font-medium">{{item.title}}</td>
+            <td class="text-center">{{item.releaseYear}}</td>
+            <td class="text-left">{{item.genre}}</td>
+            <td class="text-left">
+              <span class="category-badge" [ngClass]="{'dvd-badge': item.category?.name?.toLowerCase() === 'dvd'}">
+                {{item.category?.name}}
+              </span>
+            </td>
+            <td class="text-left">{{item.artist?.country}}</td>
+            <td>
+              <div class="flex gap-2 justify-content-center">
+                <button pButton
+                        type="button"
+                        icon="pi pi-pencil"
+                        class="p-button-rounded p-button-text p-button-info"
+                        routerLink="/items/create/{{item.id}}">
+                </button>
+                <button pButton
+                        type="button"
+                        icon="pi pi-trash"
+                        class="p-button-rounded p-button-text p-button-danger"
+                        (click)="delete(item)">
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <ng-template #loading>
+      <div class="loading-spinner">
+        <p-progressSpinner></p-progressSpinner>
+      </div>
+    </ng-template>
+         <p-dialog  [(visible)]="display" [modal]="true" [style]="{width: 'auto'}" [draggable]="false" [resizable]="false">
+      <div class="album-cover-container" *ngIf="retrievedImage">
+        <img [src]="retrievedImage" alt="Capa do álbum" class="album-cover-image"
+             (error)="onImageError($event)"
+             (load)="onImageLoad($event)">
+      </div>
+    </p-dialog>
+  </div>
+</div>
