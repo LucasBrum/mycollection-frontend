@@ -15,7 +15,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CardModule } from 'primeng/card';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from 'primeng/api';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
