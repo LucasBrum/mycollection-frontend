@@ -1,149 +1,223 @@
-.body {
-  width: calc(100% - 5rem);
-  height: 100vh;
+.artists-container {
+  padding: 1rem;
+  min-height: calc(100vh - 4rem);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   margin-left: 5rem;
-  z-index: 0;
+  transition: margin-left 0.3s ease;
+}
+
+.header-section {
+  margin-bottom: 1rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.header-left {
+  .page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.25rem 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .page-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+}
+
+.header-right {
+  .add-button {
+    font-weight: 600;
+    padding: 0.875rem 1.75rem;
+  }
+}
+
+.content-section {
+  background: transparent;
+}
+
+// Grid de Artistas
+.artists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  padding: 0.25rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.artist-card {
+  background: var(--surface-card);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.25rem 1rem;
+  text-align: center;
   position: relative;
-  top: 0;
-  transition: all 5s ease;
-  background: #f4f7fa;
-  padding: 3rem;
+
+  .artist-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 0.75rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+
+    i {
+      font-size: 1.75rem;
+      color: white;
+    }
+  }
+
+  .artist-name {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
 }
 
-.container {
-  width: 70%;
-  margin: auto;
-  padding: 1rem 1rem 3rem 1rem;
-  border-radius: 1.5rem;
-  background: #2632380f;
+.card-body {
+  padding: 1rem;
+  flex: 1;
+
+  .artist-info {
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: var(--surface-ground);
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      i {
+        font-size: 1rem;
+        color: #667eea;
+        min-width: 20px;
+      }
+
+      span {
+        font-size: 0.875rem;
+        color: var(--text-color);
+        font-weight: 500;
+      }
+    }
+  }
 }
 
-.body-trimmed {
-  width: calc(100% - 16.5625rem);
-  margin-left: 16.5625rem;
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-top: 1px solid var(--surface-border);
+
+  button {
+    flex: 1;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+
+    &.p-button-info {
+      &:hover {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+      }
+    }
+
+    &.p-button-danger {
+      &:hover {
+        background: #ef4444;
+        color: white;
+        border-color: #ef4444;
+      }
+    }
+  }
 }
 
-.body-md-screen {
-  width: calc(100% - 5rem);
-  margin-left: 5rem;
-}
-
-:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
-    text-align: center;
-
-}
-
-:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
-    text-align: center;
-}
-
+// Loading
 .loading-spinner {
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin: auto;
-}
-
-.p-button-info {
-  margin: 5px 5px 5px 5px;
-
-}
-
-.p-button-danger {
-  margin: 5px 5px 5px 5px;
-
-}
-
-a.a-edit-artist {
-  background-image: linear-gradient(
-    to right,
-    #004d69,
-    #003cff 50%,
-    #6366F1 50%
-  );
-  background-size: 200% 100%;
-  background-position: -100%;
-  display: inline-block;
-  padding: 5px 0;
-  position: relative;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 0.3s ease-in-out;
-  font-weight: bold;
-}
-
-a.a-delete-artist {
-  background-image: linear-gradient(
-    to right,
-    #ff0000,
-    #0084ff 50%,
-    #ff0000 50%
-  );
-  background-size: 200% 100%;
-  background-position: -100%;
-  display: inline-block;
-  padding: 5px 0;
-  position: relative;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 0.3s ease-in-out;
-  font-weight: bold;
-  margin: 0 10px;
-}
-
-a:before{
-  content: '';
-  background: #000000;
-  display: block;
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 0;
-  height: 3px;
-  transition: all 0.3s ease-in-out;
-}
-
-a:hover {
- background-position: 0;
-
-}
-
-a:hover::before{
-  width: 100%;
-
-}
-
-/* Presentational Styles */
-body {
-  display: grid;
-  font-family: 'Poppins', sans-serif;
-  font-size: 27px;
-  font-weight: 700;
-  height: 100vh;
-  place-items: center;
-
-}
-
-:host ::ng-deep .p-button {
-  margin: 0 .5rem 0 0;
-  min-width: 10rem;
-}
-
-p {
-  margin: 0;
-}
-
-.confirmation-content {
-  display: flex;
   align-items: center;
-  justify-content: center;
+  min-height: 400px;
 }
 
-:host ::ng-deep .p-dialog .p-button {
-  min-width: 6rem;
+// Confirm Dialog
+:host ::ng-deep {
+  .cd-btn-cancel {
+    background-color: rgb(117, 117, 117);
+  }
+
+  .cd-btn-remove {
+    background-color: #EF4444;
+  }
 }
 
-.cd-btn-remove {
-  background-color: #ff0000;
-}
+// Responsive
+@media screen and (max-width: 768px) {
+  .artists-container {
+    padding: 1rem;
+    margin-left: 0;
+  }
 
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+    text-align: center;
+    padding: 1.25rem;
+  }
+
+  .header-left {
+    .page-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .card-actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}

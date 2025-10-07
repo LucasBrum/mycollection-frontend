@@ -31,6 +31,8 @@ export class ItemCreateComponent implements OnInit {
   countries: any[] = [];
   categorias: Category[] = [];
   selectedCategory: Category;
+  imagePreview: string | ArrayBuffer | null = null;
+  isDragging: boolean = false;
 
   pristine = true;
 
@@ -96,14 +98,34 @@ export class ItemCreateComponent implements OnInit {
         this.listCategories(),
         this.listArtists()
       ]).then(() => {
+        // Encontra os objetos completos nas listas carregadas
+        // O backend retorna 'id' mas a lista também pode usar '_id'
+        const categoryIdFromBackend = (item.category as any)?.id || item.category?._id;
+        const artistIdFromBackend = (item.artist as any)?.id || item.artist?._id;
+
+        const selectedArtist = this.artists.find(a => {
+          const artistId = a._id || (a as any).id;
+          return artistId === artistIdFromBackend;
+        });
+
+        const selectedCategory = this.categorias.find(c => {
+          const categoryId = c._id || (c as any).id;
+          return categoryId === categoryIdFromBackend;
+        });
+
         this.itemForm.patchValue({
           title: item.title,
           releaseYear: item.releaseYear,
           genre: item.genre,
-          category: item.category,
-          artist: item.artist,
+          category: selectedCategory,
+          artist: selectedArtist,
           coverImagePath: item.coverImagePath
         });
+
+        // Set image preview if cover exists
+        if (item.coverImagePath) {
+          this.imagePreview = item.coverImagePath;
+        }
       });
     }
   }
@@ -185,18 +207,99 @@ export class ItemCreateComponent implements OnInit {
         type: file.type,
         size: file.size
       });
-      
+
       // Armazena o arquivo diretamente
       this.itemForm.patchValue({
         coverImageFile: file
       });
-      
+
+      // Generate image preview
+      this.generateImagePreview(file);
+
       this.messageService.add({
         severity: 'info',
         summary: 'Sucesso',
         detail: `Imagem "${file.name}" selecionada com sucesso.`
       });
     }
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      if (file.type.startsWith('image/')) {
+        this.itemForm.patchValue({
+          coverImageFile: file
+        });
+        this.generateImagePreview(file);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: `Imagem "${file.name}" adicionada com sucesso.`
+        });
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Por favor, selecione apenas arquivos de imagem.'
+        });
+      }
+    }
+  }
+
+  onFileSelect(event: any) {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      this.itemForm.patchValue({
+        coverImageFile: file
+      });
+      this.generateImagePreview(file);
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Sucesso',
+        detail: `Imagem "${file.name}" selecionada com sucesso.`
+      });
+    }
+  }
+
+  generateImagePreview(file: File) {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.imagePreview = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  removeImage() {
+    this.imagePreview = null;
+    this.itemForm.patchValue({
+      coverImageFile: null
+    });
+    if (this.fileUpload) {
+      this.fileUpload.clear();
+    }
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Removido',
+      detail: 'Imagem removida com sucesso.'
+    });
   }
 
   private updateItem() {
@@ -284,11 +387,11 @@ export class ItemCreateComponent implements OnInit {
   }
 
   get camposForm(): any { return this.itemForm.controls; }
-  get artist(): string { return this.camposForm.artist.value; }
+  get artist(): Artist { return this.camposForm.artist.value; }
   get title(): string { return this.camposForm.title.value; }
   get releaseYear(): string { return this.camposForm.releaseYear.value; }
   get genre(): string { return this.camposForm.genre.value; }
-  get category(): string { return this.camposForm.category.value; }
+  get category(): Category { return this.camposForm.category.value; }
   get coverImageFile(): string { return this.camposForm.coverImageFile.value; }
 
 }

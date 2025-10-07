@@ -1,71 +1,186 @@
 <p-toast></p-toast>
-<div class="container justify-content-center shadow-2">
-  <p-fieldset [legend]="id ? 'Editar Item' : 'Cadastro de Items'" class="fieldset-artist">
-    <form class="app-form item-form" [formGroup]="itemForm">
-      <div  class="grid">
-        <div class="col-12 sm:col-12 md:col-12 lg:col-6">
-          <span class="p-float-label">
-            <p-dropdown styleClass="fullWidth" [options]="artists" placeholder="Artist" optionLabel="name" formControlName="artist"></p-dropdown>
-              <label for="inputtext"></label>
-              <small *ngIf="!artist && (!camposForm.artist.pristine || !pristine)" class="p-error block">Campo
-                obrigatório</small>
-            </span>
-        </div>
-        <div class="col-12 sm:col-12 md:col-12 lg:col-6">
-          <span class="p-float-label">
-            <input class="fullWidth" type="text" pInputText formControlName="title" required>
-              <label for="inputtext">Title</label>
-              <small *ngIf="!title && (!camposForm.title.pristine || !pristine)" class="p-error block">Campo
-                obrigatório</small>
-            </span>
-        </div>
-        <div class="col-12 sm:col-12 md:col-12 lg:col-3">
-          <span class="p-float-label">
-            <input class="fullWidth" type="text" pInputText formControlName="releaseYear" required>
-              <label for="inputtext">Year</label>
-              <small *ngIf="!releaseYear && (!camposForm.releaseYear.pristine || !pristine)" class="p-error block">Campo
-                obrigatório</small>
-            </span>
-        </div>
-        <div class="col-12 sm:col-12 md:col-12 lg:col-3">
-          <span class="p-float-label">
-            <input class="fullWidth" type="text" pInputText formControlName="genre" required>
-              <label for="inputtext">Genre</label>
-              <small *ngIf="!genre && (!camposForm.genre.pristine || !pristine)" class="p-error block">Campo
-                obrigatório</small>
-            </span>
-        </div>
-        <div class="col-12 sm:col-12 md:col-12 lg:col-3">
-          <span class="p-float-label">
-            <p-dropdown styleClass="fullWidth" [options]="categorias" placeholder="Categories" optionLabel="name" formControlName="category" ></p-dropdown>
-              <label for="inputtext"></label>
-              <small *ngIf="!artist && (!camposForm.artist.pristine || !pristine)" class="p-error block">Campo
-                obrigatório</small>
-            </span>
-        </div>
-        <div class="col-12 sm:col-12 md:col-12 lg:col-3">
-          <span class="p-float-label">
-            <p-fileUpload #fileUpload
-              id="coverImage" 
-              styleClass="fullWidth p-button-outlined p-button-info" 
-              mode="basic"
-              [auto]="true"
-              [customUpload]="true"
-              (uploadHandler)="onUpload($event)"
-              accept="image/*" 
-              chooseLabel="Adicionar Imagem">
-            </p-fileUpload>
-          </span>
-        </div>
+<div class="form-container">
+  <div class="form-header">
+    <div class="header-content">
+      <button pButton
+              icon="pi pi-arrow-left"
+              class="p-button-text p-button-rounded back-button"
+              routerLink="/items"
+              pTooltip="Voltar para lista">
+      </button>
+      <div class="header-title">
+        <h1>{{id ? 'Editar Álbum' : 'Adicionar Novo Álbum'}}</h1>
+        <p>{{id ? 'Atualize as informações do álbum' : 'Preencha os detalhes do álbum'}}</p>
       </div>
-      <div class="grid">
-        <div [class]="id ? 'col-12' : 'col-12 sm:col-12 md:col-12 lg:col-6'">
-            <button pButton [label]="id ? 'Atualizar' : 'Salvar'" icon="pi pi-check" class="btn-salvar" (click)="save()"></button>
-        </div>
-        <div class="col-12 sm:col-12 md:col-12 lg:col-6" *ngIf="!id">
-          <button pButton label="Adicionar Outro" icon="pi pi-plus-circle" class="p-button-success btn-adicionar-outro" (click)="saveAnother()"></button>
-        </div>
-      </div>
-    </form>
-  </p-fieldset>
+    </div>
   </div>
+
+  <form [formGroup]="itemForm" class="modern-form">
+    <div class="form-content">
+      <div class="form-grid">
+      <!-- Upload de Imagem com Drag & Drop -->
+      <div class="image-upload-section">
+        <label class="section-label">Capa do Álbum</label>
+        <div class="upload-container"
+             [class.dragging]="isDragging"
+             (dragover)="onDragOver($event)"
+             (dragleave)="onDragLeave($event)"
+             (drop)="onDrop($event)">
+
+          <div *ngIf="!imagePreview" class="upload-placeholder">
+            <i class="pi pi-cloud-upload upload-icon"></i>
+            <p class="upload-text">Arraste e solte a imagem aqui</p>
+            <span class="upload-subtext">ou</span>
+            <label for="fileInput" class="file-label">
+              <span class="file-button">Selecionar Arquivo</span>
+            </label>
+            <input type="file"
+                   id="fileInput"
+                   accept="image/*"
+                   (change)="onFileSelect($event)"
+                   style="display: none;">
+            <p class="upload-hint">PNG, JPG ou WEBP (máx. 5MB)</p>
+          </div>
+
+          <div *ngIf="imagePreview" class="image-preview-container">
+            <img [src]="imagePreview" alt="Preview" class="image-preview">
+            <div class="image-overlay">
+              <button pButton
+                      type="button"
+                      icon="pi pi-trash"
+                      class="p-button-rounded p-button-danger remove-btn"
+                      (click)="removeImage()"
+                      pTooltip="Remover imagem">
+              </button>
+              <label for="fileInput" class="change-btn">
+                <i class="pi pi-pencil"></i> Alterar
+              </label>
+            </div>
+          </div>
+
+          <p-fileUpload #fileUpload
+            [ngStyle]="{'display': 'none'}"
+            id="coverImage"
+            mode="basic"
+            [auto]="true"
+            [customUpload]="true"
+            (uploadHandler)="onUpload($event)"
+            accept="image/*">
+          </p-fileUpload>
+        </div>
+      </div>
+
+      <!-- Formulário de Dados -->
+      <div >
+        <div class="form-row">
+          <div class="form-field full-width">
+            <label class="field-label">Título do Álbum *</label>
+            <input type="text"
+                   pInputText
+                   formControlName="title"
+                   placeholder="Digite o título do álbum"
+                   class="modern-input">
+            <small *ngIf="!title && (!camposForm.title.pristine || !pristine)" class="p-error">
+              Campo obrigatório
+            </small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="field-label">Artista *</label>
+            <div class="card flex justify-content-center">
+              <p-dropdown
+                [options]="artists"
+                formControlName="artist"
+                [checkmark]="true"
+                optionLabel="name"
+                [showClear]="true"
+                placeholder="Selecione o artista"
+                [filter]="true"
+                filterBy="name"
+                styleClass="w-full" />
+            </div>
+            <small *ngIf="!artist && (!camposForm.artist.pristine || !pristine)" class="p-error">
+              Campo obrigatório
+            </small>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Categoria *</label>
+            <div class="card flex justify-content-center">
+              <p-dropdown
+                [options]="categorias"
+                formControlName="category"
+                [checkmark]="true"
+                optionLabel="name"
+                [showClear]="true"
+                placeholder="Selecione a categoria"
+                styleClass="w-full" />
+            </div>
+            <small *ngIf="!category && (!camposForm.category.pristine || !pristine)" class="p-error">
+              Campo obrigatório
+            </small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="field-label">Ano de Lançamento *</label>
+            <input type="number"
+                   pInputText
+                   formControlName="releaseYear"
+                   placeholder="Ex: 2024"
+                   class="modern-input">
+            <small *ngIf="!releaseYear && (!camposForm.releaseYear.pristine || !pristine)" class="p-error">
+              Campo obrigatório
+            </small>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Gênero Musical *</label>
+            <input type="text"
+                   pInputText
+                   formControlName="genre"
+                   placeholder="Ex: Rock, Pop, Jazz..."
+                   class="modern-input">
+            <small *ngIf="!genre && (!camposForm.genre.pristine || !pristine)" class="p-error">
+              Campo obrigatório
+            </small>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Botões de Ação -->
+    <div class="form-actions">
+      <button pButton
+              type="button"
+              label="Cancelar"
+              icon="pi pi-times"
+              class="p-button-outlined p-button-secondary cancel-btn"
+              routerLink="/items">
+      </button>
+
+      <div class="primary-actions">
+        <button *ngIf="!id"
+                pButton
+                type="button"
+                label="Salvar e Adicionar Outro"
+                icon="pi pi-plus-circle"
+                class="p-button-success save-another-btn"
+                (click)="saveAnother()">
+        </button>
+        <button pButton
+                type="button"
+                [label]="id ? 'Atualizar' : 'Salvar'"
+                icon="pi pi-check"
+                class="p-button-primary save-btn"
+                (click)="save()">
+        </button>
+      </div>
+    </div>
+  </div>
+  </form>
+</div>

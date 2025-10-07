@@ -14,8 +14,10 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CardModule } from 'primeng/card';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { PaginatorModule } from 'primeng/paginator';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 @NgModule({
@@ -25,6 +27,7 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     TableModule,
     AppPrimengModule,
     DialogModule,
@@ -37,7 +40,8 @@ import { SharedModule } from '../shared/shared.module';
     DropdownModule,
     ReactiveFormsModule,
     FileUploadModule,
-
+    PaginatorModule,
+    TooltipModule,
     SharedModule
   ]
 })

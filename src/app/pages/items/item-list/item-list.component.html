@@ -16,7 +16,7 @@
     <div class="header-content">
       <div class="header-left">
         <h1 class="page-title">Minha Coleção</h1>
-        <p class="page-subtitle">Gerencie seus álbuns favoritos</p>
+        <p class="page-subtitle">{{filteredItems.length}} {{filteredItems.length === 1 ? 'álbum' : 'álbuns'}} na coleção</p>
       </div>
       <div class="header-right">
         <p-button label="Adicionar Novo Item"
@@ -28,26 +28,123 @@
     </div>
   </div>
 
+  <!-- Filtros e Busca -->
+  <div class="filters-container">
+    <div class="search-box">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text"
+               pInputText
+               [(ngModel)]="searchTerm"
+               (input)="applyFilters()"
+               placeholder="Buscar por título, artista, gênero..."
+               class="search-input">
+      </span>
+    </div>
+
+    <div class="filter-controls">
+      <p-dropdown
+        [options]="categoriesFilterOptions"
+        [(ngModel)]="selectedCategory"
+        (onChange)="applyFilters()"
+        placeholder="Categoria"
+        [showClear]="false"
+        styleClass="modern-filter-dropdown">
+      </p-dropdown>
+
+      <p-dropdown
+        [options]="artistsFilterOptions"
+        [(ngModel)]="selectedArtist"
+        (onChange)="applyFilters()"
+        placeholder="Artista"
+        [showClear]="false"
+        optionLabel="name"
+        styleClass="modern-filter-dropdown">
+      </p-dropdown>
+
+      <div class="view-toggle">
+        <button pButton
+                type="button"
+                icon="pi pi-th-large"
+                [class.active]="viewMode === 'grid'"
+                (click)="viewMode = 'grid'"
+                class="p-button-text view-btn"
+                pTooltip="Visualização em Grade">
+        </button>
+        <button pButton
+                type="button"
+                icon="pi pi-list"
+                [class.active]="viewMode === 'list'"
+                (click)="viewMode = 'list'"
+                class="p-button-text view-btn"
+                pTooltip="Visualização em Lista">
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="content-container">
-    <div class="card-container" *ngIf="items; else loading">
-      <p-table [value]="items"
+    <!-- Visualização em Grid -->
+    <div *ngIf="viewMode === 'grid' && filteredItems.length > 0" class="grid-container">
+      <div class="album-grid">
+        <div *ngFor="let item of paginatedItems" class="album-card" (click)="openItemDetails(item)">
+          <div class="album-cover">
+            <img [src]="item.coverImagePath || 'assets/placeholder-album.png'"
+                 [alt]="item.title"
+                 (error)="onImageError($event)"
+                 class="cover-image">
+            <div class="album-overlay">
+              <div class="overlay-actions">
+                <button pButton
+                        type="button"
+                        icon="pi pi-eye"
+                        class="p-button-rounded p-button-text overlay-btn"
+                        pTooltip="Ver detalhes"
+                        (click)="openItemDetails(item); $event.stopPropagation()">
+                </button>
+                <button pButton
+                        type="button"
+                        icon="pi pi-pencil"
+                        class="p-button-rounded p-button-text overlay-btn"
+                        pTooltip="Editar"
+                        routerLink="/items/create/{{item.id}}"
+                        (click)="$event.stopPropagation()">
+                </button>
+                <button pButton
+                        type="button"
+                        icon="pi pi-trash"
+                        class="p-button-rounded p-button-text overlay-btn overlay-btn-danger"
+                        pTooltip="Excluir"
+                        (click)="delete(item); $event.stopPropagation()">
+                </button>
+              </div>
+            </div>
+            <span class="category-tag" [ngClass]="{'dvd-tag': item.category?.name?.toLowerCase() === 'dvd'}">
+              {{item.category?.name}}
+            </span>
+          </div>
+          <div class="album-info">
+            <h3 class="album-title" [pTooltip]="item.title">{{item.title}}</h3>
+            <p class="album-artist" [pTooltip]="item.artist?.name">{{item.artist?.name}}</p>
+            <div class="album-meta">
+              <span class="meta-item"><i class="pi pi-calendar"></i> {{item.releaseYear}}</span>
+              <span class="meta-item"><i class="pi pi-tag"></i> {{item.genre}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visualização em Lista -->
+    <div *ngIf="viewMode === 'list' && filteredItems.length > 0" class="list-container">
+      <p-table [value]="paginatedItems"
         styleClass="modern-table"
-        selectionMode="single"
-        [(selection)]="selectedItem"
         dataKey="id"
         responsiveLayout="scroll"
-        [rows]="10"
-        [paginator]="true"
-        [responsive]="true"
-        #tabela
-        (onRowSelect)="getCoverFromAlbum($event)"
-        [rowsPerPageOptions]="[10, 20, 30, 50]"
-        [showCurrentPageReport]="true"
-        currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} items">
-
-
+        [responsive]="true">
         <ng-template pTemplate="header">
           <tr>
+            <th style="width: 80px">Capa</th>
             <th pSortableColumn="artist.name" class="text-left">
               <div class="flex align-items-center">
                 <span>Artista</span>
@@ -60,7 +157,7 @@
                 <p-sortIcon field="title"></p-sortIcon>
               </div>
             </th>
-            <th pSortableColumn="releaseYear" style="width: 120px">
+            <th pSortableColumn="releaseYear" style="width: 100px">
               <div class="flex align-items-center">
                 <span>Ano</span>
                 <p-sortIcon field="releaseYear"></p-sortIcon>
@@ -78,17 +175,17 @@
                 <p-sortIcon field="category.name"></p-sortIcon>
               </div>
             </th>
-            <th pSortableColumn="artist.country" class="text-left">
-              <div class="flex align-items-center">
-                <span>País</span>
-                <p-sortIcon field="artist.country"></p-sortIcon>
-              </div>
-            </th>
-            <th style="width: 100px">Ações</th>
+            <th style="width: 120px">Ações</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item>
-          <tr [pSelectableRow]="item" class="hover:surface-200">
+          <tr class="list-row">
+            <td>
+              <img [src]="item.coverImagePath || 'assets/placeholder-album.png'"
+                   [alt]="item.title"
+                   class="list-cover"
+                   (error)="onImageError($event)">
+            </td>
             <td class="text-left">{{item.artist?.name}}</td>
             <td class="text-left font-medium">{{item.title}}</td>
             <td class="text-center">{{item.releaseYear}}</td>
@@ -98,20 +195,28 @@
                 {{item.category?.name}}
               </span>
             </td>
-            <td class="text-left">{{item.artist?.country}}</td>
             <td>
               <div class="flex gap-2 justify-content-center">
                 <button pButton
                         type="button"
+                        icon="pi pi-eye"
+                        class="p-button-rounded p-button-text p-button-info"
+                        (click)="openItemDetails(item)"
+                        pTooltip="Ver detalhes">
+                </button>
+                <button pButton
+                        type="button"
                         icon="pi pi-pencil"
                         class="p-button-rounded p-button-text p-button-info"
-                        routerLink="/items/create/{{item.id}}">
+                        routerLink="/items/create/{{item.id}}"
+                        pTooltip="Editar">
                 </button>
                 <button pButton
                         type="button"
                         icon="pi pi-trash"
                         class="p-button-rounded p-button-text p-button-danger"
-                        (click)="delete(item)">
+                        (click)="delete(item)"
+                        pTooltip="Excluir">
                 </button>
               </div>
             </td>
@@ -119,17 +224,111 @@
         </ng-template>
       </p-table>
     </div>
-    <ng-template #loading>
-      <div class="loading-spinner">
-        <p-progressSpinner></p-progressSpinner>
-      </div>
-    </ng-template>
-         <p-dialog  [(visible)]="display" [modal]="true" [style]="{width: 'auto'}" [draggable]="false" [resizable]="false">
-      <div class="album-cover-container" *ngIf="retrievedImage">
-        <img [src]="retrievedImage" alt="Capa do álbum" class="album-cover-image"
-             (error)="onImageError($event)"
-             (load)="onImageLoad($event)">
-      </div>
-    </p-dialog>
+
+    <!-- Estado vazio -->
+    <div *ngIf="filteredItems.length === 0 && items.length > 0" class="empty-state">
+      <i class="pi pi-search empty-icon"></i>
+      <h3>Nenhum resultado encontrado</h3>
+      <p>Tente ajustar seus filtros de busca</p>
+      <button pButton
+              label="Limpar Filtros"
+              icon="pi pi-filter-slash"
+              (click)="clearFilters()"
+              class="p-button-outlined">
+      </button>
+    </div>
+
+    <div *ngIf="items.length === 0 && !loading" class="empty-state">
+      <i class="pi pi-inbox empty-icon"></i>
+      <h3>Nenhum álbum cadastrado</h3>
+      <p>Comece adicionando seu primeiro álbum à coleção</p>
+      <button pButton
+              label="Adicionar Álbum"
+              icon="pi pi-plus"
+              routerLink="/items/create"
+              class="p-button-success">
+      </button>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-spinner">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+
+    <!-- Paginação customizada -->
+    <div *ngIf="filteredItems.length > 0" class="custom-paginator">
+      <p-paginator
+        [rows]="itemsPerPage"
+        [totalRecords]="filteredItems.length"
+        [rowsPerPageOptions]="[15, 30, 45, 90]"
+        (onPageChange)="onPageChange($event)"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} álbuns">
+      </p-paginator>
+    </div>
   </div>
+
+  <!-- Dialog de Detalhes -->
+  <p-dialog [(visible)]="displayDetails"
+            [modal]="true"
+            [style]="{width: '480px', maxHeight: '85vh'}"
+            [draggable]="false"
+            [resizable]="false"
+            styleClass="item-details-dialog">
+    <ng-template pTemplate="header">
+      <h2 class="dialog-title">Detalhes do Álbum</h2>
+    </ng-template>
+
+    <div class="details-content" *ngIf="selectedItemDetails">
+      <div class="details-cover">
+        <img [src]="selectedItemDetails.coverImagePath || 'assets/placeholder-album.png'"
+             [alt]="selectedItemDetails.title"
+             class="details-image"
+             (error)="onImageError($event)">
+      </div>
+      <div class="details-info">
+        <div class="detail-row">
+          <label>Título:</label>
+          <span class="detail-value">{{selectedItemDetails.title}}</span>
+        </div>
+        <div class="detail-row">
+          <label>Artista:</label>
+          <span class="detail-value">{{selectedItemDetails.artist?.name}}</span>
+        </div>
+        <div class="detail-row">
+          <label>Ano de Lançamento:</label>
+          <span class="detail-value">{{selectedItemDetails.releaseYear}}</span>
+        </div>
+        <div class="detail-row">
+          <label>Gênero:</label>
+          <span class="detail-value">{{selectedItemDetails.genre}}</span>
+        </div>
+        <div class="detail-row">
+          <label>Categoria:</label>
+          <span class="category-badge" [ngClass]="{'dvd-badge': selectedItemDetails.category?.name?.toLowerCase() === 'dvd'}">
+            {{selectedItemDetails.category?.name}}
+          </span>
+        </div>
+        <div class="detail-row">
+          <label>País:</label>
+          <span class="detail-value">{{selectedItemDetails.artist?.country}}</span>
+        </div>
+      </div>
+      <div class="details-actions">
+        <button pButton
+                label="Editar"
+                icon="pi pi-pencil"
+                class="p-button-info"
+                routerLink="/items/create/{{selectedItemDetails.id}}"
+                (click)="displayDetails = false">
+        </button>
+        <button pButton
+                label="Excluir"
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="delete(selectedItemDetails); displayDetails = false">
+        </button>
+      </div>
+    </div>
+  </p-dialog>
 </div>
