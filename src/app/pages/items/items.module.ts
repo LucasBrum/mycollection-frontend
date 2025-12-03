@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ItemsRoutingModule } from './items-routing.module';
 import { ItemCreateComponent } from './item-create/item-create.component';
 import { ItemListComponent } from './item-list/item-list.component';
+import { DiscogsSearchDialogComponent } from './discogs-search-dialog/discogs-search-dialog.component';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { AppPrimengModule } from '../shared/app-primeng/app-primeng.module';
@@ -18,12 +19,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { PaginatorModule } from 'primeng/paginator';
 import { TooltipModule } from 'primeng/tooltip';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @NgModule({
   declarations: [
     ItemCreateComponent,
-    ItemListComponent
+    ItemListComponent,
+    DiscogsSearchDialogComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +46,9 @@ import { TooltipModule } from 'primeng/tooltip';
     FileUploadModule,
     PaginatorModule,
     TooltipModule,
-    SharedModule
+    SharedModule,
+    SelectButtonModule,
+    ProgressSpinnerModule
   ]
 })
 export class ItemsModule { }

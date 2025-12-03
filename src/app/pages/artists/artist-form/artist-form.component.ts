@@ -27,7 +27,6 @@ export class ArtistFormComponent implements OnInit {
 
   artistForm: FormGroup;
   coverImageFile: File[];
-  countries: any[] = [];
   categorias: Category[] = [];
   selectedCategory: Category;
   formSubmitted = false;
@@ -57,7 +56,6 @@ export class ArtistFormComponent implements OnInit {
 
     this.buildForm();
     this.listCategories();
-    this.listCountries();
   }
 
   setArtistFormToEdit(artist: Artist) {
@@ -188,13 +186,6 @@ export class ArtistFormComponent implements OnInit {
       .subscribe(categorias => this.categorias = categorias);
   }
 
-  listCountries() {
-    this.artistService.listCountries()
-      .subscribe(countries => {
-        this.countries = countries
-      });
-
-  }
 
   private onError(message: string) {
     const msg = message;

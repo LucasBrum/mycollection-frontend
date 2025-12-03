@@ -13,8 +13,8 @@
         </div>
         <div class="col-12 sm:col-12 md:col-12 lg:col-6">
           <span class="p-float-label">
-            <p-dropdown styleClass="fullWidth" [options]="countries" placeholder="Country" optionLabel="name" optionValue="name" formControlName="country" [showClear]="true"></p-dropdown>
-              <label for="inputtext"></label>
+            <input class="fullWidth" type="text" pInputText formControlName="country" required>
+              <label for="inputtext">Country</label>
               <small *ngIf="camposForm.country.errors?.required && formSubmitted" class="p-error block">Campo
                 obrigatório</small>
             </span>

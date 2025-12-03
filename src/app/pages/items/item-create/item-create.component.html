@@ -13,6 +13,15 @@
         <p>{{id ? 'Atualize as informações do álbum' : 'Preencha os detalhes do álbum'}}</p>
       </div>
     </div>
+    <!-- Discogs Import Button -->
+    <button *ngIf="!id"
+            pButton
+            type="button"
+            label="Importar do Discogs"
+            icon="pi pi-cloud-download"
+            class="p-button-outlined discogs-import-btn"
+            (click)="openDiscogsDialog()">
+    </button>
   </div>
 
   <form [formGroup]="itemForm" class="modern-form">
@@ -151,6 +160,62 @@
         </div>
 
       </div>
+
+      <!-- Discogs Data Preview (Tracks and Credits) -->
+      <div *ngIf="tracks.length > 0 || credits.length > 0" class="discogs-data-section">
+        <!-- Tracks -->
+        <div *ngIf="tracks.length > 0" class="tracks-preview">
+          <h3>
+            <i class="pi pi-list"></i> Tracklist ({{tracks.length}} faixas)
+            <button *ngIf="tracks.length > 10"
+                    type="button"
+                    class="expand-btn"
+                    (click)="showAllTracks = !showAllTracks">
+              <i class="pi" [ngClass]="showAllTracks ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+              {{showAllTracks ? 'Recolher' : 'Expandir'}}
+            </button>
+          </h3>
+          <div class="tracks-list">
+            <div *ngFor="let track of (showAllTracks ? tracks : tracks.slice(0, 10))" class="track-item">
+              <span class="track-position">{{track.position}}</span>
+              <span class="track-title">{{track.title}}</span>
+              <span class="track-duration">{{track.duration || '-'}}</span>
+            </div>
+            <div *ngIf="!showAllTracks && tracks.length > 10"
+                 class="show-more-btn"
+                 (click)="showAllTracks = true">
+              <i class="pi pi-plus-circle"></i>
+              +{{tracks.length - 10}} faixas mais...
+            </div>
+          </div>
+        </div>
+
+        <!-- Credits -->
+        <div *ngIf="credits.length > 0" class="credits-preview">
+          <h3>
+            <i class="pi pi-users"></i> Credits ({{credits.length}})
+            <button *ngIf="credits.length > 10"
+                    type="button"
+                    class="expand-btn"
+                    (click)="showAllCredits = !showAllCredits">
+              <i class="pi" [ngClass]="showAllCredits ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+              {{showAllCredits ? 'Recolher' : 'Expandir'}}
+            </button>
+          </h3>
+          <div class="credits-list">
+            <div *ngFor="let credit of (showAllCredits ? credits : credits.slice(0, 10))" class="credit-item">
+              <span class="credit-name">{{credit.name}}</span>
+              <span class="credit-role">{{credit.role}}</span>
+            </div>
+            <div *ngIf="!showAllCredits && credits.length > 10"
+                 class="show-more-btn"
+                 (click)="showAllCredits = true">
+              <i class="pi pi-plus-circle"></i>
+              +{{credits.length - 10}} mais...
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Botões de Ação -->
@@ -184,3 +249,9 @@
   </div>
   </form>
 </div>
+
+<!-- Discogs Search Dialog -->
+<app-discogs-search-dialog
+  [(visible)]="showDiscogsDialog"
+  (releaseSelected)="onDiscogsReleaseSelected($event)">
+</app-discogs-search-dialog>

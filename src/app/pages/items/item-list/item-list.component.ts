@@ -265,4 +265,12 @@ export class ItemListComponent implements OnInit {
     console.log('Image loaded successfully:', event);
   }
 
+  /**
+   * Retorna a URL da imagem de capa do item.
+   * Prioriza discogsImageUrl, depois coverImagePath.
+   */
+  getItemCoverImage(item: Item): string {
+    return item.discogsImageUrl || item.coverImagePath || 'assets/placeholder-album.png';
+  }
+
 }

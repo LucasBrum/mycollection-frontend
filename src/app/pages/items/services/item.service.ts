@@ -160,13 +160,46 @@ export class ItemService {
     if (body.country) body.country = body.country.trim()
     if (body.genre) body.genre = body.genre.trim()
 
-    if (body.category) {
+    // CORREÇÃO: Tratar string vazia e objetos inválidos como null
+    if (body.category && typeof body.category === 'object' && body.category.id) {
       body.category = { id: body.category.id }
+    } else {
+      body.category = null;
     }
 
-    if (body.artist) {
+    if (body.artist && typeof body.artist === 'object' && body.artist.id) {
       body.artist = { id: body.artist.id }
+    } else {
+      body.artist = null;
     }
+
+    // Se não tem artist mas tem artistName, mantém o artistName para criar novo artista
+    if (body.artistName) {
+      body.artistName = body.artistName.trim();
+    }
+
+    // Discogs fields
+    if (body.labelName) body.labelName = body.labelName.trim();
+
+    // Ensure tracks array is properly formatted
+    if (body.tracks && Array.isArray(body.tracks)) {
+      body.tracks = body.tracks.map((track: any, index: number) => ({
+        position: track.position || String(index + 1),
+        title: track.title?.trim() || '',
+        duration: track.duration || '',
+        trackOrder: track.trackOrder || index + 1
+      }));
+    }
+
+    // Ensure credits array is properly formatted
+    if (body.credits && Array.isArray(body.credits)) {
+      body.credits = body.credits.map((credit: any) => ({
+        name: credit.name?.trim() || '',
+        role: credit.role?.trim() || '',
+        discogsArtistId: credit.discogsArtistId || null
+      }));
+    }
+
     return body;
   }
 

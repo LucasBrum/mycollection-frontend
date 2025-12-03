@@ -1,0 +1,208 @@
+<p-dialog [(visible)]="visible"
+          [modal]="true"
+          [style]="{width: '90vw', maxWidth: '1200px', height: '85vh'}"
+          [draggable]="false"
+          [resizable]="false"
+          (onHide)="closeDialog()"
+          styleClass="discogs-search-dialog">
+
+  <ng-template pTemplate="header">
+    <div class="dialog-header">
+      <i class="pi pi-search"></i>
+      <span>Buscar no Discogs</span>
+    </div>
+  </ng-template>
+
+  <div class="dialog-content">
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-type-container">
+        <p-selectButton [options]="searchTypeOptions"
+                        [(ngModel)]="searchType"
+                        optionLabel="label"
+                        optionValue="value">
+        </p-selectButton>
+      </div>
+
+      <div class="search-input-container">
+        <span class="p-input-icon-left p-input-icon-right search-input-wrapper">
+          <i class="pi pi-search"></i>
+          <input type="text"
+                 pInputText
+                 [(ngModel)]="searchQuery"
+                 (keypress)="onKeyPress($event)"
+                 [placeholder]="searchType === 'album' ? 'Nome do album...' : 'Nome do artista...'"
+                 class="search-input">
+          <i *ngIf="searchQuery" class="pi pi-times clear-icon" (click)="searchQuery = ''"></i>
+        </span>
+        <button pButton
+                label="Buscar"
+                icon="pi pi-search"
+                (click)="search()"
+                [loading]="loading"
+                class="search-button">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Results Section -->
+      <div class="results-section">
+        <div class="results-header" *ngIf="searchResults.length > 0">
+          <span>{{totalRecords}} resultados encontrados</span>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading-container" *ngIf="loading">
+          <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+          <span>Buscando...</span>
+        </div>
+
+        <!-- Results Grid -->
+        <div class="results-grid" *ngIf="!loading && searchResults.length > 0">
+          <div *ngFor="let result of searchResults"
+               class="result-card"
+               [class.selected]="selectedResult?.id === result.id"
+               (click)="selectResult(result)">
+            <img [src]="getCoverImage(result)"
+                 [alt]="result.title"
+                 class="result-cover"
+                 loading="lazy">
+            <div class="result-info">
+              <h4 class="result-title" [pTooltip]="result.title">{{result.title}}</h4>
+              <p class="result-year">{{result.year || 'N/A'}}</p>
+              <p class="result-label">{{result.label?.[0] || 'N/A'}}</p>
+              <div class="result-formats" *ngIf="result.format?.length">
+                <span class="format-badge" *ngFor="let format of result.format.slice(0, 2)">{{format}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="!loading && searchResults.length === 0 && searchQuery">
+          <i class="pi pi-inbox"></i>
+          <p>Nenhum resultado encontrado</p>
+          <small>Tente buscar com outros termos</small>
+        </div>
+
+        <!-- Initial State -->
+        <div class="empty-state" *ngIf="!loading && searchResults.length === 0 && !searchQuery">
+          <i class="pi pi-search"></i>
+          <p>Digite um termo para buscar</p>
+          <small>Busque por nome do album ou artista</small>
+        </div>
+
+        <!-- Pagination -->
+        <p-paginator *ngIf="totalRecords > rowsPerPage"
+                     [rows]="rowsPerPage"
+                     [totalRecords]="totalRecords"
+                     [rowsPerPageOptions]="[10, 20, 30]"
+                     (onPageChange)="onPageChange($event)"
+                     styleClass="results-paginator">
+        </p-paginator>
+      </div>
+
+      <!-- Details Panel -->
+      <div class="details-panel" [class.has-selection]="selectedResult">
+        <div class="details-placeholder" *ngIf="!selectedResult">
+          <i class="pi pi-info-circle"></i>
+          <p>Selecione um album para ver os detalhes</p>
+        </div>
+
+        <!-- Loading Details -->
+        <div class="details-loading" *ngIf="selectedResult && loadingDetails">
+          <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+          <span>Carregando detalhes...</span>
+        </div>
+
+        <!-- Release Details -->
+        <div class="details-content" *ngIf="selectedResult && releaseDetails && !loadingDetails">
+          <div class="details-cover">
+            <img [src]="getReleaseImage()" [alt]="releaseDetails.title">
+          </div>
+
+          <div class="details-info">
+            <div class="detail-row">
+              <label>Titulo:</label>
+              <span>{{releaseDetails.title}}</span>
+            </div>
+            <div class="detail-row">
+              <label>Artista:</label>
+              <span>{{getArtistName()}}</span>
+            </div>
+            <div class="detail-row">
+              <label>Ano:</label>
+              <span>{{releaseDetails.year || 'N/A'}}</span>
+            </div>
+            <div class="detail-row">
+              <label>Gravadora:</label>
+              <span>{{getLabelName()}}</span>
+            </div>
+            <div class="detail-row">
+              <label>Genero:</label>
+              <span>{{releaseDetails.genres?.join(', ') || 'N/A'}}</span>
+            </div>
+            <div class="detail-row" *ngIf="releaseDetails.styles?.length">
+              <label>Estilos:</label>
+              <span>{{releaseDetails.styles.join(', ')}}</span>
+            </div>
+            <div class="detail-row">
+              <label>Pais:</label>
+              <span>{{releaseDetails.country || 'N/A'}}</span>
+            </div>
+          </div>
+
+          <!-- Tracklist -->
+          <div class="tracklist-section" *ngIf="releaseDetails.tracklist?.length > 0">
+            <h4><i class="pi pi-list"></i> Tracklist ({{releaseDetails.tracklist.length}} faixas)</h4>
+            <div class="tracklist-container">
+              <ul class="tracklist">
+                <li *ngFor="let track of releaseDetails.tracklist; let i = index">
+                  <span class="track-position">{{track.position || (i + 1)}}</span>
+                  <span class="track-title">{{track.title}}</span>
+                  <span class="track-duration">{{track.duration || '-'}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Credits -->
+          <div class="credits-section" *ngIf="releaseDetails.extraartists?.length > 0">
+            <h4><i class="pi pi-users"></i> Credits ({{releaseDetails.extraartists.length}})</h4>
+            <div class="credits-container">
+              <ul class="credits-list">
+                <li *ngFor="let credit of releaseDetails.extraartists.slice(0, 10)">
+                  <span class="credit-name">{{credit.name}}</span>
+                  <span class="credit-role">{{credit.role}}</span>
+                </li>
+                <li *ngIf="releaseDetails.extraartists.length > 10" class="credits-more">
+                  +{{releaseDetails.extraartists.length - 10}} mais...
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <button pButton
+              label="Cancelar"
+              icon="pi pi-times"
+              class="p-button-text"
+              (click)="closeDialog()">
+      </button>
+      <button pButton
+              label="Usar Este Release"
+              icon="pi pi-check"
+              [disabled]="!releaseDetails"
+              (click)="confirmSelection()">
+      </button>
+    </div>
+  </ng-template>
+
+</p-dialog>

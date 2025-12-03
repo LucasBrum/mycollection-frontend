@@ -2,7 +2,7 @@ import { Artist } from './../model/artist';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first, map, tap } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ArtistItemDetailsResponse } from '../model/ArtistItemDetailsResponse';
 
 @Injectable({
@@ -12,12 +12,9 @@ export class ArtistService {
 
 
   private readonly API = 'mycollection/api/artists'
-  private _jsonCountries = 'assets/countries.json'
   private _refreshNeeded$ = new Subject<void>();
 
   constructor(private httpClient: HttpClient) {
-    this.listCountries().subscribe(data => {
-    })
   }
 
   get refreshNeeded$() {
@@ -39,14 +36,6 @@ export class ArtistService {
         first(),
         map(result => result['data'])
       )
-  }
-
-  listCountries(): Observable<any> {
-    return this.httpClient.get(this._jsonCountries)
-    .pipe(
-      first(),
-      map(result => result['data'])
-    )
   }
 
   save(artist: Artist) {

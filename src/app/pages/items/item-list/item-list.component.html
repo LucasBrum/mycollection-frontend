@@ -89,7 +89,7 @@
       <div class="album-grid">
         <div *ngFor="let item of paginatedItems" class="album-card" (click)="openItemDetails(item)">
           <div class="album-cover">
-            <img [src]="item.coverImagePath || 'assets/placeholder-album.png'"
+            <img [src]="getItemCoverImage(item)"
                  [alt]="item.title"
                  (error)="onImageError($event)"
                  class="cover-image">
@@ -181,7 +181,7 @@
         <ng-template pTemplate="body" let-item>
           <tr class="list-row">
             <td>
-              <img [src]="item.coverImagePath || 'assets/placeholder-album.png'"
+              <img [src]="getItemCoverImage(item)"
                    [alt]="item.title"
                    class="list-cover"
                    (error)="onImageError($event)">
@@ -281,7 +281,7 @@
 
     <div class="details-content" *ngIf="selectedItemDetails">
       <div class="details-cover">
-        <img [src]="selectedItemDetails.coverImagePath || 'assets/placeholder-album.png'"
+        <img [src]="getItemCoverImage(selectedItemDetails)"
              [alt]="selectedItemDetails.title"
              class="details-image"
              (error)="onImageError($event)">
